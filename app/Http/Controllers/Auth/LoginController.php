@@ -70,17 +70,32 @@ class LoginController extends Controller
     public function sendLinkForget(SendCodeWithSmsRequest $request)
     {
         $message = 'باسلام جهت تغییر کلمه عبور خود روی لینک زیر کلیک کنید' . PHP_EOL;
-        $token=$this->generateCode($request, $message);
-        return redirect()->route('update.Password',$token->token);
+        $token = $this->generateCode($request, $message);
+        return redirect()->route('update.Password', $token->token);
     }
 
-    public function updatePassword(Otp $otp){
-        return view('Auth.updatePassword',compact('otp'));
-    }
-
-    public function updatePasswordPost(Otp $otp)
+    public function updatePassword(Otp $otp)
     {
-        dd($otp);
+        if (!empty($otp->seen_at))
+            return redirect()->route('login.index')->withErrors(['token' => 'لینک ارسالی معتبر نمیباشد']);
+        return view('Auth.updatePassword', compact('otp'));
+    }
+
+    public function updatePasswordPost(RegisterPasswordRequest $request, Otp $otp)
+    {
+        if (!empty($otp->seen_at))
+            return redirect()->route('login.index')->withErrors(['token' => 'لینک ارسالی معتبر نمیباشد']);
+
+        $otp->update(['seen_at' => date('Y-m-d H:i:s')]);
+        $inputs = $request->all();
+        $user = User::where('mobile', $otp->mobile)->first();
+        $result=$user->update([
+            'password' => password_hash($inputs['password'], PASSWORD_DEFAULT)
+        ]);
+        return  $result? redirect()->route('login.index')->with(['success'=>'کلمه عبور شما ویرایش شد']):redirect()->route('login.index')->withErrors(['token' => 'عملیات ویرایش کلمه عبور با شکست روبه رو شد لطفا چند دقیقه دیگر تلاش فرمایید']);
+
+
+
     }
 
     public function forgotPasswordToken(Request $request, Otp $otp)

@@ -28,7 +28,6 @@ class RegisterPasswordRequest extends FormRequest
         return [
             "password"=>[Password::min(8)->mixedCase()->uncompromised(),'confirmed'],
             "password_confirmation"=>'required',
-            'mobile'=>'sometimes|exists:users,mobile'
         ];
     }
 }
