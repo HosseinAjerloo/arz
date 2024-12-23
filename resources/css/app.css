@@ -1,0 +1,20 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@font-face {
+    font-family: vazir;
+    src: url('../../public/merikhArz/src/fonts/Vazir.woff');
+    src: url('../../public/merikhArz/src/fonts/Vazir.woff2');
+}
+*{
+    font-family: 'vazir';
+}
+body{
+    font-family: 'vazir';
+    direction: rtl;
+}
+
+
+
+
+
