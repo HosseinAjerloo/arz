@@ -2,7 +2,7 @@
 @section('content')
 <section class="w-full relative flex items-center justify-center">
     <img src="{{asset('merikhArz/src/images/mainImg.png')}}" alt="" class="object-cover bg-center h-full w-full">
-    <div class="absolute bottom-4 text-center py-3  z-20 w-80 bg-black/45 border border-white/15 rounded-md
+    <div class="absolute bottom-4 text-center py-3  z-[9] w-80 bg-black/45 border border-white/15 rounded-md
         text-white text-lg font-black tracking-wide">
         مریخ <spna class="text-base-font-color">ارز</spna>: معامله آسان رمزارزها
     </div>

@@ -8,19 +8,20 @@ $(document).ready(function () {
     let arrowRight = $(".arrowRight");
     let arrowLeft = $(".arrowLeft");
     let information = $(".information");
+    let url=window.location.protocol+'//'+window.location.host;
 
     $(btnMenu).click(function () {
         if ($(menu).hasClass('right-[100%]')) {
             $(menu).removeClass('right-[100%]')
             $(menu).removeClass('invisible')
             $(menu).addClass('right-0')
-            $(btnMenu).attr('src', '../src/images/close.svg')
+            $(btnMenu).attr('src', url+'/merikhArz/src/images/close.svg')
 
         } else {
             $(menu).addClass('right-[100%]')
             $(menu).removeClass('right-0')
             $(menu).addClass('invisible')
-            $(btnMenu).attr('src', '../src/images/hamburger.svg')
+            $(btnMenu).attr('src', url+'/merikhArz/src/images/hamburger.svg')
 
 
         }
@@ -41,7 +42,7 @@ $(document).ready(function () {
             $(menu).addClass('right-[100%]')
             $(menu).addClass('invisible')
             $(menu).removeClass('right-0')
-            $(btnMenu).attr('src', '../src/images/hamburger.svg')
+            $(btnMenu).attr('src', url+'/merikhArz/src/images/hamburger.svg')
         }
 
         if ($(profile).hasClass('opacity-0')) {
