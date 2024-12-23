@@ -42,7 +42,8 @@
 
 <?php if(auth()->guard()->guest()): ?>
     <section
-        class="mt-2 bg-no-repeat w-[100%] bg-cover	bg-center  sm:bg-[position:unset]   bg-[url('../src/images/bg-fastLogin.png')] h-80 relative flex items-center flex-col">
+        class="mt-2 bg-no-repeat w-[100%] bg-cover	bg-center  sm:bg-[position:unset]   h-80 relative flex items-center flex-col"
+        style="background-image: url('<?php echo e(asset('merikhArz/src/images/bg-fastLogin.png')); ?>')">
         <span class="font-black text-lg border border-base-font-color rounded-2xl px-4 py-1.5 max-h-min bg-F4F7FB ">
             ثبت نام آسان !
         </span>
