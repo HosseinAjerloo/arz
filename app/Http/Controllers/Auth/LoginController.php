@@ -78,7 +78,9 @@ class LoginController extends Controller
     {
         if (!empty($otp->seen_at))
             return redirect()->route('login.index')->withErrors(['token' => 'لینک ارسالی معتبر نمیباشد']);
-        return view('Auth.updatePassword', compact('otp'));
+
+        return redirect()->route('login.index')->with(['success' => 'لینک ویرایش کلمه عبور برای شما ارسال شد.']);
+
     }
 
     public function updatePasswordPost(RegisterPasswordRequest $request, Otp $otp)

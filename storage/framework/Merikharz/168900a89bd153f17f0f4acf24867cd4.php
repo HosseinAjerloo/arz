@@ -7,7 +7,7 @@
     </div>
 </section>
 <section class="w-full flex flex-wrap justify-between mt-4">
-    <a class="w-[48%] h-40 bg-gradient-to-b from-FFC98B to-FFF5EA rounded-md flex justify-center items-center flex-col mt-2">
+    <a href="<?php echo e(route('panel.transmission.view')); ?>" class="w-[48%] h-40 bg-gradient-to-b from-FFC98B to-FFF5EA rounded-md flex justify-center items-center flex-col mt-2">
         <img src="<?php echo e(asset("merikhArz/src/images/perfectMoneyIcon.png")); ?>" alt="" class="object-cover">
         <p class="text-base">حواله پرفکت مانی</p>
     </a>

@@ -16,6 +16,7 @@ use App\Models\Payment;
 use App\Models\Service;
 use App\Models\SiteService;
 use App\Models\Transmission;
+use App\Models\User;
 use App\Models\Voucher;
 use App\Services\SmsService\SatiaService;
 use Carbon\Carbon;
@@ -42,7 +43,8 @@ class TransmissionController extends Controller
         $banks = Bank::where('is_active', 1)->get();
         $services = Service::all();
         $dollar = Doller::orderBy('id', 'desc')->first();
-        return view('Panel.Transmission.index', compact('services', 'dollar', 'banks'));
+        $user=Auth::user();
+        return view('Panel.Transmission.index', compact('services', 'dollar', 'banks','user'));
     }
 
     public function store(TransmissionRequest $request)
