@@ -109,7 +109,7 @@ class LoginController extends Controller
             Session::put(['user' => User::where('mobile', $otp->mobile)->first()->id]);
 
         $otp->update(['seen_at' => date('Y-m-d H:i:s')]);
-        return view('Auth.forgotPassword', compact('otp'));
+        return view('Auth.updatePassword', compact('otp'));
     }
 
     public function register()
