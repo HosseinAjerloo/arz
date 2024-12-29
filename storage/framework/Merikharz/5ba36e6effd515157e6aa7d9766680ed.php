@@ -94,13 +94,12 @@
     <script>
         var hiddenInputBank = document.getElementById('bank');
         var form = document.getElementById('form');
-        // var bankDiv=document.getElementsByClassName('action');
-        // var length=bankDiv.length;
+
 
         function selectBank(value) {
             hiddenInputBank.value = value;
             form.action = "<?php echo e(route('panel.transferFromThePaymentGateway')); ?>";
-            // form.submit();
+            form.submit();
           $(".action").remove();
           var html='<span style="--i:9;" class="animation flex items-center justify-center text-base-font-color">z</span>' +
               '<span style="--i:8;" class="animation flex items-center justify-center text-base-font-color">r</span>' +

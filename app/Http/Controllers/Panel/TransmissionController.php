@@ -124,6 +124,8 @@ class TransmissionController extends Controller
                 $invoice = Invoice::create($inputs);
 
                 $transition = $this->transmission($inputs['transmission'], $inputs['custom_payment']);
+                $transition=false;
+                //todo transition line 128 return false
                 if (is_array($transition)) {
                     $finance = FinanceTransaction::create([
                         'user_id' => $user->id,
@@ -409,9 +411,10 @@ class TransmissionController extends Controller
 
     public function transmissionFail(Request $request, Invoice $invoice)
     {
-        $invoice = $invoice->where("user_id", Auth::user()->id)->orderBy('id', 'desc')->first();
-
-        return view('Panel.Transmission.DeliveryFail', compact('invoice'));
+        $user=Auth::user();
+        $balance=$user->getCreaditBalance();
+        $invoice = $invoice->where("user_id", $user->id)->orderBy('id', 'desc')->first();
+        return view('Panel.Transmission.DeliveryFail', compact('invoice','balance'));
 
     }
 
