@@ -49,7 +49,10 @@
                     <img src="<?php echo e(asset('merikhArz/src/images/seke.svg')); ?>" alt="">
                     <h1 class="text-sm">
                         موجودی فعلی شما <span
-                            class="text-mini-mini-base font-bold   <?php if($user->getCreaditBalance()>0): ?> text-green-600  <?php else: ?> text-rose-700 <?php endif; ?>"><?php echo e($user->getCreaditBalance()); ?></span>
+                            class="text-mini-mini-base font-bold   <?php if($user->getCreaditBalance()>0): ?> text-green-600  <?php else: ?> text-rose-700 <?php endif; ?>">
+                            <?php echo e(numberFormat(empty(substr($user->getCreaditBalance(),0,(strlen($user->getCreaditBalance())-1)))?0: substr($user->getCreaditBalance(),0,(strlen($user->getCreaditBalance())-1)))); ?>
+
+                        </span>
                         تومان میباشد
                     </h1>
                 </div>
