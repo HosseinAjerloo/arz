@@ -172,6 +172,7 @@ class TransmissionController extends Controller
 
     public function transferFromThePaymentGateway(TransmissionRequest $request)
     {
+
         try {
             $balance = Auth::user()->getCreaditBalance();
 
@@ -189,7 +190,6 @@ class TransmissionController extends Controller
             } elseif (isset($inputs['custom_payment'])) {
                 $inputs['service_id_custom'] = $inputs['custom_payment'];
                 $voucherPrice =( floor(($dollar->DollarRateWithAddedValue() * $inputs['custom_payment']) /10000 )*10000);
-
             } else {
                 return redirect()->route('panel.transmission.view')->withErrors(['SelectInvalid' => "انتخاب شما معتبر نمیباشد"]);
             }

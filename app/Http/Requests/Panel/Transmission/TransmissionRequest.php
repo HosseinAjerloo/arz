@@ -25,7 +25,6 @@ class TransmissionRequest extends FormRequest
     {
         return [
             'Accepting_the_rules'=>"in:on|required",
-            "service_id"=>"sometimes|exists:services,id",
             "custom_payment"=>[(request()->has('service_id')==false?'required':'nullable'),'sometimes','numeric',"max:".env('Daily_Purchase_Limit'),'min:0.1',new DecimalRule()],
             "transmission"=>["required","max:9","min:9",new PAYERACCOUNTRule()]
         ];
@@ -33,7 +32,7 @@ class TransmissionRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'custom_payment.required'=>'در صورت انتخاب نکردن خرید سریع ووچر انتخاب مبلغ دلخواه الزامی است'
+            'custom_payment.required'=>'انتخاب مبلغ حواله الزامی است'
         ];
     }
 }
