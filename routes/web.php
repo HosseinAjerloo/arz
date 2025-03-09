@@ -124,5 +124,3 @@ Route::post('test1', function (\App\Http\Requests\Auth\SendCodeWithSmsRequest $r
 })->name('test');
 
 
-
-
