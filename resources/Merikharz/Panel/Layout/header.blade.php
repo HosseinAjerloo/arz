@@ -88,12 +88,12 @@
             class="menuItem invisible absolute w-80 top-16 right-[100%] bg-white p-2 z-10 rounded-ee-2xl transition-all">
             <ul class="w-full">
                 <li class="text-sm h-8 border-b-base-font-color border-dashed border-b text-black p-1.5 ">
-                    <a href="">
+                    <a href="{{route('panel.order')}}">
                         سفارشات شما
                     </a>
                 </li>
                 <li class="text-sm h-8 border-b-base-font-color   border-dashed  border-b text-black p-1.5">
-                    <a href="">
+                    <a href="{{route('panel.transmission.view')}}">
                         حواله پرفکت مانی
                     </a>
                 </li>

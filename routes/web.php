@@ -119,8 +119,6 @@ Route::fallback(function () {
     abort(404);
 });
 
-Route::post('test1', function (\App\Http\Requests\Auth\SendCodeWithSmsRequest $request) {
-//    return \response()->json(['status', 'success']);
-})->name('test');
+
 
 
