@@ -124,8 +124,7 @@ class TransmissionController extends Controller
                 $invoice = Invoice::create($inputs);
 
                 $transition = $this->transmission($inputs['transmission'], $inputs['custom_payment']);
-                $transition=false;
-                //todo transition line 128 return false
+
                 if (is_array($transition)) {
                     $finance = FinanceTransaction::create([
                         'user_id' => $user->id,
@@ -404,7 +403,7 @@ class TransmissionController extends Controller
     {
         $transitionDelivery = $transitionDelivery->where('user_id', Auth::user()->id)->where("id", $transitionDelivery->id)->first();
         if ($transitionDelivery)
-            return view('Panel.Transmission.DeliveryOfTheTransferNumber', compact('transitionDelivery'));
+            return view('Panel.Transmission.TransmissionSuccessfully', compact('transitionDelivery'));
         else
             abort(404);
     }

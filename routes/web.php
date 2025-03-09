@@ -120,7 +120,7 @@ Route::fallback(function () {
 });
 
 Route::post('test1', function (\App\Http\Requests\Auth\SendCodeWithSmsRequest $request) {
-    return \response()->json(['status', 'success']);
+//    return \response()->json(['status', 'success']);
 })->name('test');
 
 
