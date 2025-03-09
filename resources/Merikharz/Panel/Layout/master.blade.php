@@ -7,6 +7,7 @@
 @include('Panel.Layout.header')
 @include('Alert.Toast.warning')
 @include('Alert.Toast.success')
+@yield('header-content')
 <main class="px-5 mt-4">
    @yield('content')
 </main>

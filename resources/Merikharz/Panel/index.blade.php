@@ -20,10 +20,10 @@
         <img src="{{asset('merikhArz/src/images/host.png')}}" alt="" class="object-cover">
         <p class="text-base text-center">خرید از سایت های خارجی</p>
     </div>
-    <div class="w-[48%] h-40 bg-gradient-to-b from-DBBBFF to-F6EDFF rounded-md flex justify-center items-center flex-col mt-2">
+    <a href="{{route('panel.wallet.charging')}}" class="w-[48%] h-40 bg-gradient-to-b from-DBBBFF to-F6EDFF rounded-md flex justify-center items-center flex-col mt-2">
         <img src="{{asset('merikhArz/src/images/host.png')}}" alt="" class="object-cover">
         <p class="text-base text-center">شارژ حساب شما</p>
-    </div>
+    </a>
 
 </section>
 

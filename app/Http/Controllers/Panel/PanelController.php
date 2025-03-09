@@ -349,7 +349,7 @@ class PanelController extends Controller
 
             $back_price = $objBank->verify($payment->amount);
 
-            if ($back_price !==true or Payment::where("order_id", $inputs['ResNum'])->count() > 1) {
+            if ($back_price !== true or Payment::where("order_id", $inputs['ResNum'])->count() > 1) {
                 $invoice->update(['status' => 'failed', 'description' => ' پرداخت موفقیت آمیز نبود ' . $objBank->verifyTransaction($back_price)]);
                 $financeTransaction->update(['description' => ' پرداخت موفقیت آمیز نبود ' . $objBank->verifyTransaction($back_price), 'status' => 'fail']);
 
@@ -494,9 +494,8 @@ class PanelController extends Controller
     {
         $banks = Bank::where('is_active', 1)->get();
         $user = Auth::user();
-        $balance = $user->getCreaditBalance();
-        $balance = numberFormat($balance);
-        return view("Panel.RechargeWallet.index", compact('balance', 'banks'));
+
+        return view("Panel.RechargeWallet.index", compact('user', 'banks'));
     }
 
     public function walletChargingPreview(WalletChargingRequest $request)
@@ -507,13 +506,11 @@ class PanelController extends Controller
             [
                 'state' => 'requested',
             ]);
-        $balance = $user->getCreaditBalance();
 
         $payment->update(['order_id' => $payment->id + Payment::transactionNumber]);
         $inputs['orderID'] = $payment->id + Payment::transactionNumber;
         session()->put('payment', $payment->id);
-
-        return view("Panel.RechargeWallet.FinalApproval", compact('inputs', 'balance'));
+        return view("Panel.RechargeWallet.FinalApproval", compact('inputs', 'user', 'payment'));
     }
 
     public function walletChargingStore(WalletChargingRequest $request)
@@ -631,7 +628,7 @@ class PanelController extends Controller
 
             $back_price = $objBank->verify($payment->amount);
 
-            if ($back_price !==true or Payment::where("order_id", $inputs['ResNum'])->count() > 1) {
+            if ($back_price !== true or Payment::where("order_id", $inputs['ResNum'])->count() > 1) {
                 $invoice->update(['status' => 'failed', 'description' => ' پرداخت موفقیت آمیز نبود ' . $objBank->verifyTransaction($back_price)]);
                 $financeTransaction->update(['description' => ' پرداخت موفقیت آمیز نبود ' . $objBank->verifyTransaction($back_price), 'status' => 'fail']);
 
