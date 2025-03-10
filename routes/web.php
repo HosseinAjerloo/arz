@@ -122,3 +122,6 @@ Route::fallback(function () {
 
 
 
+Route::get('test',function (){
+    return view('Panel.Ticket.index');
+});

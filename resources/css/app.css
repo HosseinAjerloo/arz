@@ -33,6 +33,12 @@ body{
 
     }
 }
+.file-demo{
+    bottom:10%;
+    left: 50%;
+    transform: translateX(-50%) scale(0);
+    transition: .5s;
+}
 
 
 

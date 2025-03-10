@@ -22,7 +22,7 @@ class TicketController extends Controller
 {
     public function index()
     {
-        $tickets = Ticket::orderBy('id', 'desc')->where('user_id', \request()->user()->id)->simplePaginate(10);
+        $tickets = Ticket::orderBy('id', 'desc')->where('user_id', \request()->user()->id)->get();
         return view('Panel.Ticket.tickets', compact('tickets'));
     }
 
@@ -54,6 +54,7 @@ class TicketController extends Controller
             $new_ticket = TicketMessage::create($inputs);
             $result = $new_ticket->image()->create(['user_id' => $ticket->user_id, 'path' => $imageService->getFinalFileAddres()]);
             $result->jalali_date=Jalalian::fromCarbon($result->created_at)->format('h:i Y/m/d');
+            $result->hours=Jalalian::fromCarbon($result->created_at)->format('h:i');
             $result->value=route('panel.ticket.download',$result->id);
             $result->crs=asset($result->path);
             return $result ? response()->json(['success' => true,'data'=>$result]) : response()->json(['success' => false]);
@@ -63,6 +64,7 @@ class TicketController extends Controller
             $new_ticket = TicketMessage::create($inputs);
 
             $new_ticket->jalali_date = Jalalian::fromCarbon($new_ticket->created_at)->format('h:i Y/m/d');
+            $new_ticket->hours=Jalalian::fromCarbon($new_ticket->created_at)->format('h:i');
             return [
                 'success' => true,
                 'data' => $new_ticket
