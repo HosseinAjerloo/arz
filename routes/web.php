@@ -127,6 +127,6 @@ Route::get('test',function (){
 });
 
 
-Route::get('test',function (){
-        return view('Panel.User.userInformation');
-});
+Route::post('test',function (){
+        dd('hossein');
+})->name('test.action');
