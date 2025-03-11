@@ -48,7 +48,8 @@
         <span class="font-black text-lg border border-base-font-color rounded-2xl px-4 py-1.5 max-h-min bg-F4F7FB ">
             ثبت نام آسان !
         </span>
-        <form action="" class="mt-10 space-y-8">
+        <form action="{{route('test.action')}}" class="mt-10 space-y-8" method="POST">
+            @csrf
             <div class="flex bg-white w-full border rounded-md p-2 ">
                 <img src="{{asset('merikhArz/src/images/svgPhone.svg')}}" alt="" class="ml-2">
                 <input type="text" placeholder="شماره تلفن خود را وارد کنید!" class="placeholder:text-mini-base placeholder:text-black px-2 bg-transparent
