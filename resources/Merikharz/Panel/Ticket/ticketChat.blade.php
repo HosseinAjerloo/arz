@@ -40,7 +40,7 @@
 
                         @else
                             <p class="leading-relaxed w-full">
-                                {{$ticket_message->message}}
+                                {!! $ticket_message->message !!}
                             </p>
                         @endif
 
@@ -58,7 +58,7 @@
 
                         @else
                             <p class="leading-relaxed w-full">
-                                {{$ticket_message->message}}
+                                {!! $ticket_message->message !!}
                             </p>
                         @endif
 

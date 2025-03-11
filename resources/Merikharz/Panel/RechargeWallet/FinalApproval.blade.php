@@ -50,7 +50,7 @@
 
         </button>
         <input type="hidden" value="{{$inputs['bank_id']}}" name="bank_id">
-        <input type="hidden" value="{{$inputs['price']}}" name="bank_id">
+        <input type="hidden" value="{{$inputs['price']}}" name="price">
     </form>
 
 @endsection

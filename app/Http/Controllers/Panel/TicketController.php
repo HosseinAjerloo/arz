@@ -40,7 +40,7 @@ class TicketController extends Controller
     {
         $user = Auth::user();
         $ticket = Ticket::find($request->ticket_id);
-        $ticket->update(['status'=>'waiting_for_an_answer']);
+        $ticket->update(['status' => 'waiting_for_an_answer']);
 
         if (!$ticket)
             abort(404);
@@ -53,18 +53,18 @@ class TicketController extends Controller
             $inputs['type'] = 'file';
             $new_ticket = TicketMessage::create($inputs);
             $result = $new_ticket->image()->create(['user_id' => $ticket->user_id, 'path' => $imageService->getFinalFileAddres()]);
-            $result->jalali_date=Jalalian::fromCarbon($result->created_at)->format('h:i Y/m/d');
-            $result->hours=Jalalian::fromCarbon($result->created_at)->format('h:i');
-            $result->value=route('panel.ticket.download',$result->id);
-            $result->crs=asset($result->path);
-            return $result ? response()->json(['success' => true,'data'=>$result]) : response()->json(['success' => false]);
+            $result->jalali_date = Jalalian::fromCarbon($result->created_at)->format('h:i Y/m/d');
+            $result->hours = Jalalian::fromCarbon($result->created_at)->format('h:i');
+            $result->value = route('panel.ticket.download', $result->id);
+            $result->crs = asset($result->path);
+            return $result ? response()->json(['success' => true, 'data' => $result]) : response()->json(['success' => false]);
         } else {
 
             $inputs['type'] = 'message';
             $new_ticket = TicketMessage::create($inputs);
 
             $new_ticket->jalali_date = Jalalian::fromCarbon($new_ticket->created_at)->format('h:i Y/m/d');
-            $new_ticket->hours=Jalalian::fromCarbon($new_ticket->created_at)->format('h:i');
+            $new_ticket->hours = Jalalian::fromCarbon($new_ticket->created_at)->format('h:i');
             return [
                 'success' => true,
                 'data' => $new_ticket
@@ -74,7 +74,7 @@ class TicketController extends Controller
 
     }
 
-    public function ticketAddSubmit(AddTicketSubmitRequest $request,ImageService $imageService)
+    public function ticketAddSubmit(AddTicketSubmitRequest $request, ImageService $imageService)
     {
         $ticket = Ticket::create([
             'user_id' => $request->user()->id,
@@ -98,9 +98,16 @@ class TicketController extends Controller
         }
         return redirect()->route('panel.ticket')->with(['success' => "تیکت با موفقیت ثبت شد."]);
     }
-    public function download(Request $request,File $file)
+
+    public function download(Request $request, File $file)
     {
-            $path=public_path($file->path);
-            return FileAlias::exists($path)?Response::download($path):  redirect()->back()->withErrors(['error' => 'دانلود فایل با خطا مواجه شد لطفا بعدا تلاش فرمایید']);
+        $path = public_path($file->path);
+        return FileAlias::exists($path) ? Response::download($path) : redirect()->back()->withErrors(['error' => 'دانلود فایل با خطا مواجه شد لطفا بعدا تلاش فرمایید']);
+    }
+
+    public function ticketAdd()
+    {
+        $user=Auth::user();
+        return view('Panel.Ticket.addTicket',compact('user'));
     }
 }

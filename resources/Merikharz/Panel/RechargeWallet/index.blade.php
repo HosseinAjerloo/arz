@@ -28,7 +28,6 @@
                     <input type="text" class="py-1.5 px-4 border-2 border-black rounded-md text-black w-full"
                            name="price">
                 </div>
-                @foreach($banks as $bank)
                     <input type="radio" name="bank_id" value="{{$bank->id}}" id="{{$bank->id}}" class="invisible">
                     <label class="mx-auto" for="{{$bank->id}}">
                         <span
@@ -37,7 +36,6 @@
                             <img src="{{asset('merikhArz/src/images/bankkart.svg')}}" alt="" class="bg-cover w-5 h-5 ">
                         </span>
                     </label>
-                @endforeach
 
             </form>
         </article>

@@ -36,10 +36,10 @@ Route::middleware(['auth'])->group(function () {
     Route::withoutMiddleware('IsEmptyUserInformation')->group(function () {
         Route::get('error/{payment}', [App\Http\Controllers\Panel\PanelController::class, 'error'])->name('panel.error');
         Route::prefix('user')->group(function () {
+            Route::get('information', [App\Http\Controllers\Panel\UserController::class, 'index'])->name('panel.user.information');
             Route::get('completion-of-information', [App\Http\Controllers\Panel\UserController::class, 'completionOfInformation'])->name('panel.user.completionOfInformation');
             Route::post('completion-of-information', [App\Http\Controllers\Panel\UserController::class, 'register'])->name('panel.user.register');
             Route::get('edit', [App\Http\Controllers\Panel\UserController::class, 'edit'])->name('panel.user.edit');
-            Route::post('update', [App\Http\Controllers\Panel\UserController::class, 'update'])->name('panel.user.update');
         });
     });
     Route::get('contact-us', [App\Http\Controllers\Panel\PanelController::class, 'contactUs'])->name('panel.contactUs');
@@ -86,7 +86,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('ticket-chat/{ticket}', [App\Http\Controllers\Panel\TicketController::class, 'ticketChat'])->name('panel.ticket-chat');
     Route::post('ticket-client-message', [App\Http\Controllers\Panel\TicketController::class, 'ticketMessage'])->name('panel.ticket-client-message');
-    Route::view('ticket-add', 'Panel.Ticket.addTicket')->name('panel.ticket-add');
+    Route::get('ticket-add', [App\Http\Controllers\Panel\TicketController::class,'ticketAdd'])->name('panel.ticket-add');
     Route::post('ticket-add-submit', [App\Http\Controllers\Panel\TicketController::class, 'ticketAddSubmit'])->name('panel.ticket-add-submit');
     Route::get('download/{file}', [App\Http\Controllers\Panel\TicketController::class, 'download'])->name('panel.ticket.download');
     Route::get('faq', [App\Http\Controllers\Panel\FaqController::class, 'index'])->name('panel.faq');
@@ -124,4 +124,9 @@ Route::fallback(function () {
 
 Route::get('test',function (){
     return view('Panel.Ticket.index');
+});
+
+
+Route::get('test',function (){
+        return view('Panel.User.userInformation');
 });

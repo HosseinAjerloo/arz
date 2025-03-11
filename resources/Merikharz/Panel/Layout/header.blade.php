@@ -23,8 +23,8 @@
 
             <div class="flex space-x-reverse space-x-3">
                 <img src="{{asset("merikhArz/src/images/hamburger.svg")}}" alt="" class="btnMenu cursor-pointer">
-                <div class="relative">
-                    <img src="{{asset("merikhArz/src/images/userIcon.svg")}}" alt="" class="userIcon ">
+                <div class="relative ">
+                    <img src="{{asset("merikhArz/src/images/userIcon.svg")}}" alt="" class="userIcon cursor-pointer">
                     <div
                         class="profile cursor-pointer -z-10 absolute w-60 top-12 right-0 bg-white p-2  rounded-ee-2xl transition-all  translate-y-3 opacity-0">
                         <ul class="w-full">
@@ -39,9 +39,9 @@
                             <li class="text-sm h-8 border-b-base-font-color border-dashed border-b text-black/75 py-1.5 flex items-center space-x-reverse space-x-2">
                                 <img src="{{asset('MerikhArz/src/images/pen.svg')}}" alt="" class="w-5 h-5">
 
-                                <p>
+                                <a class="flex " href="{{route('panel.user.information')}}">
                                     ویرایش پروفایل
-                                </p>
+                                </a>
                             </li>
                             <li class="text-sm h-8  text-black/45 px-1.5 py-6 flex items-center">
                                 <div
@@ -98,7 +98,7 @@
                     </a>
                 </li>
                 <li class="text-sm h-8 border-b-base-font-color   border-dashed border-b text-black p-1.5">
-                    <a href="">
+                    <a href="{{route('panel.wallet.charging')}}">
                         شارژ حساب های شما
                     </a>
                 </li>
@@ -113,7 +113,7 @@
                     </a>
                 </li>
                 <li class="text-sm h-8  text-black p-1.5">
-                    <a href="">
+                    <a href="{{route('panel.faq')}}">
                         تیکت به پشتیبانی
                     </a>
                 </li>

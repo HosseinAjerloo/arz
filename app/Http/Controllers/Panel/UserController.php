@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Panel;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Panel\User\RegisterRequest;
 use App\Http\Requests\Panel\User\UpdateUserRequest;
+use App\Models\FinanceTransaction;
 use App\Models\User;
 use App\Models\Voucher;
 use Illuminate\Http\Request;
@@ -12,6 +13,12 @@ use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
+    public function index()
+    {
+        $user=Auth::user();
+        $financeTransactions=FinanceTransaction::where('user_id',$user->id)->orderBy('created_at','desc')->take(5)->get();
+        return view('Panel.User.userInformation',compact('user','financeTransactions'));
+    }
     public function completionOfInformation()
     {
         $user=Auth::user();
@@ -35,13 +42,7 @@ class UserController extends Controller
     public function edit()
     {
         $user=Auth::user();
-        return view('Panel.User.edit',compact('user'));
+        return view('Panel.User.register',compact('user'));
     }
-    public function update(UpdateUserRequest $request)
-    {
-        $user=Auth::user();
-        $inputs=$request->all();
-        $user=$user->update($inputs);
-        return $user?redirect()->route('panel.index')->with(['success'=>"اطلاعات کاربری شما با موفقیت ویرایش شد "]):redirect()->route('panel.index')->withErrors(['updateError'=>"اطلاعات کاربری شما با موفقیت ویرایش شد "]);
-    }
+
 }

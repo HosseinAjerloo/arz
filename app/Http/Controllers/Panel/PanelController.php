@@ -492,14 +492,14 @@ class PanelController extends Controller
 
     public function walletCharging(Request $request)
     {
-        $banks = Bank::where('is_active', 1)->get();
+        $bank = Bank::where('is_active', 1)->first();
         $user = Auth::user();
-
-        return view("Panel.RechargeWallet.index", compact('user', 'banks'));
+        return view("Panel.RechargeWallet.index", compact('user', 'bank'));
     }
 
     public function walletChargingPreview(WalletChargingRequest $request)
     {
+
         $user = Auth::user();
         $inputs = $request->all();
         $payment = Payment::create(
@@ -594,7 +594,6 @@ class PanelController extends Controller
 
     public function walletChargingBack(Request $request)
     {
-
         try {
 
             $user = Auth::user();

@@ -10,6 +10,9 @@
 @yield('header-content')
 
 <main class="px-5 mt-4">
+    <section class="errors">
+
+    </section>
    @yield('content')
 </main>
 @include('Panel.Layout.footer')
