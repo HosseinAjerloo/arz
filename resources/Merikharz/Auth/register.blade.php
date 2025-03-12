@@ -99,25 +99,7 @@
         });
     </script>
 
-    <script>
-        function close()
-        {
-            $(document).ready(function () {
-                let toast = $('.toast');
-                setTimeout(function () {
-                    $(toast).addClass('-translate-y-7');
-                    $(toast).remove();
-                }, 9000)
 
-
-                let closeToast = $('.close-toast');
-                $(closeToast).click(function () {
-                    $(toast).addClass('invisible');
-                    $(toast).remove();
-                });
-            })
-        }
-    </script>
     <script>
         function time(message){
            var sendBtn=document.getElementsByClassName("send")[0];

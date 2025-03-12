@@ -1,6 +1,5 @@
 @if($errors->any())
-
-        <section class="container p-2 absolute space-y-2 max-w-max">
+        <section class="container p-2 absolute space-y-2 max-w-max z-[1000]">
             @foreach($errors->all() as $error)
             <div  class="toast transition-all duration-300 transform  flex items-center w-full max-w-xs p-4 text-gray-500 bg-white rounded-lg shadow dark:text-gray-400 dark:bg-gray-800" role="alert">
                 <div class="inline-flex items-center justify-center flex-shrink-0 w-8 h-8 text-orange-500 bg-orange-100 rounded-lg dark:bg-orange-700 dark:text-orange-200">
@@ -18,23 +17,6 @@
                 </button>
             </div>
             @endforeach
-
         </section>
-
 @endif
-<script>
-    $(document).ready(function (){
-        let toast=$('.toast');
-        setTimeout(function (){
-            $(toast).addClass('-translate-y-7');
-            $(toast).remove();
-        },9000)
 
-
-        let closeToast= $('.close-toast');
-        $(closeToast).click(function (){
-           $(toast).addClass('invisible');
-           $(toast).remove();
-        });
-    })
-</script>
