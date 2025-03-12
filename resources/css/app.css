@@ -39,7 +39,12 @@ body{
     transform: translateX(-50%) scale(0);
     transition: .5s;
 }
-
+.inFade{
+    transition: .5s ;
+    visibility: hidden;
+    transform: scale(0);
+    display: none;
+}
 
 
 

@@ -120,13 +120,15 @@ class LoginController extends Controller
 
     public function registerUser(RegisterRequest $request, Otp $otp)
     {
+
         $inputs = $request->all();
         $expiration = Carbon::now()->subMinutes(3)->toDateTimeString();
-        $otp = $otp->where('created_at', ">", $expiration)->where('token', $otp->token)->whereNull('seen_at')->first();
-        if (!$otp) {
-            return redirect()->route('register')->withErrors(['expiration_at' => "مدت زمان استفاده از کد گذشته است و یا کد وارده صحیح نمیباشد "]);
+        $code = $otp->where('code', $inputs['code'])->where('created_at', ">", $expiration)->where('token', $otp->token)->whereNull('seen_at')->first();
+        if (!$code) {
+            return redirect()->back()->withErrors(['expiration_at' => "مدت زمان استفاده از کد گذشته است و یا کد وارده صحیح نمیباشد "]);
         }
-        $code = $otp->where('code', $inputs['code'])->whereNull('seen_at')->where('token', $otp->token)->where('created_at', ">", $expiration)->first();
+        if (User::where('mobile',$code->mobile)->first())
+            return redirect()->back()->withErrors(['error'=>'این نام کاربری از قبل داخل سامانه وجود دارد  ']);
         if ($code) {
             $user = User::firstOrCreate(['mobile' => $code->mobile], [
                 'mobile' => $code->mobile
