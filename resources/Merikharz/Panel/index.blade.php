@@ -5,7 +5,7 @@
 
     </section>
     <section class="w-full relative flex items-center justify-center">
-        <img src="{{asset('merikhArz/src/images/mainImg.png')}}" alt="" class="object-cover bg-center h-full w-full">
+        <img src="{{asset('merikhArz/src/images/mainImg.png')}}" alt="" class="object-cover bg-center h-full w-full 2xl:w-1/2">
         <div class="absolute bottom-4 text-center py-3  z-[9] w-80 bg-black/45 border border-white/15 rounded-md
         text-white text-lg font-black tracking-wide">
             مریخ
