@@ -272,7 +272,6 @@ class TransmissionController extends Controller
             $dollar = Doller::orderBy('id', 'desc')->first();
             $user = Auth::user();
             $balance = Auth::user()->getCreaditBalance();
-            $inputs = $request->all();
             $payment = Payment::find(session()->get('payment'));
             $financeTransaction = FinanceTransaction::find(session()->get('financeTransaction'));
 
@@ -285,12 +284,13 @@ class TransmissionController extends Controller
                 'user ID :' . $user->id
                 . PHP_EOL
             );
+            $inputs = array_merge(request()->all(),request()->request->all());
             $invoice = $payment->invoice;
             if (!$objBank->backBank()) {
                 $payment->update(
                     [
-                        'RefNum' => null,
-                        'ResNum' => $inputs['ResNum'],
+                        'RefNum' => $inputs['RefNum']??null,
+                        'ResNum' => $payment->order_id,
                         'state' => 'failed'
 
                     ]);
@@ -303,7 +303,8 @@ class TransmissionController extends Controller
             }
             $back_price = $objBank->verify($payment->amount);
 
-            if ($back_price !==true or Payment::where("order_id", $inputs['ResNum'])->count() > 1) {
+
+            if ($back_price !==true or Payment::where("order_id", $payment->order_id)->count() > 1) {
 
                 $bankErrorMessage = "درگاه بانک سامان تراکنش شمارا به دلیل " . $objBank->verifyTransaction($back_price) . " ناموفق اعلام کرد باتشکر سایناارز" . PHP_EOL . 'پشتیبانی بانک سامان' . PHP_EOL . '021-6422';
                 $satiaService->send($bankErrorMessage, $user->mobile, env('SMS_Number'), env('SMS_Username'), env('SMS_Password'));
@@ -322,8 +323,8 @@ class TransmissionController extends Controller
 
             $payment->update(
                 [
-                    'RefNum' => $inputs['RefNum'],
-                    'ResNum' => $inputs['ResNum'],
+                    'RefNum' => $inputs['RefNum']??null,
+                    'ResNum' => $payment->order_id,
                     'state' => 'finished'
                 ]);
 
@@ -541,7 +542,6 @@ class TransmissionController extends Controller
             $dollar = Doller::orderBy('id', 'desc')->first();
             $user = Auth::user();
             $balance = Auth::user()->getCreaditBalance();
-            $inputs = $request->all();
             $payment = Payment::find(session()->get('payment'));
             $financeTransaction = FinanceTransaction::find(session()->get('financeTransaction'));
 
@@ -554,12 +554,14 @@ class TransmissionController extends Controller
                 'user ID :' . $user->id
                 . PHP_EOL
             );
+            $inputs = array_merge(request()->all(),request()->request->all());
+
             $invoice = $payment->invoice;
             if (!$objBank->backBank()) {
                 $payment->update(
                     [
-                        'RefNum' => null,
-                        'ResNum' => $inputs['ResNum'],
+                        'RefNum' => $inputs['RefNum']??null,
+                        'ResNum' => $payment->order_id,
                         'state' => 'failed'
 
                     ]);
@@ -572,9 +574,10 @@ class TransmissionController extends Controller
             }
 
 
+
             $back_price = $objBank->verify($payment->amount);
 
-            if ($back_price !==true or Payment::where("order_id", $inputs['ResNum'])->count() > 1) {
+            if ($back_price !==true or Payment::where("order_id", $payment->order_id)->count() > 1) {
 
                 $bankErrorMessage = "درگاه بانک سامان تراکنش شمارا به دلیل " . $objBank->verifyTransaction($back_price) . " ناموفق اعلام کرد باتشکر سایناارز" . PHP_EOL . 'پشتیبانی بانک سامان' . PHP_EOL . '021-6422';
                 $satiaService->send($bankErrorMessage, $user->mobile, env('SMS_Number'), env('SMS_Username'), env('SMS_Password'));
@@ -593,8 +596,8 @@ class TransmissionController extends Controller
 
             $payment->update(
                 [
-                    'RefNum' => $inputs['RefNum'],
-                    'ResNum' => $inputs['ResNum'],
+                    'RefNum' => $inputs['RefNum']??null,
+                    'ResNum' => $payment->order_id,
                     'state' => 'finished'
                 ]);
 
