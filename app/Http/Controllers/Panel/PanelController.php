@@ -52,9 +52,9 @@ class PanelController extends Controller
     {
 
         $banks = Bank::where('is_active', 1)->get();
-        $services = Service::all();
         $dollar = Doller::orderBy('id', 'desc')->first();
-        return view('Panel.Purchase.index', compact('services', 'dollar', 'banks'));
+        $user=Auth::user();
+        return view('Panel.Utopia.index',compact('user','banks','dollar'));
     }
 
     public function store(PurchaseRequest $request)

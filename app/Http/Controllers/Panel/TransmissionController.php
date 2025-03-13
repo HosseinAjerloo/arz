@@ -266,7 +266,7 @@ class TransmissionController extends Controller
 
     public function transferFromThePaymentGatewayBack(Request $request)
     {
-//        try {
+        try {
             $satiaService = new SatiaService();
 
             $dollar = Doller::orderBy('id', 'desc')->first();
@@ -393,11 +393,11 @@ class TransmissionController extends Controller
                 ]);
                 return redirect()->route('panel.transfer.fail');
             }
-//        } catch (\Exception $e) {
+        } catch (\Exception $e) {
             Log::emergency(PHP_EOL . $e->getMessage() . PHP_EOL);
             SendAppAlertsJob::dispatch('در انتقال ووچر از درگاه باتکی خطایی رخ داده است لطفا پیگیری شود.')->onQueue('perfectmoney');
             return redirect()->route('panel.index')->withErrors(['error' => 'یک خطای غیر منتظره رخ داد لفطا از طریق پشتیبانی تیکت برنید']);
-//        }
+        }
     }
 
     public function information(Request $request, Transmission $transitionDelivery)
