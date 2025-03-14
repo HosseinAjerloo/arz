@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -30,5 +31,9 @@ class Ticket extends Model
     public function user()
     {
         return $this->belongsTo(User::class,'user_id');
+    }
+    public function serializeDate(DateTimeInterface $dateTime)
+    {
+        return $dateTime->setTimezone('Asia/Tehran')->format('Y-m-d H:i:s');
     }
 }

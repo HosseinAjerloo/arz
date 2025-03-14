@@ -16,23 +16,19 @@
     <section class="w-full flex flex-wrap justify-between mt-4">
         <a href="{{route('panel.transmission.view')}}"
            class="w-[48%] h-40 bg-gradient-to-b from-FFC98B to-FFF5EA rounded-md flex justify-center items-center flex-col mt-2">
-            <img src="{{asset("merikhArz/src/images/utopia.png")}}" alt="" class="object-cover w-28 h-28">
-            <p class="text-base">ووچر یوتوپیا</p>
+            <img src="{{asset("merikhArz/src/images/adminTicket.svg")}}" alt="" class="object-cover w-28 h-28">
+            <p class="text-base mt-6">تیکت های پیشتیبانی</p>
         </a>
         <div
             class="w-[48%] h-40 bg-gradient-to-b from-FFBEBE to-FFF5EA rounded-md flex justify-center items-center flex-col mt-2">
-            <img src="{{asset('merikhArz/src/images/server.png')}}" alt="" class="object-cover w-28 h-28">
-            <p class="text-base">خرید سرور اختصاصی</p>
+            <img src="{{asset('merikhArz/src/images/dollarAdmin.svg')}}" alt="" class="object-cover w-28 h-28">
+            <p class="text-base  mt-6">تنظیم نرخ دلار</p>
         </div>
-        <div
-            class="w-[48%] h-40 bg-gradient-to-b from-8EBFFC to-E5F1FF rounded-md flex justify-center items-center flex-col mt-2">
-            <img src="{{asset('merikhArz/src/images/host.png')}}" alt="" class="object-cover w-28 h-28">
-            <p class="text-base text-center">خرید از سایت های خارجی</p>
-        </div>
+
         <a href="{{route('panel.wallet.charging')}}"
-           class="w-[48%] h-40 bg-gradient-to-b from-DBBBFF to-F6EDFF rounded-md flex justify-center items-center flex-col mt-2">
-            <img src="{{asset('merikhArz/src/images/host.png')}}" alt="" class="object-cover w-28 h-28">
-            <p class="text-base text-center">شارژ حساب شما</p>
+           class="w-full h-40 bg-gradient-to-b from-DBBBFF to-F6EDFF rounded-md flex justify-center items-center flex-col mt-2">
+            <img src="{{asset('merikhArz/src/images/usersAdmin.svg')}}" alt="" class="object-cover w-28 h-28">
+            <p class="text-base text-center mt-6">کاربران</p>
         </a>
 
     </section>
@@ -51,86 +47,6 @@
         </div>
     </section>
 
-    @guest
-        <section
-            class="mt-2 bg-no-repeat w-[100%] bg-cover	bg-center  sm:bg-[position:unset]  relative flex items-center flex-col"
-            style="background-image: url('{{ asset('merikhArz/src/images/bg-fastLogin.png') }}')">
-        <span class="font-black text-lg border border-base-font-color rounded-2xl px-4 py-1.5 max-h-min bg-F4F7FB ">
-            ثبت نام آسان !
-        </span>
-            <form  class="mt-10 space-y-8"  id="form">
-                @csrf
-                <div class="flex bg-white w-full border rounded-md p-2 ">
-                    <img src="{{asset('merikhArz/src/images/svgPhone.svg')}}" alt="" class="ml-2">
-                    <input autocomplete="off" name="mobile" type="text" placeholder="شماره تلفن خود را وارد کنید!" class="mobile placeholder:text-mini-base placeholder:text-black px-2 bg-transparent
-                outline-none">
-                </div>
-                <div class="flex bg-white w-full border rounded-md p-2 password inFade">
-                    <img src="{{asset('merikhArz/src/images/key.svg')}}" alt="" class="ml-2">
-                    <input autocomplete="off" type="text"  name="code" placeholder="رمز عبور پیامک شده!" class="placeholder:text-mini-base placeholder:text-black px-2 bg-transparent
-                outline-none">
-                </div>
-                <div class="flex bg-white w-full border rounded-md p-2 password inFade">
-                    <img src="{{asset('merikhArz/src/images/key.svg')}}" alt="" class="ml-2">
-                    <input autocomplete="off" type="text" name="password" placeholder="تنظیم رمز عبور شما!" class="placeholder:text-mini-base placeholder:text-black px-2 bg-transparent
-                outline-none">
-                </div>
-
-                <div class=" text-center">
-                    <p class="text-mini-base text-sky-600 time">
-
-                    </p>
-                </div>
-                <div class=" text-center">
-                    <p class="text-mini-base">
-                        اگر قبلا ثبت نام کرده اید، <a href="" class="text-sky-600"> وارد شوید!</a>
-                    </p>
-                </div>
-
-                <div class="text-center w-full ">
-                    <button
-                        class="text-md  rounded-2xl px-12 py-1.5  bg-gradient-to-b from-80C714 to-268832 text-white  send">
-                        ثبت
-                        نام
-                    </button>
-
-                    <button
-                        class="text-md  rounded-2xl px-12 py-1.5  bg-gradient-to-b from-80C714 to-268832 text-white  register hidden">
-                        ثبت
-                        نام
-                    </button>
-
-                </div>
-            </form>
-        </section>
-    @endguest
-
-    <section class="bg-F5F5F5 py-1.5 px-4 rounded-md mt-6">
-        <h1 class="text-mini-base text-center">
-            <span class="font-bold text-lg">مریخ</span> <span class="text-base-font-color font-bold text-lg"> ارز</span>،
-            هر آنچه برای معاملات ارزی خود نیاز دارید
-        </h1>
-        <ul class="space-y-3 mt-4">
-            <li class="text-mini-base leading-5">
-                تبادل کلیه ارزهای دیجیتال و پول های الکترونیک با حداقل کارمزد
-            </li>
-            <li class="text-mini-base leading-5">
-                خرید سرورهای اختصاصی از کشورهای مختلف با قیمت استثنایی
-            </li>
-            <li class="text-mini-base leading-5">
-                خرید آسان و مطمئن از سایت های متنوع خارجی
-            </li>
-            <li class="text-mini-base leading-5">
-                شارژ حساب های خارجی و کیف پول شما
-            </li>
-            <li class="text-mini-base leading-5">
-                شارژ حساب های خارجی و ولت شما
-            </li>
-            <li class="text-mini-base leading-5">
-                پشتیبانی و پاسخگویی 24 ساعته
-            </li>
-        </ul>
-    </section>
 @endsection
 @section('script')
 
@@ -156,7 +72,7 @@
                         let setPassword=document.getElementsByClassName('password');
                         for(const div of setPassword)
                         {
-                           div.classList.remove('inFade')
+                            div.classList.remove('inFade')
                         }
                         $(registerBtn).removeClass('hidden')
 
@@ -201,7 +117,7 @@
 
             var countDownDate = new Date(message.created_at)
 
-            var now = new Date("{{\Carbon\Carbon::now()->subMinutes(3)->timezone('Asia/Tehran')->toDateTimeString()}}")
+            var now = new Date("{{\Carbon\Carbon::now()->subMinutes(3)->toDateTimeString()}}")
             let form = document.getElementById('form');
 
 

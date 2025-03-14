@@ -74,6 +74,7 @@
 
                     },
                     error: function (error) {
+
                         let html = '<section class="container p-2 absolute space-y-2 max-w-max">' +
                             '<div  class="toast transition-all duration-300 transform  flex items-center w-full max-w-xs p-4 text-gray-500 bg-white rounded-lg shadow dark:text-gray-400 dark:bg-gray-800" role="alert">' +
                             '<div class="inline-flex items-center justify-center flex-shrink-0 w-8 h-8 text-orange-500 bg-orange-100 rounded-lg dark:bg-orange-700 dark:text-orange-200">' +
@@ -102,12 +103,18 @@
 
     <script>
         function time(message){
+            console.log(message.created_at)
            var sendBtn=document.getElementsByClassName("send")[0];
 
             var countDownDate = new Date(message.created_at)
+            countDownDate.toLocaleTimeString('fa-IR',{
+                timeZone:'Asia/Tehran'
+            });
 
-            var now = new Date("{{\Carbon\Carbon::now()->subMinutes(3)->toDateTimeString()}}")
-
+            var now = new Date("{{\Carbon\Carbon::now()->subMinutes(3)->timezone('Asia/Tehran')->toDateTimeString()}}")
+            now.toLocaleTimeString('fa-IR',{
+                timeZone:'Asia/Tehran'
+            });
 
             // Update the count down every 1 second
             var x = setInterval(function () {
@@ -130,6 +137,7 @@
                 } else {
                     text = 'مدت زمان باقی مانده تا دریافت مجدد کد ' + seconds + ' ثانیه  '
                 }
+
                 document.getElementsByClassName("time")[0].innerHTML = text
 
                 // If the count down is finished, write some text

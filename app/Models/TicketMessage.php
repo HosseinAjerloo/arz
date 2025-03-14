@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -13,5 +14,9 @@ class TicketMessage extends Model
     public function image()
     {
         return $this->morphOne(File::class,'fileable');
+    }
+    public function serializeDate(DateTimeInterface $dateTime)
+    {
+        return $dateTime->setTimezone('Asia/Tehran')->format('Y-m-d H:i:s');
     }
 }

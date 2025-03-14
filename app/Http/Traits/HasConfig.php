@@ -106,6 +106,7 @@ trait HasConfig
 
     protected function purchasePermit($invoice, $payment)
     {
+
         $user = Auth::user();
         $balance = Auth::user()->getCreaditBalance();
         $invoice = Invoice::where('id', $invoice->id)->where('user_id', $user->id)->where("status", 'finished')->first();
