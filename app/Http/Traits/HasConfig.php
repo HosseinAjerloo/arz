@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Str;
 
 
 trait HasConfig
@@ -59,6 +60,15 @@ trait HasConfig
                 $this->PMeVoucher = $PMeVoucher;
             }
         }
+
+    }
+    protected function generateVoucherUtopia($amount)
+    {
+        $user=Auth::user();
+        $token=Str::random(3).'-'.Str::random(4).'-'.Str::random(4).'-'.Str::random(4).'-'.Str::random(3);
+
+        $this->PMeVoucher['VOUCHER_NUM'] = 'USD-'.$user->id.$token;
+        $this->PMeVoucher['VOUCHER_CODE'] = $token;
 
     }
 
