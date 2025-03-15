@@ -26,7 +26,7 @@ class TransmissionRequest extends FormRequest
         return [
             'Accepting_the_rules'=>"in:on|required",
             "custom_payment"=>[(request()->has('service_id')==false?'required':'nullable'),'sometimes','numeric',"max:".env('Daily_Purchase_Limit'),'min:0.1',new DecimalRule()],
-            "transmission"=>["required","max:9","min:9",new PAYERACCOUNTRule()]
+            "transmission"=>["required","max:64","min:64"]
         ];
     }
     public function messages(): array

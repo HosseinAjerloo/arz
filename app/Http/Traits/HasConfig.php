@@ -79,47 +79,54 @@ trait HasConfig
 
     }
 
-    protected function transmission($transmission, $amount)
+
+
+    //
+
+    protected function generateTokenTransmissionUtopia()
     {
-
-        if ($transmission != env('DESTINATION_REMITTANCE'))
-            return $this->transmissionVoucher($transmission, $amount);
-
-        $transmissionBank = TransmissionsBank::where('status', 'new')->where('payment_amount', $amount)->where('type', 'sainaex')->first();
-        if ($transmissionBank) {
-            $this->inputsConfig->type = 'sainaex';
-            return $this->sendReference($transmissionBank);
-        } else if ($customVoucherTransfer = $this->customVoucherTransfer($amount)) {
-            return $this->sendReference($customVoucherTransfer);
-        } else {
-            return false;
-        }
+        $token = bin2hex(openssl_random_pseudo_bytes(32));
+       return $this->verifayTokenTransmissionUtopia($token);
     }
 
-    protected function sendReference(TransmissionsBank $transmissionBank): array
+    protected function verifayTokenTransmissionUtopia($token)
     {
-        $transmissionBank->update(['status' => 'used']);
+        $transmissionUtopia = Transmission::where('payment_batch_num', $token)->first();
+        if ($transmissionUtopia)
+            $this->generateTokenTransmissionUtopia();
+        else
+            return $token;
+
+    }
+    ///
+
+    protected function transmissionUtopia($transmission, $amount)
+    {
+        if ($transmission != env('DESTINATION_REMITTANCE_Utopia'))
+            return false;
+
+
+            if ($this->customVoucherTransfer($amount))
+            {
+                return $this->sendReference();
+            }
+            return false;
+
+    }
+
+    protected function sendReference(): array
+    {
         $PMeVoucher = [];
-        $PMeVoucher['PAYMENT_AMOUNT'] = $transmissionBank->payment_amount;
-        $PMeVoucher['PAYMENT_BATCH_NUM'] = $transmissionBank->payment_batch_num;
-        $PMeVoucher['Payer_Account'] = env('PAYER_ACCOUNT');
-        $PMeVoucher['Payee_Account'] = env('DESTINATION_REMITTANCE');
-        $PMeVoucher['Payee_Account_Name'] = 'hologate4';
+        $PMeVoucher['PAYMENT_AMOUNT'] = $this->inputsConfig->payment_amount;
+        $PMeVoucher['PAYMENT_BATCH_NUM'] =  $this->inputsConfig->payment_batch_num;
+        $PMeVoucher['Payer_Account'] = env('DESTINATION_REMITTANCE_Utopia');
+        $PMeVoucher['Payee_Account'] = env('DESTINATION_REMITTANCE_Utopia');
+        $PMeVoucher['Payee_Account_Name'] = 'merikhArz';
         return $PMeVoucher;
     }
 
 
-    protected function transmissionVoucher($transmission, $amount)
-    {
-        $PM = new PerfectMoneyAPI(env('PM_ACCOUNT_ID'), env('PM_PASS'));
-        $PMeVoucher = $PM->transferFund(env('PAYER_ACCOUNT'), $transmission, $amount);
-        if (is_array($PMeVoucher) and isset($PMeVoucher['PAYMENT_BATCH_NUM']) and isset($PMeVoucher['Payee_Account'])) {
-            return $PMeVoucher;
-        } else {
-            Log::emergency('The transfer did not take place, the reason for its failure: ' . json_encode($PMeVoucher));
-            return false;
-        }
-    }
+
 
     protected function purchasePermit($invoice, $payment)
     {
@@ -172,29 +179,10 @@ trait HasConfig
 
     protected function customVoucherTransfer($amount)
     {
-
-        $lastRecord = TransmissionsBank::where('type', 'sainaex')->latest()->first();
         $this->inputsConfig->payment_amount = $amount;
-        $this->inputsConfig->type = 'sainaex';
-        $randBatch = rand(111, 999);
-        if (!$lastRecord) {
-            $this->inputsConfig->payment_batch_num = TransmissionsBank::StartWith . $randBatch;
-        } else {
-            $payment_batch_num = (TransmissionsBank::StartWith + $lastRecord->id) + 1;
-            $this->inputsConfig->payment_batch_num = $payment_batch_num . $randBatch;
-        }
-
-        if ($this->requestToHost()) {
-            return TransmissionsBank::create(
-                [
-                    'payment_amount' => $this->inputsConfig->payment_amount,
-                    'payment_batch_num' => $this->inputsConfig->payment_batch_num,
-                    'status' => 'new',
-                    'description' => 'انتقال ووچر به صورت اتوماتیک',
-                    'type' => $this->inputsConfig->type,
-                ]
-            );
-        }
+        $this->inputsConfig->payment_batch_num=$this->generateTokenTransmissionUtopia();
+        $this->inputsConfig->type = 'merikhArz';
+        if (!$this->requestToHost())
         return false;
     }
 
@@ -205,13 +193,8 @@ trait HasConfig
                 'token' => env('SAINAEX_TOKEN')
             ])->withoutVerifying()->post(env('SAINAEX_REQUEST'),
                 [
-                    'batch' => $this->inputsConfig->payment_batch_num,
-                    'currency' => 'USD',
-                    'type' => 'sainaex',
-                    'fee' => '0.00',
-                    'payer_account' => env('PAYER_ACCOUNT'),
-                    'payee_account' => env('DESTINATION_REMITTANCE'),
-                    'memo' => "SAINAEX,Received Payment " . $this->inputsConfig->payment_amount . " USD from account  " . env('PAYER_ACCOUNT') . ". Memo: API Payment.",
+                    'hash' => $this->inputsConfig->payment_batch_num,
+                    'validate' => 'merikhArz',
                     'amount' => $this->inputsConfig->payment_amount
                 ]);
             $body = json_decode($response->body());

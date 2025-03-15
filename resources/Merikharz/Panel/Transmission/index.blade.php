@@ -60,20 +60,20 @@
                 @foreach($banks as $bank)
 
                     <div class="flex items-center justify-center action">
-                        <button type="button" onclick="selectBank({{$bank->id}})"
-                                class="bg-gradient-to-b from-268832 to-80C714 flex items-center justify-center space-x-reverse space-x-2 text-mini-mini-base px-4 py-2.5 text-white rounded-lg w-full">
+                        <label for="bank-{{$bank->id}}" type="button" onclick="selectBank({{$bank->id}})"
+                               class="labelBank cursor-pointer bg-gradient-to-b from-268832 to-80C714 flex items-center justify-center space-x-reverse space-x-2 text-mini-mini-base px-4 py-2.5 text-white rounded-lg w-full">
                             <span class="w-48 text-mini-base leading-4">پرداخت با {{$bank->name??''}}</span>
                             <img src="{{asset('merikhArz/src/images/bankkart.svg')}}" alt="" class="bg-cover w-5 h-5 ">
-                        </button>
+                        </label>
+                        <input type="radio" value="{{$bank->id}}"  name="bank" id="bank-{{$bank->id}}" class="action hidden">
                     </div>
 
                 @endforeach
-                <input type="hidden" value="" name="bank" id="bank" class="action">
 
 
                 <div class="flex items-center justify-center action">
                     <button
-                        class="bg-gradient-to-b from-DE9408 to-FFC98B flex items-center justify-center space-x-reverse space-x-2 text-mini-mini-base px-4 py-2.5 text-white rounded-lg w-full">
+                        class="submitWallet bg-gradient-to-b from-DE9408 to-FFC98B flex items-center justify-center space-x-reverse space-x-2 text-mini-mini-base px-4 py-2.5 text-white rounded-lg w-full">
                         <span class="w-48 text-mini-base leading-4">پرداخت از طریق کیف پول</span>
                         <img src="{{asset('merikhArz/src/images/walletWhite.svg')}}" alt="" class="bg-cover w-5 h-5 ">
                     </button>
@@ -200,6 +200,16 @@
             })
         }
 
+        $(".labelBank").click(function (){
+            $("#form").attr('action', '{{route('panel.PurchaseThroughTheBank')}}');
+            setTimeout(function (){
+                $('#form').submit();
+            },500)
+        })
+        $(".submitWallet").click(function (){
+            $("#form").attr('action', '{{route('panel.transmission')}}');
+            $('#form').submit();
+        })
     </script>
 
 @endsection

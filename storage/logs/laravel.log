@@ -1,0 +1,2 @@
+[2025-03-15 15:24:24] local.EMERGENCY: con not connection to request host https://hossein.com:90/api/utopia/insert cURL error 6: Could not resolve host: hossein.com (see https://curl.haxx.se/libcurl/c/libcurl-errors.html) for https://hossein.com:90/api/utopia/insert  
+[2025-03-15 15:25:59] local.EMERGENCY: con not connection to request host https://hossein.com:90/api/utopia/insert cURL error 6: Could not resolve host: hossein.com (see https://curl.haxx.se/libcurl/c/libcurl-errors.html) for https://hossein.com:90/api/utopia/insert  
