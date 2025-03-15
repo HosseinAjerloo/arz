@@ -201,7 +201,7 @@
         }
 
         $(".labelBank").click(function (){
-            $("#form").attr('action', '{{route('panel.PurchaseThroughTheBank')}}');
+            $("#form").attr('action', '{{route('panel.transferFromThePaymentGateway')}}');
             setTimeout(function (){
                 $('#form').submit();
             },500)
