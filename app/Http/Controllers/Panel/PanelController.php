@@ -52,13 +52,14 @@ class PanelController extends Controller
     {
 
         $banks = Bank::where('is_active', 1)->get();
-        $services = Service::all();
         $dollar = Doller::orderBy('id', 'desc')->first();
-        return view('Panel.Purchase.index', compact('services', 'dollar', 'banks'));
+        $user=Auth::user();
+        return view('Panel.Utopia.index',compact('user','banks','dollar'));
     }
 
     public function store(PurchaseRequest $request)
     {
+
         try {
             $satiaService = new SatiaService();
 
@@ -80,10 +81,10 @@ class PanelController extends Controller
                 $inputs['type'] = 'service';
                 $inputs['status'] = 'requested';
                 $inputs['time_price_of_dollars'] = $dollar->DollarRateWithAddedValue();
-                $inputs['description'] = 'خرید کارت هدیه پرفکت مانی';
+                $inputs['description'] = 'خرید کارت هدیه یوتوپیا';
                 $invoice = Invoice::create($inputs);
 
-                $this->generateVoucher($service->amount);
+                $this->generateVoucherUtopia();
 
                 $voucher = Voucher::create(
                     [
@@ -91,14 +92,13 @@ class PanelController extends Controller
                         'service_id' => $inputs['service_id'],
                         'invoice_id' => $invoice->id,
                         'status' => 'requested',
-                        'description' => 'ارسال در خواست به سروریس پرفکت مانی'
+                        'description' => 'ارسال در خواست به سرویس یوتوپیا'
                     ]
                 );
-                if (is_array($this->PMeVoucher) and isset($this->PMeVoucher['VOUCHER_NUM']) and isset($this->PMeVoucher['VOUCHER_CODE'])) {
+                if (is_array($this->PMeVoucher) and  isset($this->PMeVoucher['VOUCHER_CODE'])) {
                     $voucher->update([
                         'status' => 'finished',
-                        'description' => 'ارتباط با سروریس پرفکت مانی موفقیت آمیز بود',
-                        "serial" => $this->PMeVoucher['VOUCHER_NUM'],
+                        'description' => 'ارتباط با سرویس یوتوپیا موفقیت آمیز بود',
                         'code' => $this->PMeVoucher['VOUCHER_CODE']
                     ]);
                     Log::emergency("panel Controller :" . json_encode($this->PMeVoucher));
@@ -125,7 +125,7 @@ class PanelController extends Controller
                 } else {
                     $voucher->delete();
 
-                    $invoice->update(['status' => 'failed', 'description' => 'خرید کارت هدیه پرفکت مانی ناموفق بود و عملیات کسر موجودی از کیف پول متوقف شد']);
+                    $invoice->update(['status' => 'failed', 'description' => 'خرید کارت هدیه یوتوپیا ناموفق بود و عملیات کسر موجودی از کیف پول متوقف شد']);
 
                     Log::emergency("perfectmoney error : " . $this->PMeVoucher['ERROR']);
                     return redirect()->route('panel.purchase.view')->withErrors(['error' => "عملیات خرید ووچر ناموفق بود در صورت کسر موجودی از کیف پول شما با پشتیبانی تماس حاصل فرمایید."]);
@@ -143,10 +143,10 @@ class PanelController extends Controller
                 $inputs['service_id_custom'] = $inputs['custom_payment'];
                 $inputs['status'] = 'requested';
                 $inputs['time_price_of_dollars'] = $dollar->DollarRateWithAddedValue();
-                $inputs['description'] = 'خرید کارت هدیه پرفکت مانی';
+                $inputs['description'] = 'خرید کارت هدیه یوتوپیا';
                 $invoice = Invoice::create($inputs);
 
-                $this->generateVoucher($inputs['custom_payment']);
+                $this->generateVoucherUtopia();
 
 
                 $voucher = Voucher::create(
@@ -154,15 +154,14 @@ class PanelController extends Controller
                         'user_id' => $user->id,
                         'invoice_id' => $invoice->id,
                         'status' => 'requested',
-                        'description' => 'ارسال در خواست به سروریس پرفکت مانی',
+                        'description' => 'ارسال در خواست به سرویس یوتوپیا',
                         "service_id_custom" => $inputs['custom_payment']
                     ]
                 );
-                if (is_array($this->PMeVoucher) and isset($this->PMeVoucher['VOUCHER_NUM']) and isset($this->PMeVoucher['VOUCHER_CODE'])) {
+                if (is_array($this->PMeVoucher) and  isset($this->PMeVoucher['VOUCHER_CODE'])) {
                     $voucher->update([
                         'status' => 'finished',
-                        'description' => 'ارتباط با سروریس پرفکت مانی موفقیت آمیز بود',
-                        "serial" => $this->PMeVoucher['VOUCHER_NUM'],
+                        'description' => 'ارتباط با سرویس یوتوپیا موفقیت آمیز بود',
                         'code' => $this->PMeVoucher['VOUCHER_CODE']
                     ]);
                     Log::emergency("panel Controller :" . json_encode($this->PMeVoucher));
@@ -192,7 +191,7 @@ class PanelController extends Controller
                 } else {
                     $voucher->delete();
 
-                    $invoice->update(['status' => 'failed', 'description' => 'خرید کارت هدیه پرفکت مانی ناموفق بود و عملیات کسر موجودی از کیف پول متوقف شد']);
+                    $invoice->update(['status' => 'failed', 'description' => 'خرید کارت هدیه یوتوپیا ناموفق بود و عملیات کسر موجودی از کیف پول متوقف شد']);
 
                     Log::emergency("perfectmoney error : " . $this->PMeVoucher['ERROR']);
                     return redirect()->route('panel.purchase.view')->withErrors(['error' => "عملیات خرید ووچر ناموفق بود در صورت کسر موجودی از کیف پول شما با پشتیبانی تماس حاصل فرمایید."]);
@@ -204,7 +203,7 @@ class PanelController extends Controller
             }
 
         } catch (\Exception $exception) {
-            SendAppAlertsJob::dispatch('در خرید پرفکت مانی از طریق کیف پول خطایی به وجود آمد')->onQueue('perfectmoney');
+            SendAppAlertsJob::dispatch('در خرید یوتوپیا از طریق کیف پول خطایی به وجود آمد')->onQueue('perfectmoney');
 
             return redirect()->route('panel.purchase.view')->withErrors(['error' => "عملیات خرید ووچر ناموفق بود در صورت کسر موجودی از کیف پول شما با پشتیبانی تماس حاصل فرمایید."]);
         }
@@ -248,7 +247,7 @@ class PanelController extends Controller
             $inputs['status'] = 'requested';
             $inputs['bank_id'] = $bank->id;
             $inputs['time_price_of_dollars'] = $dollar->DollarRateWithAddedValue();
-            $inputs['description'] = ' خرید کارت هدیه پرفکت مانی از طریق ' . $bank->name;
+            $inputs['description'] = ' خرید کارت هدیه یوتوپیا از طریق ' . $bank->name;
 
 
             $invoice = Invoice::create($inputs);
@@ -303,7 +302,7 @@ class PanelController extends Controller
             );
             return $objBank->connectionToBank($token);
         } catch (\Exception $e) {
-            SendAppAlertsJob::dispatch('در ارتباط بابانک برای خرید پرفکت مانی خطایی به وجود آمد لطفا پیگیری شود')->onQueue('perfectmoney');
+            SendAppAlertsJob::dispatch('در ارتباط بابانک برای خرید یوتوپیا خطایی به وجود آمد لطفا پیگیری شود')->onQueue('perfectmoney');
             Log::emergency(PHP_EOL . $e->getMessage() . PHP_EOL);
             return redirect()->route('panel.purchase.view')->withErrors(['error' => 'ارتباط با بانک فراهم نشد لطفا چند دقیقه بعد تلاش فرماید.']);
         }
@@ -388,7 +387,7 @@ class PanelController extends Controller
             return redirect()->route('panel.deliveryVoucherBankView', [$invoice, $payment]);
         } catch (\Exception $e) {
             Log::emergency("panel Controller :" . $e->getMessage());
-            SendAppAlertsJob::dispatch('در خرید پرفکت مانی از درگاه بانکی خطایی به وجود آمد لطفا درگاه و پرفکت مانی را چک کنید(توجه این خطا در برگشت از بانک رخ داده است)')->onQueue('perfectmoney');
+            SendAppAlertsJob::dispatch('در خرید یوتوپیا از درگاه بانکی خطایی به وجود آمد لطفا درگاه و یوتوپیا را چک کنید(توجه این خطا در برگشت از بانک رخ داده است)')->onQueue('perfectmoney');
 
             return redirect()->route('panel.purchase.view')->withErrors(['error' => "خطایی رخ داد از صبر و شکیبایی شما مچکریم لطفا جهت پیگیری در خواست تیکت ثبت کنید"]);
 
@@ -426,14 +425,14 @@ class PanelController extends Controller
                 $amount = $invoice->service_id_custom;
             }
 
-            $this->generateVoucher($amount);
+            $this->generateVoucherUtopia();
 
             $voucher = Voucher::create(
                 [
                     'user_id' => $user->id,
                     'invoice_id' => $invoice->id,
                     'status' => 'requested',
-                    'description' => 'ارسال در خواست به سروریس پرفکت مانی',
+                    'description' => 'ارسال در خواست به سرویس یوتوپیا',
                 ]
             );
             if (isset($invoice->service_id)) {
@@ -446,11 +445,10 @@ class PanelController extends Controller
                     "service_id_custom" => $amount
                 ]);
             }
-            if (is_array($this->PMeVoucher) and isset($this->PMeVoucher['VOUCHER_NUM']) and isset($this->PMeVoucher['VOUCHER_CODE'])) {
+            if (is_array($this->PMeVoucher) and  isset($this->PMeVoucher['VOUCHER_CODE'])) {
                 $voucher->update([
                     'status' => 'finished',
-                    'description' => 'ارتباط با سروریس پرفکت مانی موفقیت آمیز بود',
-                    "serial" => $this->PMeVoucher['VOUCHER_NUM'],
+                    'description' => 'ارتباط با سرویس یوتوپیا موفقیت آمیز بود',
                     'code' => $this->PMeVoucher['VOUCHER_CODE']
                 ]);
                 Log::emergency("panel Controller :" . json_encode($this->PMeVoucher));
@@ -479,13 +477,13 @@ class PanelController extends Controller
 
             } else {
                 $voucher->delete();
-                $message = "پرداخت با موفقیت انجام شد به دلیل عدم ارتباط با پرفکت مانی مبلغ کیف پول شما افزایش داده شد و شما میتوانید در یک ساعت آینده از کیف پول خود ووچر خودرا تهیه کنید";
+                $message = "پرداخت با موفقیت انجام شد به دلیل عدم ارتباط با یوتوپیا مبلغ کیف پول شما افزایش داده شد و شما میتوانید در یک ساعت آینده از کیف پول خود ووچر خودرا تهیه کنید";
                 $satiaService->send($message, $user->mobile, env('SMS_Number'), env('SMS_Username'), env('SMS_Password'));
                 return Response::json(['status' => false]);
             }
         } catch (\Exception $e) {
             Log::emergency(PHP_EOL . $e->getMessage() . PHP_EOL);
-            SendAppAlertsJob::dispatch('در خرید پرفکت مانی ازطریق جاوااسکریپت خطایی به وجود آمد لطفا سرویس پرفکت مانی چک شود')->onQueue('perfectmoney');
+            SendAppAlertsJob::dispatch('در خرید یوتوپیا ازطریق جاوااسکریپت خطایی به وجود آمد لطفا سرویس یوتوپیا چک شود')->onQueue('perfectmoney');
 
             return Response::json(['status' => false]);
         }

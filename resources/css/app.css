@@ -17,6 +17,17 @@ body{
     animation: animate 1.5s linear infinite;
     animation-delay: calc(.1s * var(--i));
 }
+.loading{
+    animation:1s loading 1s infinite  linear;
+}
+@keyframes loading {
+    0%{
+        transform: rotate(0deg);
+    }
+    100%{
+        transform: rotate(360deg);
+    }
+}
 @keyframes animate {
     0%{
         transform: translateY(0);

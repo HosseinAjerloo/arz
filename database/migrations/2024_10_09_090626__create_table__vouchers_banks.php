@@ -13,7 +13,6 @@ return new class extends Migration
     {
         Schema::create('vouchers_bank', function (Blueprint $table) {
             $table->id();
-            $table->string('serial')->nullable();
             $table->string('code')->nullable();
             $table->string('amount')->nullable();
             $table->enum('status',['used','new'])->nullable();

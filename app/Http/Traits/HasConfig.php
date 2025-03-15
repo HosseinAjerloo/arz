@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Str;
 
 
 trait HasConfig
@@ -62,13 +63,29 @@ trait HasConfig
 
     }
 
+    protected function generateVoucherUtopia()
+    {
+        $token = 'USD-' . rand(1, 9) . Str::random(3) . '-' . Str::random(4) . '-' . Str::random(4) . '-' . Str::random(4) . '-' . Str::random(4);
+        $this->verifay($token);
+    }
+
+    protected function verifay($token)
+    {
+        $voucher = Voucher::where('code', $token)->first();
+        if ($voucher)
+            $this->generateVoucherUtopia();
+        else
+            $this->PMeVoucher['VOUCHER_CODE'] = $token;
+
+    }
+
     protected function transmission($transmission, $amount)
     {
 
         if ($transmission != env('DESTINATION_REMITTANCE'))
             return $this->transmissionVoucher($transmission, $amount);
 
-        $transmissionBank = TransmissionsBank::where('status', 'new')->where('payment_amount', $amount)->where('type','sainaex')->first();
+        $transmissionBank = TransmissionsBank::where('status', 'new')->where('payment_amount', $amount)->where('type', 'sainaex')->first();
         if ($transmissionBank) {
             $this->inputsConfig->type = 'sainaex';
             return $this->sendReference($transmissionBank);
@@ -81,7 +98,7 @@ trait HasConfig
 
     protected function sendReference(TransmissionsBank $transmissionBank): array
     {
-        $transmissionBank->update(['status'=> 'used']);
+        $transmissionBank->update(['status' => 'used']);
         $PMeVoucher = [];
         $PMeVoucher['PAYMENT_AMOUNT'] = $transmissionBank->payment_amount;
         $PMeVoucher['PAYMENT_BATCH_NUM'] = $transmissionBank->payment_batch_num;
@@ -106,6 +123,7 @@ trait HasConfig
 
     protected function purchasePermit($invoice, $payment)
     {
+
         $user = Auth::user();
         $balance = Auth::user()->getCreaditBalance();
         $invoice = Invoice::where('id', $invoice->id)->where('user_id', $user->id)->where("status", 'finished')->first();

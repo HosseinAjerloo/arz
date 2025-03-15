@@ -15,7 +15,7 @@ class TicketController extends Controller
 {
     public function index(Request $request)
     {
-        $tickets = Ticket::orderBy('id', 'desc')->simplePaginate(10);
+        $tickets = Ticket::orderBy('id', 'desc')->get();
         return view('Admin.Ticket.tickets', compact('tickets'));
     }
 

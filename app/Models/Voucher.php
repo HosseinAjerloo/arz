@@ -10,7 +10,7 @@ class Voucher extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $fillable = ['user_id', 'service_id', 'invoice_id', 'serial', 'code', 'status', 'description', 'service_id_custom'];
+    protected $fillable = ['user_id', 'service_id', 'invoice_id', 'code', 'status', 'description', 'service_id_custom'];
 
     public function service()
     {
@@ -24,6 +24,10 @@ class Voucher extends Model
         } else {
             return $this->service_id_custom;
         }
+    }
+    public function financeTransaction()
+    {
+        return $this->hasOne(FinanceTransaction::class,'voucher_id');
     }
 
 }
