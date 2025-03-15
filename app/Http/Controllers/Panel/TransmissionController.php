@@ -35,7 +35,7 @@ class TransmissionController extends Controller
     public function __construct()
     {
         $this->inputsConfig = $this;
-        $this->inputsConfig->type='perfectmoney';
+        $this->inputsConfig->type='merikhArz';
     }
 
     public function index()
