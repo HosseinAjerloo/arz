@@ -25,6 +25,7 @@ use AyubIRZ\PerfectMoneyAPI\PerfectMoneyAPI;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Response;
+use Morilog\Jalali\Jalalian;
 use function Laravel\Prompts\alert;
 
 
@@ -212,6 +213,7 @@ class PanelController extends Controller
 
     public function delivery()
     {
+
         if (session()->has('voucher') && session()->get('payment_amount')) {
             $voucher = session()->get('voucher');
             $payment_amount = session()->get('payment_amount');
@@ -472,6 +474,8 @@ class PanelController extends Controller
 
                 $message = "سلام کارت هدیه  شما ایجاد شد اطلاعات بیشتر در قسمت سوابق قابل دسترس می باشد.";
                 $satiaService->send($message, $user->mobile, env('SMS_Number'), env('SMS_Username'), env('SMS_Password'));
+                $voucher->finance=$voucher->financeTransaction->id;
+                $voucher->jalaliDate=Jalalian::forge($voucher->created_at)->format('H:i:s Y/m/d');
                 return Response::json(['voucher' => $voucher, 'payment_amount' => $payment_amount, 'status' => true]);
 
 

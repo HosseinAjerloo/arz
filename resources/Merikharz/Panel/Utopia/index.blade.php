@@ -60,7 +60,7 @@
                             <span class="w-48 text-mini-base leading-4">پرداخت با {{$bank->name??''}}</span>
                             <img src="{{asset('merikhArz/src/images/bankkart.svg')}}" alt="" class="bg-cover w-5 h-5 ">
                         </label>
-                        <input type="radio" value="{{$bank->id}}"  name="bank" id="bank-{{$bank->id}}" class="action ">
+                        <input type="radio" value="{{$bank->id}}"  name="bank" id="bank-{{$bank->id}}" class="action hidden">
                     </div>
 
                 @endforeach
