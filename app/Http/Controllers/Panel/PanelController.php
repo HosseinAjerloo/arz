@@ -25,6 +25,7 @@ use AyubIRZ\PerfectMoneyAPI\PerfectMoneyAPI;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Response;
+use Morilog\Jalali\Jalalian;
 use function Laravel\Prompts\alert;
 
 
@@ -71,7 +72,7 @@ class PanelController extends Controller
 
             if (isset($inputs['service_id'])) {
                 $service = Service::find($inputs['service_id']);
-                $voucherPrice = floor($dollar->DollarRateWithAddedValue() * $service->amount);
+                $voucherPrice=( floor(($dollar->DollarRateWithAddedValue() *  $service->amount) /10000 )*10000);
 
                 if ($voucherPrice > $balance) {
                     return redirect()->route('panel.purchase.view')->withErrors(['Low_inventory' => "موجودی کیف پول شما کافی نیست"]);
@@ -133,7 +134,7 @@ class PanelController extends Controller
 
             } elseif (isset($inputs['custom_payment'])) {
 
-                $voucherPrice = floor($dollar->DollarRateWithAddedValue() * $inputs['custom_payment']);
+                $voucherPrice=( floor(($dollar->DollarRateWithAddedValue() * $inputs['custom_payment']) /10000 )*10000);
 
                 if ($voucherPrice > $balance) {
                     return redirect()->route('panel.purchase.view')->withErrors(['Low_inventory' => "موجودی کیف پول شما کافی نیست"]);
@@ -212,6 +213,7 @@ class PanelController extends Controller
 
     public function delivery()
     {
+
         if (session()->has('voucher') && session()->get('payment_amount')) {
             $voucher = session()->get('voucher');
             $payment_amount = session()->get('payment_amount');
@@ -235,10 +237,12 @@ class PanelController extends Controller
 
             if (isset($inputs['service_id'])) {
                 $service = Service::find($inputs['service_id']);
-                $voucherPrice = floor($dollar->DollarRateWithAddedValue() * $service->amount);
+                $voucherPrice=( floor(($dollar->DollarRateWithAddedValue() * $service->amount) /10000 )*10000);
+
             } elseif (isset($inputs['custom_payment'])) {
                 $inputs['service_id_custom'] = $inputs['custom_payment'];
-                $voucherPrice = floor($dollar->DollarRateWithAddedValue() * $inputs['custom_payment']);
+                $voucherPrice=( floor(($dollar->DollarRateWithAddedValue() * $inputs['custom_payment']) /10000 )*10000);
+
             } else {
                 return redirect()->route('panel.purchase.view')->withErrors(['SelectInvalid' => "انتخاب شما معتبر نمیباشد"]);
             }
@@ -472,6 +476,8 @@ class PanelController extends Controller
 
                 $message = "سلام کارت هدیه  شما ایجاد شد اطلاعات بیشتر در قسمت سوابق قابل دسترس می باشد.";
                 $satiaService->send($message, $user->mobile, env('SMS_Number'), env('SMS_Username'), env('SMS_Password'));
+                $voucher->finance=$voucher->financeTransaction->id;
+                $voucher->jalaliDate=Jalalian::forge($voucher->created_at)->format('H:i:s Y/m/d');
                 return Response::json(['voucher' => $voucher, 'payment_amount' => $payment_amount, 'status' => true]);
 
 

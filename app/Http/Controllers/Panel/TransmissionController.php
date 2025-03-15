@@ -35,7 +35,7 @@ class TransmissionController extends Controller
     public function __construct()
     {
         $this->inputsConfig = $this;
-        $this->inputsConfig->type='perfectmoney';
+        $this->inputsConfig->type='merikhArz';
     }
 
     public function index()
@@ -49,7 +49,6 @@ class TransmissionController extends Controller
 
     public function store(TransmissionRequest $request)
     {
-
         try {
             $satiaService = new SatiaService();
             $inputs = request()->all();
@@ -74,7 +73,7 @@ class TransmissionController extends Controller
 
                 $invoice = Invoice::create($inputs);
 
-                $transition = $this->transmission($inputs['transmission'], $service->amount);
+                $transition = $this->transmissionUtopia($inputs['transmission'], $service->amount);
                 if (is_array($transition)) {
                     $finance = FinanceTransaction::create([
                         'user_id' => $user->id,
@@ -123,7 +122,7 @@ class TransmissionController extends Controller
                 $inputs['description'] = 'انتقال حواله  پرفکت مانی';
                 $invoice = Invoice::create($inputs);
 
-                $transition = $this->transmission($inputs['transmission'], $inputs['custom_payment']);
+                $transition = $this->transmissionUtopia($inputs['transmission'], $inputs['custom_payment']);
 
                 if (is_array($transition)) {
                     $finance = FinanceTransaction::create([
@@ -336,7 +335,7 @@ class TransmissionController extends Controller
             }
 
 
-            $transition = $this->transmission(session()->get('transmission'), $amount);
+            $transition = $this->transmissionUtopia(session()->get('transmission'), $amount);
             $invoice->update(['status' => 'finished']);
             if (is_array($transition)) {
 
@@ -609,7 +608,7 @@ class TransmissionController extends Controller
             }
 
 
-            $transition = $this->transmission(session()->get('transmission'), $amount);
+            $transition = $this->transmissionUtopia(session()->get('transmission'), $amount);
             $invoice->update(['status' => 'finished']);
             if (is_array($transition)) {
 

@@ -31,45 +31,38 @@
         <header class="flex items-center justify-center h-10 bg-DFEDFF rounded-lg space-x-2 space-x-reverse p-1.5">
             <img src="{{asset('merikhArz/src/images/checked.svg')}}" alt="" class="w-5 h-5 hidden image-success">
             <i class="fa-solid fa-spinner loading text-green-600"></i>
-            <h1 class="text-smfont-bold message">
+            <h1 class="text-smfont-bold " id="message">
                 درحال ساخت ووچر یوتوپیا
             </h1>
         </header>
-        <article class="flex flex-col justify-center space-y-3 p-2 hidden voucher-status">
+        <article class="flex flex-col justify-center space-y-3 p-2 hidden " id="voucher-status">
             <div class="flex items-center ">
                 <p class="w-24 text-mini-base">کد رهگیری :</p>
                 <div class="flex items-center space-x-reverse space-x-2">
                     <img src="{{asset('merikhArz/src/images/copy.svg')}}" alt="" class="w-4 h-4 copy cursor-pointer">
-                    <p class="flex items-center justify-center text-mini-base voucher-code">
-{{--                        {{$voucher->code??''}}--}}
-                        USD-1YVV-FLHf-qOyF-ampk-JDDt
+                    <p class="flex items-center justify-center text-mini-base " id="voucher-code">
+
                     </p>
                 </div>
             </div>
             <div class="flex items-center ">
                 <p class="w-24 text-mini-base">تاریخ :</p>
                 <div class="flex items-center space-x-reverse space-x-2">
-                    <p class="flex items-center justify-center text-mini-base">
-{{--                        {{\Illuminate\Support\Carbon::make($voucher->created_at)->format('H:i:s Y/m/d')}}--}}
-                        1403/01/29 10:11:53
+                    <p class="flex items-center justify-center text-mini-base" id="voucher-dateTime">
                     </p>
                 </div>
             </div>
             <div class="flex items-center ">
                 <p class="w-24 text-mini-base">شماره خرید :</p>
                 <div class="flex items-center space-x-reverse space-x-2">
-                    <p class="flex items-center justify-center text-mini-base">
-{{--                        {{$voucher->financeTransaction->id??''}}--}}
-                        12
+                    <p class="flex items-center justify-center text-mini-base" id="voucher-finance">
                     </p>
                 </div>
             </div>
             <div class="flex items-center ">
                 <p class="w-24 text-mini-base">مبلغ حواله :</p>
                 <div class="flex items-center space-x-reverse space-x-2">
-                    <p class="flex items-center justify-center text-mini-base voucher-amount ">
-{{--                        {{$payment_amount??''}}--}}
-                        1.2
+                    <p class="flex items-center justify-center text-mini-base " id="voucher-amount">
                     </p>
                 </div>
             </div>
@@ -79,7 +72,7 @@
             <a href="{{route('panel.index')}}" class="bg-gradient-to-b from-DE9408 to-FFB01B flex items-center text-mini-mini-base px-4 py-2.5 text-white rounded-lg">
                 بازگشت به پنل کاربری
             </a>
-            <button disabled onclick="redirect()" class="again  bg-gradient-to-b from-80C714 to-268832 flex items-center text-mini-mini-base px-4 py-2.5 text-white rounded-lg ">
+            <button disabled onclick="redirect()" class="again cursor-pointer bg-gradient-to-b from-80C714 to-268832 flex items-center text-mini-mini-base px-4 py-2.5 text-white rounded-lg ">
                 درخواست مجددا
             </button>
         </div>
@@ -126,11 +119,14 @@
                 data:dataValue,
                 timeout:20000,
                 success: function(response){
+                    console.log(response);
                     if(response.status!='undefined' && response.status)
                     {
                         $("#voucher-status").removeClass('hidden');
                         $("#voucher-code").html(response.voucher.code)
                         $("#voucher-amount").html(response.payment_amount)
+                        $("#voucher-dateTime").html(response.voucher.jalaliDate)
+                        $("#voucher-finance").html(response.voucher.finance)
                         $(".loading").addClass('hidden')
                         $("#message").html('کارت هدیه یوتوپیا بامشخصات ذیل برای شما ایجاد شد')
                         $(".image-success").removeClass('hidden');
@@ -142,6 +138,7 @@
                     }
                 },
                 error: function(error){
+                    console.log('error'+error)
                     $("#message").html('روند ایجاد کارت هدیه یوتوپیا با مشکل روبه رو شد')
                     $(".loading").addClass('text-rouse-500')
                     again();
