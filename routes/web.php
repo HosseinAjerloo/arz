@@ -119,6 +119,4 @@ Route::fallback(function () {
     abort(404);
 });
 
-Route::get('test',function (){
-   dd(strlen('654ce5c177da5e7b0468084e2c66fe40640b597e757127cdf25d8de8a510283d'));
-});
+
