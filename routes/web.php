@@ -122,7 +122,3 @@ Route::fallback(function () {
 
 
 
-Route::get('test',function (){
-    return view('Panel.Delivery.bankDelivery');
-});
-
