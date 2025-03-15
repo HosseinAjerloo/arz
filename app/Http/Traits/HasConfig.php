@@ -183,9 +183,9 @@ trait HasConfig
         $this->inputsConfig->payment_batch_num=$this->generateTokenTransmissionUtopia();
         $this->inputsConfig->type = 'merikhArz';
         if (!$this->requestToHost()){
-            return false;
+            return true;
         }
-        
+
         return true;
     }
 
