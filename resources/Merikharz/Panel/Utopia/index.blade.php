@@ -12,14 +12,14 @@
             </h1>
         </header>
         <article class="flex flex-col justify-start space-y-2 p-2 ">
-            <form action="{{route('panel.transmission')}}" class="space-y-4" id="form" method="post">
+            <form action="{{route('panel.purchase')}}" class="space-y-4" id="form" method="post">
                 @csrf
 
                 <div class="flex items-center space-x-reverse space-x-2 ">
                     <p class="text-black font-bold text-mini-mini-base w-28 leading-4">مبلغ ووچر یوتوپیا (دلار) :</p>
                     <input type="text"
                            class="customPayment py-1.5 px-4 border border-black rounded-md text-black w-[92%]"
-                           name="custom_payment">
+                           name="custom_payment" value="{{old('custom_payment')}}">
                     <img src="{{asset('merikhArz/src/images/pasteIcon.svg')}}" alt="">
                 </div>
 
@@ -55,15 +55,15 @@
                 @foreach($banks as $bank)
 
                     <div class="flex items-center justify-center action">
-                        <button type="button" onclick="selectBank({{$bank->id}})"
-                                class="bg-gradient-to-b from-268832 to-80C714 flex items-center justify-center space-x-reverse space-x-2 text-mini-mini-base px-4 py-2.5 text-white rounded-lg w-full">
+                        <label for="bank-{{$bank->id}}" type="button" onclick="selectBank({{$bank->id}})"
+                                class="labelBank cursor-pointer bg-gradient-to-b from-268832 to-80C714 flex items-center justify-center space-x-reverse space-x-2 text-mini-mini-base px-4 py-2.5 text-white rounded-lg w-full">
                             <span class="w-48 text-mini-base leading-4">پرداخت با {{$bank->name??''}}</span>
                             <img src="{{asset('merikhArz/src/images/bankkart.svg')}}" alt="" class="bg-cover w-5 h-5 ">
-                        </button>
+                        </label>
+                        <input type="radio"  name="bank" id="bank-{{$bank->id}}" class="action hidden">
                     </div>
 
                 @endforeach
-                <input type="hidden" value="" name="bank" id="bank" class="action">
 
 
                 <div class="flex items-center justify-center action">
@@ -132,7 +132,6 @@
                             $('.customPayment').val('')
                         }
                     }
-                        alert(paymentResult)
                     $('.amountPayment').text(' مبلغ قابل پرداخت: ' + formatNumber(paymentResult))
 
                 } else {
@@ -196,6 +195,14 @@
                 });
             })
         }
+        $(".labelBank").click(function (){
+                $("#form").attr('action', '{{route('panel.PurchaseThroughTheBank')}}');
+                $('#form').submit();
+        })
+        $(".submitWallet").click(function (){
+                $("#form").attr('action', '{{route('panel.purchase')}}');
+                $('#form').submit();
+        })
 
     </script>
 

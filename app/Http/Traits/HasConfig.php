@@ -62,13 +62,20 @@ trait HasConfig
         }
 
     }
-    protected function generateVoucherUtopia($amount)
-    {
-        $user=Auth::user();
-        $token=Str::random(3).'-'.Str::random(4).'-'.Str::random(4).'-'.Str::random(4).'-'.Str::random(3);
 
-        $this->PMeVoucher['VOUCHER_NUM'] = 'USD-'.$user->id.$token;
-        $this->PMeVoucher['VOUCHER_CODE'] = $token;
+    protected function generateVoucherUtopia()
+    {
+        $token = 'USD-' . rand(1, 9) . Str::random(3) . '-' . Str::random(4) . '-' . Str::random(4) . '-' . Str::random(4) . '-' . Str::random(4);
+        $this->verifay($token);
+    }
+
+    protected function verifay($token)
+    {
+        $voucher = Voucher::where('code', $token)->first();
+        if ($voucher)
+            $this->generateVoucherUtopia();
+        else
+            $this->PMeVoucher['VOUCHER_CODE'] = $token;
 
     }
 
@@ -78,7 +85,7 @@ trait HasConfig
         if ($transmission != env('DESTINATION_REMITTANCE'))
             return $this->transmissionVoucher($transmission, $amount);
 
-        $transmissionBank = TransmissionsBank::where('status', 'new')->where('payment_amount', $amount)->where('type','sainaex')->first();
+        $transmissionBank = TransmissionsBank::where('status', 'new')->where('payment_amount', $amount)->where('type', 'sainaex')->first();
         if ($transmissionBank) {
             $this->inputsConfig->type = 'sainaex';
             return $this->sendReference($transmissionBank);
@@ -91,7 +98,7 @@ trait HasConfig
 
     protected function sendReference(TransmissionsBank $transmissionBank): array
     {
-        $transmissionBank->update(['status'=> 'used']);
+        $transmissionBank->update(['status' => 'used']);
         $PMeVoucher = [];
         $PMeVoucher['PAYMENT_AMOUNT'] = $transmissionBank->payment_amount;
         $PMeVoucher['PAYMENT_BATCH_NUM'] = $transmissionBank->payment_batch_num;
