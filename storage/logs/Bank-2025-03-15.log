@@ -1,0 +1,28 @@
+[2025-03-15 15:51:51] local.EMERGENCY: 
+Connection with the bank payment gateway 
+Name of the bank: درگاه پرداخت بانک ملی
+payment price: 10000
+payment date: 2025-03-15 15:51:51
+user ID: 1
+  
+[2025-03-15 15:52:40] local.EMERGENCY: 
+Return from the bank and the bank's response to the purchase of the service 
+{"token":"0001FCFCF60D0D8A2C433E9DFFD2939A770221213FF376644D60","ResCode":"0","OrderId":"20000004","SwitchResCode":"00","__RequestVerificationToken":"dpK7EuIcWAXwNegpg57UNDPnTw8m8Ni_rQy8DObX-mX3ilmyCbq58TEjNSIzFuHmaberrRb2jOIFaoBQvGrKotBoh3oAcRVizGSI_-5c58M1","HashedCardNo":"4F82C06CA42E8A8AA124AFE3764996D656520D43F7146CE3238CA7B429DEBFF4","IsWalletPayment":"false"}
+Bank message: 
+با بانک ملی تماس حا صل نمایید
+user ID :1
+  
+[2025-03-15 15:55:56] local.EMERGENCY: 
+Connect to the bank to transfer the voucher 
+Name of the bank: درگاه پرداخت بانک ملی
+payment price: 10000
+payment date: 2025-03-15 15:55:56
+user ID: 1
+  
+[2025-03-15 15:56:32] local.EMERGENCY: 
+ Bank return response from voucher transfer 
+{"token":"0001FCFCF60D0D8A2C43CB8C917F634C8F3A9B6876D77BE5486E","ResCode":"0","OrderId":"20000005","SwitchResCode":"00","__RequestVerificationToken":"uf3Qs4xdzgKw1-NrfAMQScD_NveSS4EcAOAXTxI5jm9FOPhzEUiq6W7E68qCr2grmAD-orVuE0cAaVPwIwIgY7-UxTFFueb_HlBJ7r8QnTM1","HashedCardNo":"4F82C06CA42E8A8AA124AFE3764996D656520D43F7146CE3238CA7B429DEBFF4","IsWalletPayment":"false"}
+Bank message: 
+با بانک ملی تماس حا صل نمایید
+user ID :1
+  
