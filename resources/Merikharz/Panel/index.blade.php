@@ -70,11 +70,19 @@
                     <input autocomplete="off" type="text"  name="code" placeholder="رمز عبور پیامک شده!" class="placeholder:text-mini-base placeholder:text-black px-2 bg-transparent
                 outline-none">
                 </div>
-                <div class="flex bg-white w-full border rounded-md p-2 password inFade">
-                    <img src="{{asset('merikhArz/src/images/key.svg')}}" alt="" class="ml-2">
-                    <input autocomplete="off" type="text" name="password" placeholder="تنظیم رمز عبور شما!" class="placeholder:text-mini-base placeholder:text-black px-2 bg-transparent
-                outline-none">
-                </div>
+                    <div class="inFade password">
+                        <div class="flex bg-white w-full border rounded-md p-2  ">
+                            <img src="{{asset('merikhArz/src/images/key.svg')}}" alt="" class="ml-2">
+                            <input autocomplete="off" type="text" name="password" placeholder="تنظیم رمز عبور شما!" class="placeholder:text-mini-base placeholder:text-black px-2 bg-transparent
+                outline-none"/>
+
+                        </div>
+                        <div class="mt-4 mb-4 flex items-center justify-center flex-col text-rose-700">
+                            <p>نکته رمز عبور باید شامل حروف کوچک و بزرگ و عدد باشد</p>
+                            <p class="mt-2.5">رمز عبور باید 8 رقم باشد</p>
+                        </div>
+
+                    </div>
 
                 <div class=" text-center">
                     <p class="text-mini-base text-sky-600 time">
