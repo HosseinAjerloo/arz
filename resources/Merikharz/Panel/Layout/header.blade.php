@@ -58,13 +58,13 @@
             </div>
 
 
-            <div class="flex space-x-reverse space-x-2">
+            <a href="{{route('panel.index')}}" class="flex space-x-reverse space-x-2">
                 <h1 class="font-bold text-xl">
                     مریخ
                     <span class="text-base-font-color">ارز</span>
                 </h1>
                 <img src="{{asset('merikhArz/src/images/merikhIcon.svg')}}" alt="">
-            </div>
+            </a>
         @endguest
         <!-- end user has login   -->
 
@@ -95,6 +95,11 @@
                 <li class="text-sm h-8 border-b-base-font-color   border-dashed  border-b text-black p-1.5">
                     <a href="{{route('panel.transmission.view')}}">
                         حواله یوتوپیا
+                    </a>
+                </li>
+                <li class="text-sm h-8 border-b-base-font-color   border-dashed  border-b text-black p-1.5">
+                    <a href="{{route('panel.purchase')}}">
+                        خرید ووچر یوتوپیا
                     </a>
                 </li>
                 <li class="text-sm h-8 border-b-base-font-color   border-dashed border-b text-black p-1.5">

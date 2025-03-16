@@ -7,7 +7,7 @@
                 سوالات متداول
             </p>
         </div>
-        <a href="" class="flex items-center space-x-reverse space-x-2">
+        <a href="{{route('panel.ticket-add')}}" class="flex items-center space-x-reverse space-x-2">
             <img src="{{asset('merikhArz/src/images/plus.svg')}}" alt="" class="w-6 h-6">
             <p class="text-mini-base font-bold underline-offset-8 underline text-sky-600 decoration-sky-600">ثبت
                 تیکت</p>

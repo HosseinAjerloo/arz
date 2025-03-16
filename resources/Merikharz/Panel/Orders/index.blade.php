@@ -125,7 +125,7 @@
                         <img src="{{asset('merikhArz/src/images/utopia.png')}}" class="w-5 h-5" alt="">
 
                         <p class="text-mini-base">
-                            کد رهگیری :
+                            کد hash :
                         </p>
                         <div class="flex items-center space-x-reverse space-x-2">
                             <p class="text-mini-base">
@@ -219,7 +219,7 @@
                     <div class="flex items-center space-x-reverse space-x-2">
                         <img src="{{asset('merikhArz/src/images/utopia.png')}}" class="w-5 h-5" alt="">
                         <p class="text-mini-base">
-                            کد رهگیری :
+                            کد ووچر :
                         </p>
                         <div class="flex items-center space-x-reverse space-x-2">
                             <p class="text-mini-base">
