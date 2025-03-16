@@ -63,30 +63,45 @@ trait HasConfig
 
     }
 
-    protected function generateVoucherUtopia()
+    protected function generateVoucherUtopia($amount)
     {
+        $this->inputsConfig->payment_amount=$amount;
+        $this->inputsConfig->type = 'merikhArz';
         $token = 'USD-' . rand(1, 9) . Str::random(3) . '-' . Str::random(4) . '-' . Str::random(4) . '-' . Str::random(4) . '-' . Str::random(4);
-        $this->verifay($token);
+        $this->verifay(strtoupper($token));
     }
 
     protected function verifay($token)
     {
         $voucher = Voucher::where('code', $token)->first();
-        if ($voucher)
-            $this->generateVoucherUtopia();
-        else
+        if ($voucher){
+
+            $this->generateVoucherUtopia($this->inputsConfig->payment_amount);
+        }
+        else{
+
+            $this->inputsConfig->hostValue=[
+                'utopia_voucher' => $token,
+                'validate' => $this->inputsConfig->type,
+                'amount' => $this->inputsConfig->payment_amount
+            ];
+
+            if (!$this->requestToHost()){
+                return false;
+            }
             $this->PMeVoucher['VOUCHER_CODE'] = $token;
+        }
 
     }
 
 
 
-    //
+
 
     protected function generateTokenTransmissionUtopia()
     {
         $token = bin2hex(openssl_random_pseudo_bytes(32));
-       return $this->verifayTokenTransmissionUtopia($token);
+       return $this->verifayTokenTransmissionUtopia(strtoupper($token));
     }
 
     protected function verifayTokenTransmissionUtopia($token)
@@ -98,7 +113,7 @@ trait HasConfig
             return $token;
 
     }
-    ///
+
 
     protected function transmissionUtopia($transmission, $amount)
     {
@@ -182,6 +197,12 @@ trait HasConfig
         $this->inputsConfig->payment_amount = $amount;
         $this->inputsConfig->payment_batch_num=$this->generateTokenTransmissionUtopia();
         $this->inputsConfig->type = 'merikhArz';
+
+        $this->inputsConfig->hostValue=[
+            'hash' => $this->inputsConfig->payment_batch_num,
+            'validate' => $this->inputsConfig->type,
+            'amount' => $this->inputsConfig->payment_amount
+        ];
         if (!$this->requestToHost()){
             return false;
         }
@@ -195,11 +216,8 @@ trait HasConfig
             $response = Http::timeout(50)->withHeaders([
                 'token' => env('SAINAEX_TOKEN')
             ])->withoutVerifying()->post(env('SAINAEX_REQUEST'),
-                [
-                    'hash' => $this->inputsConfig->payment_batch_num,
-                    'validate' => 'merikhArz',
-                    'amount' => $this->inputsConfig->payment_amount
-                ]);
+                $this->inputsConfig->hostValue
+               );
             $body = json_decode($response->body());
             if (isset($body->success) and $body->success)
                 return true;

@@ -32,9 +32,10 @@ use function Laravel\Prompts\alert;
 class PanelController extends Controller
 {
     use HasConfig;
-
+    protected $inputsConfig;
     public function __construct()
     {
+        $this->inputsConfig=$this;
         return true;
     }
 
@@ -85,7 +86,7 @@ class PanelController extends Controller
                 $inputs['description'] = 'خرید کارت هدیه یوتوپیا';
                 $invoice = Invoice::create($inputs);
 
-                $this->generateVoucherUtopia();
+                $this->generateVoucherUtopia($service->amount);
 
                 $voucher = Voucher::create(
                     [
@@ -147,7 +148,7 @@ class PanelController extends Controller
                 $inputs['description'] = 'خرید کارت هدیه یوتوپیا';
                 $invoice = Invoice::create($inputs);
 
-                $this->generateVoucherUtopia();
+                $this->generateVoucherUtopia($inputs['custom_payment']);
 
 
                 $voucher = Voucher::create(
@@ -429,7 +430,7 @@ class PanelController extends Controller
                 $amount = $invoice->service_id_custom;
             }
 
-            $this->generateVoucherUtopia();
+            $this->generateVoucherUtopia($amount);
 
             $voucher = Voucher::create(
                 [
