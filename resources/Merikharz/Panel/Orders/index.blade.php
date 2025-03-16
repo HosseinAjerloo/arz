@@ -84,104 +84,186 @@
         </section>
 
 
-                @if($financeTransaction->transmission)
-                    <section class=" w-full border-2 border-black/15 rounded-lg mt-4 transition-all">
-                        <header class="flex items-center justify-between h-10 bg-DFEDFF rounded-lg  p-1.5">
-                            <div class="flex items-center space-x-2 space-x-reverse">
-                                <img src="{{asset('merikhArz/src/images/checked.svg')}}" alt="" class="w-6 h-6">
-                                <h1 class="text-sm">
-                                    حواله پرکت مانی
-                                </h1>
-                            </div>
-                            <img src="{{asset('merikhArz/src/images/perfectmone.svg')}}" alt="" class="w-6 h-6">
-                        </header>
-                        <article class="flex flex-col justify-start space-y-4 p-2 orderParent transition-all">
+        @if($financeTransaction->transmission)
+            <section class=" w-full border-2 border-black/15 rounded-lg mt-4 transition-all">
+                <header class="flex items-center justify-between h-10 bg-DFEDFF rounded-lg  p-1.5">
+                    <div class="flex items-center space-x-2 space-x-reverse">
+                        <img src="{{asset('merikhArz/src/images/checked.svg')}}" alt="" class="w-6 h-6">
+                        <h1 class="text-sm">
+                            حواله یوتوپیا
+                        </h1>
+                    </div>
+                    <img src="{{asset('merikhArz/src/images/transmission.svg')}}" alt="" class="w-10">
+                </header>
+                <article class="flex flex-col justify-start space-y-4 p-2 orderParent transition-all">
+                    <div>
+                        <div class="flex items-center space-x-reverse space-x-2">
+                            <img src="{{asset('merikhArz/src/images/date.svg')}}" class="w-5 h-5" alt="">
+                            <p class="text-mini-base">
+                                تاریخ و زمان سفارش :
+                            </p>
                             <div>
-                                <div class="flex items-center space-x-reverse space-x-2">
-                                    <img src="{{asset('merikhArz/src/images/date.svg')}}" class="w-5 h-5" alt="">
-                                    <p class="text-mini-base">
-                                        تاریخ و زمان سفارش :
-                                    </p>
-                                    <div>
-                                        <p class="text-mini-base">
-                                            {{\Morilog\Jalali\Jalalian::forge($financeTransaction->created_at)->format('Y/m/d H:i:s')}}
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="flex items-center space-x-reverse space-x-2">
-                                <img src="{{asset('merikhArz/src/images/seke.svg')}}" class="w-5 h-5" alt="">
                                 <p class="text-mini-base">
-                                    مبلغ:
+                                    {{\Morilog\Jalali\Jalalian::forge($financeTransaction->created_at)->format('Y/m/d H:i:s')}}
                                 </p>
-                                <div>
-                                    <p class="text-mini-base">
-                                        {{$financeTransaction->transmission->payment_amount}}
-                                        ({{numberFormat($financeTransaction->amount/10)}} هزار تومان)
-                                    </p>
-                                </div>
                             </div>
-                            <div class="flex items-center space-x-reverse space-x-2">
-                                <img src="{{asset('merikhArz/src/images/perfectmone.svg')}}" class="w-5 h-5" alt="">
+                        </div>
+                    </div>
+                    <div class="flex items-center space-x-reverse space-x-2">
+                        <img src="{{asset('merikhArz/src/images/seke.svg')}}" class="w-5 h-5" alt="">
+                        <p class="text-mini-base">
+                            مبلغ:
+                        </p>
+                        <div>
+                            <p class="text-mini-base">
+                                {{$financeTransaction->transmission->payment_amount}}
+                                ({{numberFormat($financeTransaction->amount/10)}} هزار تومان)
+                            </p>
+                        </div>
+                    </div>
+                    <div class="flex items-center space-x-reverse space-x-2">
+                        <img src="{{asset('merikhArz/src/images/utopia.png')}}" class="w-5 h-5" alt="">
+
+                        <p class="text-mini-base">
+                            کد رهگیری :
+                        </p>
+                        <div class="flex items-center space-x-reverse space-x-2">
+                            <p class="text-mini-base">
+                                {{$financeTransaction->transmission->payment_batch_num}}
+                            </p>
+                            <img src="{{asset('merikhArz/src/images/copy.svg')}}" class="w-5 h-5 cursor-pointer copy"
+                                 alt="">
+
+                        </div>
+                    </div>
+
+
+                    <div class="hidden flex-col justify-start space-y-4 information transition-all ">
+
+                        <div class="flex items-center space-x-reverse space-x-2">
+                            <p class="text-mini-base">
+                                شماره سفارش :
+                            </p>
+                            <div>
                                 <p class="text-mini-base">
-                                    کد رهگیری :
+                                    {{$financeTransaction->id}}
                                 </p>
-                                <div class="flex items-center space-x-reverse space-x-2">
-                                    <p class="text-mini-base">
-                                        {{$financeTransaction->transmission->payment_batch_num}}
-                                    </p>
-                                    <img src="{{asset('merikhArz/src/images/copy.svg')}}" class="w-5 h-5 cursor-pointer copy" alt="">
-                                </div>
                             </div>
+                        </div>
 
-
-
-                            <div class="hidden flex-col justify-start space-y-4 information transition-all ">
-
-                                <div class="flex items-center space-x-reverse space-x-2">
-                                    <p class="text-mini-base">
-                                        شماره سفارش :
-                                    </p>
-                                    <div>
-                                        <p class="text-mini-base">
-                                            {{$financeTransaction->id}}
-                                        </p>
-                                    </div>
-                                </div>
-
-                                <div class="flex items-center space-x-reverse space-x-2">
-                                    <p class="text-mini-base">
-                                        شماره حساب گیرنده:
-                                    </p>
-                                    <div>
-                                        <p class="text-mini-base">
-                                            {{$financeTransaction->transmission->payee_account}}
-                                        </p>
-                                    </div>
-                                </div>
-                                <div class="flex items-center space-x-reverse space-x-2">
-                                    <p class="text-mini-base">
-                                        توضیحات:
-                                    </p>
-                                    <div>
-                                        <p class="text-mini-base">
-                                            {{$financeTransaction->description??''}}
-                                        </p>
-                                    </div>
-                                </div>
+                        <div class="flex items-center space-x-reverse space-x-2">
+                            <p class="text-mini-base">
+                                شماره حساب گیرنده:
+                            </p>
+                            <div>
+                                <p class="text-mini-base">
+                                    {{$financeTransaction->transmission->payee_account}}
+                                </p>
                             </div>
+                        </div>
+                        <div class="flex items-center space-x-reverse space-x-2">
+                            <p class="text-mini-base">
+                                توضیحات:
+                            </p>
+                            <div>
+                                <p class="text-mini-base">
+                                    {{$financeTransaction->description??''}}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
 
 
-                        </article>
+                </article>
 
-                    </section>
+            </section>
+
+        @endif
+        @if($financeTransaction->voucher)
+            <section class=" w-full border-2 border-black/15 rounded-lg mt-4 transition-all">
+                <header class="flex items-center justify-between h-10 bg-DFEDFF rounded-lg  p-1.5">
+                    <div class="flex items-center space-x-2 space-x-reverse">
+                        <img src="{{asset('merikhArz/src/images/checked.svg')}}" alt="" class="w-6 h-6">
+                        <h1 class="text-sm">
+                             افزایش کیف پول ساخت ووچر یوتوپیا
+                        </h1>
+                    </div>
+                    <img src="{{asset('merikhArz/src/images/transmission.svg')}}" alt="" class="w-10">
+                </header>
+                <article class="flex flex-col justify-start space-y-4 p-2 orderParent transition-all">
+                    <div>
+                        <div class="flex items-center space-x-reverse space-x-2">
+                            <img src="{{asset('merikhArz/src/images/date.svg')}}" class="w-5 h-5" alt="">
+                            <p class="text-mini-base">
+                                تاریخ و زمان سفارش :
+                            </p>
+                            <div>
+                                <p class="text-mini-base">
+                                    {{\Morilog\Jalali\Jalalian::forge($financeTransaction->created_at)->format('Y/m/d H:i:s')}}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex items-center space-x-reverse space-x-2">
+                        <img src="{{asset('merikhArz/src/images/seke.svg')}}" class="w-5 h-5" alt="">
+                        <p class="text-mini-base">
+                            مبلغ:
+                        </p>
+                        <div>
+                            <p class="text-mini-base">
+                                {{$financeTransaction->voucher->service_id_custom}}
+                                ({{numberFormat($financeTransaction->amount/10)}} هزار تومان)
+                            </p>
+                        </div>
+                    </div>
+                    <div class="flex items-center space-x-reverse space-x-2">
+                        <img src="{{asset('merikhArz/src/images/utopia.png')}}" class="w-5 h-5" alt="">
+                        <p class="text-mini-base">
+                            کد رهگیری :
+                        </p>
+                        <div class="flex items-center space-x-reverse space-x-2">
+                            <p class="text-mini-base">
+                                {{$financeTransaction->voucher->code}}
+                            </p>
+                            <img src="{{asset('merikhArz/src/images/copy.svg')}}" class="w-5 h-5 cursor-pointer copy"
+                                 alt="">
+                        </div>
+                    </div>
 
 
-                @endif
+                    <div class="hidden flex-col justify-start space-y-4 information transition-all ">
+
+                        <div class="flex items-center space-x-reverse space-x-2">
+                            <p class="text-mini-base">
+                                شماره سفارش :
+                            </p>
+                            <div>
+                                <p class="text-mini-base">
+                                    {{$financeTransaction->id}}
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center space-x-reverse space-x-2">
+                            <p class="text-mini-base">
+                                توضیحات:
+                            </p>
+                            <div>
+                                <p class="text-mini-base">
+                                    {{$financeTransaction->description??''}}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </article>
+
+            </section>
+
+        @endif
+
     @endforeach
-
-
-
 
 @endsection
 
