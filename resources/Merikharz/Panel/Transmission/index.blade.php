@@ -6,9 +6,9 @@
     <section class=" w-full border-2 border-black/15 rounded-lg mt-4">
         <header class="flex items-center justify-center h-10 bg-DFEDFF rounded-lg space-x-2 space-x-reverse p-1.5">
 
-            <img src="{{asset('merikhArz/src/images/perfectmone.svg')}}" alt="">
+            <img src="{{asset('merikhArz/src/images/transmission.svg')}}" class="w-[54px]">
             <h1 class="text-sm font-bold">
-                حواله پرفکت مانی
+                حواله یوتوپیا
             </h1>
         </header>
         <article class="flex flex-col justify-start space-y-2 p-2 ">
