@@ -5,6 +5,10 @@
             <img src="{{asset('merikhArz/src/images/poshtibani.svg')}}" alt="">
             <span>تیکت به پشتیبانی</span>
         </a>
+        <a href="{{route('panel.ticket')}}" class="text-sm  flex items-center justify-center space-x-reverse space-x-2 bg-gradient-to-b from-268832 to-80C714 px-6 py-2 rounded-md text-white">
+            <i class="fa-solid fa-ticket"></i>
+            <span>تیکت های من</span>
+        </a>
     </section>
     <section class="bg-DFEDFF h-14 flex items-center justify-center space-x-reverse space-x-2">
         <img src="{{asset('merikhArz/src/images/question.svg')}}" alt="" class="w-8 h-8">
