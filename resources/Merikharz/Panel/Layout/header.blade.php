@@ -94,7 +94,7 @@
                 </li>
                 <li class="text-sm h-8 border-b-base-font-color   border-dashed  border-b text-black p-1.5">
                     <a href="{{route('panel.transmission.view')}}">
-                        حواله پرفکت مانی
+                        حواله یوتوپیا
                     </a>
                 </li>
                 <li class="text-sm h-8 border-b-base-font-color   border-dashed border-b text-black p-1.5">
