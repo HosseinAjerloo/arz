@@ -14,7 +14,7 @@
         </div>
     </section>
     <section class="w-full flex flex-wrap justify-between mt-4">
-        <a href="{{route('panel.transmission.view')}}"
+        <a href="{{route('panel.admin.tickets')}}"
            class="w-[48%] h-40 bg-gradient-to-b from-FFC98B to-FFF5EA rounded-md flex justify-center items-center flex-col mt-2">
             <img src="{{asset("merikhArz/src/images/adminTicket.svg")}}" alt="" class="object-cover w-28 h-28">
             <p class="text-base mt-6">تیکت های پیشتیبانی</p>
