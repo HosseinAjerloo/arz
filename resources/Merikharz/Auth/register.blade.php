@@ -49,7 +49,7 @@
         </div>
         <div class="flex items-center justify-center text-mini-mini-base text-center leading-6 text-black/35 font-bold time w-full">
         </div>
-        <button class="bg-gradient-to-b from-FFB01B to-DE9408 text-sm w-52 h-10 rounded-md text-white font-bold"
+        <button class="bg-gradient-to-b from-FFB01B to-DE9408 text-sm w-52 h-10 rounded-md text-white font-bold register"
                 type="">ورود به
             حساب کاربری
         </button>
@@ -159,5 +159,13 @@
                 form.action = message.route
             }, 1000);
         }
+
+        $(".register").click(function (event){
+            event.preventDefault();
+            if($("#form").attr('action'))
+            {
+                $('#form').submit();
+            }
+        })
     </script>
 @endsection

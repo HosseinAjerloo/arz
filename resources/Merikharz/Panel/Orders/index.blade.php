@@ -121,14 +121,14 @@
                             </p>
                         </div>
                     </div>
-                    <div class="flex items-center space-x-reverse space-x-2">
+                    <div class="flex flex-wrap items-center space-x-reverse space-x-2">
                         <img src="{{asset('merikhArz/src/images/utopia.png')}}" class="w-5 h-5" alt="">
 
                         <p class="text-mini-base">
                             کد hash :
                         </p>
                         <div class="flex items-center space-x-reverse space-x-2">
-                            <p class="text-mini-base">
+                            <p class="text-mini-base break-all leading-6">
                                 {{$financeTransaction->transmission->payment_batch_num}}
                             </p>
                             <img src="{{asset('merikhArz/src/images/copy.svg')}}" class="w-5 h-5 cursor-pointer copy"
@@ -156,7 +156,7 @@
                                 شماره حساب گیرنده:
                             </p>
                             <div>
-                                <p class="text-mini-base">
+                                <p class="text-mini-base break-all leading-6">
                                     {{$financeTransaction->transmission->payee_account}}
                                 </p>
                             </div>
@@ -188,7 +188,7 @@
                              افزایش کیف پول ساخت ووچر یوتوپیا
                         </h1>
                     </div>
-                    <img src="{{asset('merikhArz/src/images/transmission.svg')}}" alt="" class="w-10">
+                    <img src="{{asset('merikhArz/src/images/utopia.png')}}" alt="" class="w-10">
                 </header>
                 <article class="flex flex-col justify-start space-y-4 p-2 orderParent transition-all">
                     <div>

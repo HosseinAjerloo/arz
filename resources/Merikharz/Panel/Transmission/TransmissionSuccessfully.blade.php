@@ -30,18 +30,21 @@
         </header>
 
         <article class="flex flex-col justify-center space-y-3 p-2 ">
-            <div class="flex items-center ">
-                <p class="w-24 text-mini-base">کد hash :</p>
-                <div class="flex items-center space-x-reverse space-x-2">
+            <div class="flex items-center flex-wrap">
+                <p class="w-24 text-mini-base mb-2 md:mb-0">کد hash :</p>
+                <div class="flex  items-center space-x-reverse space-x-2">
                     <img src="{{asset('merikhArz/src/images/copy.svg')}}" alt="" class="w-4 h-4 copy cursor-pointer">
-                    <p class="flex items-center justify-center text-mini-base">{{$transitionDelivery->payment_batch_num??''}}</p>
+                    <p class="flex items-center justify-center text-mini-base  w-full  break-all leading-6">
+                        {{$transitionDelivery->payment_batch_num??''}}
+                    </p>
                 </div>
             </div>
             <div class="flex items-center ">
                 <p class="w-24 text-mini-base">تاریخ :</p>
                 <div class="flex items-center space-x-reverse space-x-2">
                     <p class="flex items-center justify-center text-mini-base">
-                        1403/9/10 22:15
+                        {{\Illuminate\Support\Carbon::make($transitionDelivery->created_at)->format('H:i:s Y/m/d')}}
+
                     </p>
                 </div>
             </div>
@@ -61,10 +64,10 @@
                     </p>
                 </div>
             </div>
-            <div class="flex items-center ">
-                <p class="w-24 text-mini-base">آدرس حساب مقصد :</p>
+            <div class="flex items-center flex-wrap">
+                <p class="w-36 md:w-24 mb-2 md:mb-0 text-mini-base">آدرس حساب مقصد :</p>
                 <div class="flex items-center space-x-reverse space-x-2">
-                    <p class="flex items-center justify-center text-mini-base">
+                    <p class="flex items-center justify-center text-mini-base break-all leading-6">
                         {{$transitionDelivery->payee_account}}
                     </p>
                 </div>

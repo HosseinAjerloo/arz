@@ -22,7 +22,7 @@
         <a href="{{route('panel.transmission.view')}}"
             class="w-[48%] h-40 bg-gradient-to-b from-FFBEBE to-FFF5EA rounded-md flex justify-center items-center flex-col mt-2">
             <img src="{{asset('merikhArz/src/images/transmission.svg')}}" alt="" class="object-cover w-36 h-28">
-            <p class="text-base">حواله ووچر یوتوپیا</p>
+            <p class="text-base">حواله  یوتوپیا</p>
         </a>
         <div
             class="w-[48%] h-40 bg-gradient-to-b from-8EBFFC to-E5F1FF rounded-md flex justify-center items-center flex-col mt-2">

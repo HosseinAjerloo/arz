@@ -69,7 +69,7 @@ class TransmissionController extends Controller
                 $inputs['type'] = 'transmission';
                 $inputs['status'] = 'requested';
                 $inputs['time_price_of_dollars'] = $dollar->DollarRateWithAddedValue();
-                $inputs['description'] = 'انتقال حواله پرفکت مانی';
+                $inputs['description'] = 'انتقال حواله یوتوپیا';
 
                 $invoice = Invoice::create($inputs);
 
@@ -98,12 +98,12 @@ class TransmissionController extends Controller
 
                         ]
                     );
-                    $message = "سلام انتقال حواله پرفکت مانی انجام شد اطلاعات بیشتر در قسمت سوابق قابل دسترس می باشد.";
+                    $message = "سلام انتقال حواله یوتوپیا انجام شد اطلاعات بیشتر در قسمت سوابق قابل دسترس می باشد.";
                     $satiaService->send($message, $user->mobile, env('SMS_Number'), env('SMS_Username'), env('SMS_Password'));
                     return redirect()->route('panel.transfer.information', $transitionDelivery);
 
                 } else {
-                    $invoice->update(['status' => 'failed', 'description' => 'انتقال حواله پرفکت مانی ناموفق بود و عملیات کسر موجودی از کیف پول شما متوقف شد.']);
+                    $invoice->update(['status' => 'failed', 'description' => 'انتقال حواله یوتوپیا ناموفق بود و عملیات کسر موجودی از کیف پول شما متوقف شد.']);
                     return redirect()->route('panel.transfer.fail');
                 }
 
@@ -119,7 +119,7 @@ class TransmissionController extends Controller
                 $inputs['service_id_custom'] = $inputs['custom_payment'];
                 $inputs['status'] = 'requested';
                 $inputs['time_price_of_dollars'] = $dollar->DollarRateWithAddedValue();
-                $inputs['description'] = 'انتقال حواله  پرفکت مانی';
+                $inputs['description'] = 'انتقال حواله  یوتوپیا';
                 $invoice = Invoice::create($inputs);
 
                 $transition = $this->transmissionUtopia($inputs['transmission'], $inputs['custom_payment']);
@@ -149,12 +149,12 @@ class TransmissionController extends Controller
 
                         ]
                     );
-                    $message = "سلام انتقال حواله پرفکت مانی انجام شد اطلاعات بیشتر در قسمت سوابق قابل دسترس می باشد.";
+                    $message = "سلام انتقال حواله یوتوپیا انجام شد اطلاعات بیشتر در قسمت سوابق قابل دسترس می باشد.";
                     $satiaService->send($message, $user->mobile, env('SMS_Number'), env('SMS_Username'), env('SMS_Password'));
                     return redirect()->route('panel.transfer.information', $transitionDelivery);
 
                 } else {
-                    $invoice->update(['status' => 'failed', 'description' => 'انتقال حواله پرفکت مانی ناموفق بود و عملیات کسر موجودی از کیف پول شما متوقف شد.']);
+                    $invoice->update(['status' => 'failed', 'description' => 'انتقال حواله یوتوپیا ناموفق بود و عملیات کسر موجودی از کیف پول شما متوقف شد.']);
                     return redirect()->route('panel.transfer.fail');
                 }
             } else {
@@ -162,7 +162,7 @@ class TransmissionController extends Controller
             }
         } catch
         (\Exception $exception) {
-            SendAppAlertsJob::dispatch('در انتقال وچچر از طریف کیف پول خطایی رخ داد سرویس پرفکت مانی و سایر موارد چک شود')->onQueue('perfectmoney');
+            SendAppAlertsJob::dispatch('در انتقال وچچر از طریف کیف پول خطایی رخ داد سرویس یوتوپیا و سایر موارد چک شود')->onQueue('perfectmoney');
             Log::emergency(PHP_EOL . $exception->getMessage() . PHP_EOL);
 
             return redirect()->route('panel.transmission.view')->withErrors(['error' => "عملیات انتقال ووچر ناموفق بود در صورت کسر موجودی از کیف پول شما با پشتیبانی تماس حاصل فرمایید."]);
@@ -199,7 +199,7 @@ class TransmissionController extends Controller
             $inputs['status'] = 'requested';
             $inputs['bank_id'] = $bank->id;
             $inputs['time_price_of_dollars'] = $dollar->DollarRateWithAddedValue();
-            $inputs['description'] = ' انتقال حواله پرفکت مانی از طریق ' . $bank->name;
+            $inputs['description'] = ' انتقال حواله یوتوپیا از طریق ' . $bank->name;
 
 
             $invoice = Invoice::create($inputs);
@@ -233,7 +233,7 @@ class TransmissionController extends Controller
                 'payment_id' => $payment->id,
             ]);
             if (!$status) {
-                $invoice->update(['status' => 'failed', 'description' => "به دلیل عدم ارتباط با بانک $bank->name سفارش انتقال حواله پرفکت مانی  شما لغو شد "]);
+                $invoice->update(['status' => 'failed', 'description' => "به دلیل عدم ارتباط با بانک $bank->name سفارش انتقال حواله یوتوپیا  شما لغو شد "]);
                 $financeTransaction->update(['description' => "به دلیل عدم ارتباط با بانک $bank->name سفارش شما لغو شد ", 'status' => 'fail']);
 
                 return redirect()->route('panel.transmission.view')->withErrors(['error' => 'ارتباط با بانک فراهم نشد لطفا چند دقیقه بعد تلاش فرماید.']);
@@ -372,12 +372,12 @@ class TransmissionController extends Controller
                         'type' => $this->inputsConfig ? $this->inputsConfig->type : 'perfectmoney'
                     ]
                 );
-                $message = "سلام انتقال حواله پرفکت مانی انجام شد اطلاعات بیشتر در قسمت سوابق قابل دسترس می باشد.";
+                $message = "سلام انتقال حواله یوتوپیا انجام شد اطلاعات بیشتر در قسمت سوابق قابل دسترس می باشد.";
                 $satiaService->send($message, $user->mobile, env('SMS_Number'), env('SMS_Username'), env('SMS_Password'));
                 return redirect()->route('panel.transfer.information', $transitionDelivery);
 
             } else {
-                $invoice->update(['status' => 'finished', 'description' => 'پرداخت با موفقیت انجام شد به دلیل عدم ارتباط با پرفکت مانی مبلغ کیف پول شما افزایش داده شد و شما میتوانید در یک ساعت آینده از کیف پول خود جهت انتقال ووچر اقدام نمایید']);
+                $invoice->update(['status' => 'finished', 'description' => 'پرداخت با موفقیت انجام شد به دلیل عدم ارتباط با یوتوپیا مبلغ کیف پول شما افزایش داده شد و شما میتوانید در یک ساعت آینده از کیف پول خود جهت انتقال ووچر اقدام نمایید']);
 
                 $financeTransaction->update([
                     'user_id' => $user->id,
@@ -385,7 +385,7 @@ class TransmissionController extends Controller
                     'amount' => $payment->amount,
                     'type' => "deposit",
                     "creadit_balance" => $balance + $payment->amount,
-                    'description' => 'پرداخت با موفقیت انجام شد به دلیل عدم ارتباط با پرفکت مانی مبلغ کیف پول شما افزایش داده شد و شما میتوانید در یک ساعت آینده از کیف پول خود جهت انتقال ووچر اقدام نمایید',
+                    'description' => 'پرداخت با موفقیت انجام شد به دلیل عدم ارتباط با یوتوپیا مبلغ کیف پول شما افزایش داده شد و شما میتوانید در یک ساعت آینده از کیف پول خود جهت انتقال ووچر اقدام نمایید',
                     'payment_id' => $payment->id,
                     'time_price_of_dollars' => $dollar->DollarRateWithAddedValue()
 
@@ -469,7 +469,7 @@ class TransmissionController extends Controller
             $inputs['status'] = 'requested';
             $inputs['bank_id'] = $bank->id;
             $inputs['time_price_of_dollars'] = $dollar->DollarRateWithAddedValue();
-            $inputs['description'] = ' انتقال حواله پرفکت مانی از طریق ' . $bank->name;
+            $inputs['description'] = ' انتقال حواله یوتوپیا از طریق ' . $bank->name;
 
 
             $invoice = Invoice::create($inputs);
@@ -503,7 +503,7 @@ class TransmissionController extends Controller
                 'payment_id' => $payment->id,
             ]);
             if (!$status) {
-                $invoice->update(['status' => 'failed', 'description' => "به دلیل عدم ارتباط با بانک $bank->name سفارش انتقال حواله پرفکت مانی  شما لغو شد "]);
+                $invoice->update(['status' => 'failed', 'description' => "به دلیل عدم ارتباط با بانک $bank->name سفارش انتقال حواله یوتوپیا  شما لغو شد "]);
                 $financeTransaction->update(['description' => "به دلیل عدم ارتباط با بانک $bank->name سفارش شما لغو شد ", 'status' => 'fail']);
 
                 return redirect()->route('panel.transfer.external', ['account' => $inputs['transmission'], 'amount' => $inputs['custom_payment']])->withErrors(['error' => 'ارتباط با بانک فراهم نشد لطفا چند دقیقه بعد تلاش فرماید.']);
@@ -646,12 +646,12 @@ class TransmissionController extends Controller
 
                     ]
                 );
-                $message = "سلام انتقال حواله پرفکت مانی انجام شد اطلاعات بیشتر در قسمت سوابق قابل دسترس می باشد.";
+                $message = "سلام انتقال حواله یوتوپیا انجام شد اطلاعات بیشتر در قسمت سوابق قابل دسترس می باشد.";
                 $satiaService->send($message, $user->mobile, env('SMS_Number'), env('SMS_Username'), env('SMS_Password'));
                 return redirect()->route('panel.transfer.information', $transitionDelivery);
 
             } else {
-                $invoice->update(['status' => 'finished', 'description' => 'پرداخت با موفقیت انجام شد به دلیل عدم ارتباط با پرفکت مانی مبلغ کیف پول شما افزایش داده شد و شما میتوانید در یک ساعت آینده از کیف پول خود جهت انتقال ووچر اقدام نمایید']);
+                $invoice->update(['status' => 'finished', 'description' => 'پرداخت با موفقیت انجام شد به دلیل عدم ارتباط با یوتوپیا مبلغ کیف پول شما افزایش داده شد و شما میتوانید در یک ساعت آینده از کیف پول خود جهت انتقال ووچر اقدام نمایید']);
 
                 $financeTransaction->update([
                     'user_id' => $user->id,
@@ -659,7 +659,7 @@ class TransmissionController extends Controller
                     'amount' => $payment->amount,
                     'type' => "deposit",
                     "creadit_balance" => $balance + $payment->amount,
-                    'description' => 'پرداخت با موفقیت انجام شد به دلیل عدم ارتباط با پرفکت مانی مبلغ کیف پول شما افزایش داده شد و شما میتوانید در یک ساعت آینده از کیف پول خود جهت انتقال ووچر اقدام نمایید',
+                    'description' => 'پرداخت با موفقیت انجام شد به دلیل عدم ارتباط با یوتوپیا مبلغ کیف پول شما افزایش داده شد و شما میتوانید در یک ساعت آینده از کیف پول خود جهت انتقال ووچر اقدام نمایید',
                     'payment_id' => $payment->id,
                     'time_price_of_dollars' => $dollar->DollarRateWithAddedValue()
 
