@@ -69,8 +69,15 @@ class AdminController extends Controller
     public function loginAnotherUser(Request $request,User $user)
     {
         $currentUser=Auth::user();
-        if ($currentUser->type=='admin')
-            session(['previous_user'=>$currentUser->id]);
+        if ($currentUser->type=='admin'){
+            if (session()->has('previous_user'))
+            {
+                session()->remove('previous_user');
+            }
+            else{
+                session(['previous_user'=>$currentUser->id]);
+            }
+        }
 
         Auth::loginUsingId($user->id);
         return redirect()->route('panel.index');
