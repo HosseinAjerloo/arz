@@ -39,10 +39,7 @@ class LoginController extends Controller
 
     }
 
-    public function simpleLogin(Request $request)
-    {
-        return view('Auth.simpleLogin');
-    }
+
 
     public function simpleLoginPost(SimpleLoginPost $simpleLoginPost)
     {
@@ -76,6 +73,7 @@ class LoginController extends Controller
 
     public function updatePassword(Otp $otp)
     {
+
         if (!empty($otp->seen_at))
             return redirect()->route('login.index')->withErrors(['token' => 'لینک ارسالی معتبر نمیباشد']);
 
@@ -102,13 +100,12 @@ class LoginController extends Controller
 
     public function forgotPasswordToken(Request $request, Otp $otp)
     {
-        if (!empty($otp->seen))
-            return redirect()->route('login.simple')->withErrors(['invalidOtp' => 'لینک وارد شده معتبر نمیباشد']);
+        if (!empty($otp->seen_at))
+            return redirect()->route('login.index')->withErrors(['invalidOtp' => 'لینک وارد شده معتبر نمیباشد']);
 
         if (!Session::has('user'))
             Session::put(['user' => User::where('mobile', $otp->mobile)->first()->id]);
 
-        $otp->update(['seen_at' => date('Y-m-d H:i:s')]);
         return view('Auth.updatePassword', compact('otp'));
     }
 
