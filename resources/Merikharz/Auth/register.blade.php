@@ -23,7 +23,7 @@
                 <img src="{{asset('merikhArz/src/images/svgPhone.svg')}}" alt="" class="w-6 h-6">
                 <input type="text"
                        class=" mobile w-full h-full inline-block outline-none px-2 placeholder:text-center placeholder:text-sm"
-                       placeholder="شماره همراه  (*********09)" name="mobile" >
+                       placeholder="شماره همراه  (*********09)" name="mobile" autocomplete="off">
             </div>
             <button class="text-mini-base bg-gradient-to-b from-80C714 to-268832 w-24   h-12 text-white rounded-md text-center flex items-center justify-center cursor-pointer send">
                 ارسال
@@ -35,13 +35,17 @@
             <img src="{{asset('merikhArz/src/images/key.svg')}}" alt="" class="w-6 h-6">
             <input type="text"
                    class="w-full h-full py-1.5 outline-none px-2  placeholder:text-center  placeholder:text-sm"
-                   placeholder="کد ارسال شده به تلفن همراه " name="code">
+                   placeholder="کد ارسال شده به تلفن همراه " name="code" autocomplete="off">
         </div>
         <div class="flex items-center space-x-reverse space-x-2 w-full border-black border-2 px-2 h-12 rounded-md">
             <img src="{{asset('merikhArz/src/images/key.svg')}}" alt="" class="w-6 h-6">
             <input type="password"
                    class="w-full h-full py-1.5 outline-none px-2  placeholder:text-center  placeholder:text-sm"
-                   placeholder="کلمه عبور جدید (حروف و عدد)" name="password">
+                   placeholder="کلمه عبور جدید (حروف و عدد)" name="password" autocomplete="off">
+        </div>
+        <div class="mt-4 mb-4 flex items-center justify-center flex-col text-sm text-rose-700 font-bold">
+            <p>نکته رمز عبور باید شامل حروف کوچک و بزرگ و عدد باشد</p>
+            <p class="mt-2.5">رمز عبور باید 8 رقم باشد</p>
         </div>
         <div class="flex items-center justify-center text-mini-mini-base text-center leading-6 text-black/35 font-bold time w-full">
         </div>

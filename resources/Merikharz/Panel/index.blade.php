@@ -77,7 +77,7 @@
                 outline-none"/>
 
                         </div>
-                        <div class="mt-4 mb-4 flex items-center justify-center flex-col text-rose-700">
+                        <div class="mt-4 mb-4 flex items-center justify-center flex-col text-sm text-rose-700 font-bold">
                             <p>نکته رمز عبور باید شامل حروف کوچک و بزرگ و عدد باشد</p>
                             <p class="mt-2.5">رمز عبور باید 8 رقم باشد</p>
                         </div>
@@ -177,7 +177,7 @@
         });
 
         function showError(error) {
-            let html = `<section class="container p-2">
+            let html = `<section class="container p-2 absolute space-y-2 max-w-max z-[1000]">
 
                     <div id="toast-danger" class="toast flex items-center w-full max-w-xs p-4 mb-4 text-gray-500 bg-white rounded-lg shadow dark:text-gray-400 dark:bg-gray-800" role="alert">
                         <div class="inline-flex items-center justify-center flex-shrink-0 w-8 h-8 text-red-500 bg-red-100 rounded-lg dark:bg-red-800 dark:text-red-200">
@@ -197,7 +197,7 @@
                     </section>
                     `;
             $('.errorsAlert').append(html);
-            $('.errorsAlert').scrollIntoView()
+            $('.errorsAlert')[0].scrollIntoView()
             close();
         }
     </script>
