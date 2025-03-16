@@ -92,6 +92,15 @@
                         سفارشات شما
                     </a>
                 </li>
+                @auth
+                    @if(\Illuminate\Support\Facades\Auth::user()->type=='admin')
+                        <li class="text-sm h-8 border-b-base-font-color border-dashed border-b text-black p-1.5 ">
+                            <a href="{{route('panel.admin')}}">
+                                 ورود به پنل پشتیبانی
+                            </a>
+                        </li>
+                    @endif
+                @endauth
                 <li class="text-sm h-8 border-b-base-font-color   border-dashed  border-b text-black p-1.5">
                     <a href="{{route('panel.transmission.view')}}">
                         حواله یوتوپیا
@@ -122,6 +131,7 @@
                         تیکت به پشتیبانی
                     </a>
                 </li>
+
                 <li class="text-sm h-8  text-black/45 px-1.5 py-6 flex items-center">
                     <div
                         class=" text-mini-base border border-base-font-color rounded-2xl px-6 py-2 max-h-min bg-F4F7FB flex items-center justify-center">
