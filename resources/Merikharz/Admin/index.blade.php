@@ -25,7 +25,7 @@
             <p class="text-base  mt-6">تنظیم نرخ دلار</p>
         </div>
 
-        <a href="{{route('panel.wallet.charging')}}"
+        <a href="{{route('panel.admin.user.index')}}"
            class="w-full h-40 bg-gradient-to-b from-DBBBFF to-F6EDFF rounded-md flex justify-center items-center flex-col mt-2">
             <img src="{{asset('merikhArz/src/images/usersAdmin.svg')}}" alt="" class="object-cover w-28 h-28">
             <p class="text-base text-center mt-6">کاربران</p>

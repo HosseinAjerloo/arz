@@ -43,6 +43,16 @@
                                     ویرایش پروفایل
                                 </a>
                             </li>
+                            @if(session()->has('previous_user'))
+                            <li class="text-sm h-8 border-b-base-font-color border-dashed border-b text-black/75 py-1.5 flex items-center space-x-reverse space-x-2">
+                                <img src="{{asset('MerikhArz/src/images/pen.svg')}}" alt="" class="w-5 h-5">
+
+                                <a class="flex " href="{{route('panel.admin.login-another-user',session()->get('previous_user'))}}">
+                                   بازگشت به پروفایل خودم
+                                </a>
+                            </li>
+
+                            @endif
                             <li class="text-sm h-8  text-black/45 px-1.5 py-6 flex items-center">
                                 <div
                                     class=" text-mini-base border border-base-font-color rounded-2xl px-6 py-2 max-h-min bg-F4F7FB flex items-center justify-center mr-2">

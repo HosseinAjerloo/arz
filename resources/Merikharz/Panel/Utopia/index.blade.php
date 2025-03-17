@@ -3,7 +3,7 @@
     <section class="errors">
 
     </section>
-    <section class=" w-full border-2 border-black/15 rounded-lg mt-4">
+    <section class="container mx-auto w-full border-2 border-black/15 rounded-lg mt-4">
         <header class="flex items-center justify-center h-10 bg-DFEDFF rounded-lg space-x-2 space-x-reverse p-1.5">
 
             <img src="{{asset("merikhArz/src/images/utopia.png")}}" alt="" class="w-12 h-12">
