@@ -4,48 +4,51 @@
 
 
     </section>
-    <section class="w-full relative flex items-center justify-center">
-        <img src="{{asset('merikhArz/src/images/mainImg.png')}}" alt="" class="object-cover bg-center h-full w-full 2xl:w-1/2">
-        <div class="absolute bottom-4 text-center py-3  z-[9] w-80 bg-black/45 border border-white/15 rounded-md
+    <article class="lg:flex lg:items-center lg:justify-between">
+        <section class="w-full lg:w-[48%] relative flex items-center justify-center">
+            <img src="{{asset('merikhArz/src/images/mainImg.png')}}" alt=""
+                 class="object-cover bg-center h-full w-full 2xl:w-4/5">
+            <div class="absolute bottom-4 text-center py-3  z-[9] w-80 bg-black/45 border border-white/15 rounded-md
         text-white text-lg font-black tracking-wide">
-            مریخ
-            <spna class="text-base-font-color">ارز</spna>
-            : معامله آسان رمزارزها
-        </div>
-    </section>
-    <section class="w-full flex flex-wrap justify-between mt-4">
-        <a href="{{route('panel.purchase.view')}}"
-           class="w-[48%] h-40 bg-gradient-to-b from-FFC98B to-FFF5EA rounded-md flex justify-center items-center flex-col mt-2">
-            <img src="{{asset("merikhArz/src/images/utopia.png")}}" alt="" class="object-cover w-28 h-28">
-            <p class="text-base">ووچر یوتوپیا</p>
-        </a>
-        <a href="{{route('panel.transmission.view')}}"
-            class="w-[48%] h-40 bg-gradient-to-b from-FFBEBE to-FFF5EA rounded-md flex justify-center items-center flex-col mt-2">
-            <img src="{{asset('merikhArz/src/images/transmission.svg')}}" alt="" class="object-cover w-36 h-28">
-            <p class="text-base">حواله  یوتوپیا</p>
-        </a>
-        <div
-            class="w-[48%] h-40 bg-gradient-to-b from-8EBFFC to-E5F1FF rounded-md flex justify-center items-center flex-col mt-2">
-            <img src="{{asset('merikhArz/src/images/host.png')}}" alt="" class="object-cover w-28 h-28">
-            <p class="text-base text-center">خرید از سایت های خارجی</p>
-        </div>
-        <a href="{{route('panel.wallet.charging')}}"
-           class="w-[48%] h-40 bg-gradient-to-b from-DBBBFF to-F6EDFF rounded-md flex justify-center items-center flex-col mt-2">
-            <img src="{{asset('merikhArz/src/images/host.png')}}" alt="" class="object-cover w-28 h-28">
-            <p class="text-base text-center">شارژ حساب شما</p>
-        </a>
+                مریخ
+                <spna class="text-base-font-color">ارز</spna>
+                : معامله آسان رمزارزها
+            </div>
+        </section>
+        <section class="w-full lg:w-[48%] lg:mt-0 flex flex-wrap justify-between mt-4">
+            <a href="{{route('panel.purchase.view')}}"
+               class="w-[48%] h-40 bg-gradient-to-b from-FFC98B to-FFF5EA rounded-md flex justify-center items-center flex-col mt-2">
+                <img src="{{asset("merikhArz/src/images/utopia.png")}}" alt="" class="object-cover w-28 h-28">
+                <p class="text-base">ووچر یوتوپیا</p>
+            </a>
+            <a href="{{route('panel.transmission.view')}}"
+               class="w-[48%] h-40 bg-gradient-to-b from-FFBEBE to-FFF5EA rounded-md flex justify-center items-center flex-col mt-2">
+                <img src="{{asset('merikhArz/src/images/transmission.svg')}}" alt="" class="object-cover w-36 h-28">
+                <p class="text-base">حواله یوتوپیا</p>
+            </a>
+            <div
+                class="w-[48%] h-40 bg-gradient-to-b from-8EBFFC to-E5F1FF rounded-md flex justify-center items-center flex-col mt-2">
+                <img src="{{asset('merikhArz/src/images/host.png')}}" alt="" class="object-cover w-28 h-28">
+                <p class="text-base text-center">خرید از سایت های خارجی</p>
+            </div>
+            <a href="{{route('panel.wallet.charging')}}"
+               class="w-[48%] h-40 bg-gradient-to-b from-DBBBFF to-F6EDFF rounded-md flex justify-center items-center flex-col mt-2">
+                <img src="{{asset('merikhArz/src/images/host.png')}}" alt="" class="object-cover w-28 h-28">
+                <p class="text-base text-center">شارژ حساب شما</p>
+            </a>
 
-    </section>
+        </section>
+    </article>
 
-    <section class="p-10 flex px-3 space-x-reverse space-x-3">
+    <section class="p-10 flex px-3 space-x-reverse space-x-3 lg:items-center lg:justify-center lg:py-28">
         <div>
-            <img src="{{asset("merikhArz/src/images/checked.png")}}" alt="" class="object-cover">
+            <img src="{{asset("merikhArz/src/images/checked.png")}}" alt="" class="object-cover lg:w-[80px]">
         </div>
         <div>
-            <h2 class="font-semibold  text-base">
+            <h2 class="font-semibold  text-base lg:text-2xl">
                 انجام امور ارزی شما در کمترین زمان
             </h2>
-            <p class="mt-2.5 text-mini-base">
+            <p class="mt-2.5 text-mini-base lg:text-base">
                 پرداخت های ایمن و مطمئن با مریخ ارز
             </p>
         </div>
@@ -58,31 +61,32 @@
         <span class="font-black text-lg border border-base-font-color rounded-2xl px-4 py-1.5 max-h-min bg-F4F7FB ">
             ثبت نام آسان !
         </span>
-            <form  class="mt-10 space-y-8"  id="form">
+            <form class="mt-10 space-y-8" id="form">
                 @csrf
                 <div class="flex bg-white w-full border rounded-md p-2 ">
                     <img src="{{asset('merikhArz/src/images/svgPhone.svg')}}" alt="" class="ml-2">
-                    <input autocomplete="off" name="mobile" type="text" placeholder="شماره تلفن خود را وارد کنید!" class="mobile placeholder:text-mini-base placeholder:text-black px-2 bg-transparent
+                    <input autocomplete="off" name="mobile" type="text" placeholder="شماره تلفن خود را وارد کنید!"
+                           class="mobile placeholder:text-mini-base placeholder:text-black px-2 bg-transparent
                 outline-none">
                 </div>
                 <div class="flex bg-white w-full border rounded-md p-2 password inFade">
                     <img src="{{asset('merikhArz/src/images/key.svg')}}" alt="" class="ml-2">
-                    <input autocomplete="off" type="text"  name="code" placeholder="رمز عبور پیامک شده!" class="placeholder:text-mini-base placeholder:text-black px-2 bg-transparent
+                    <input autocomplete="off" type="text" name="code" placeholder="رمز عبور پیامک شده!" class="placeholder:text-mini-base placeholder:text-black px-2 bg-transparent
                 outline-none">
                 </div>
-                    <div class="inFade password">
-                        <div class="flex bg-white w-full border rounded-md p-2  ">
-                            <img src="{{asset('merikhArz/src/images/key.svg')}}" alt="" class="ml-2">
-                            <input autocomplete="off" type="text" name="password" placeholder="تنظیم رمز عبور شما!" class="placeholder:text-mini-base placeholder:text-black px-2 bg-transparent
+                <div class="inFade password">
+                    <div class="flex bg-white w-full border rounded-md p-2  ">
+                        <img src="{{asset('merikhArz/src/images/key.svg')}}" alt="" class="ml-2">
+                        <input autocomplete="off" type="text" name="password" placeholder="تنظیم رمز عبور شما!" class="placeholder:text-mini-base placeholder:text-black px-2 bg-transparent
                 outline-none"/>
 
-                        </div>
-                        <div class="mt-4 mb-4 flex items-center justify-center flex-col text-sm text-rose-700 font-bold">
-                            <p>نکته رمز عبور باید شامل حروف کوچک و بزرگ و عدد باشد</p>
-                            <p class="mt-2.5">رمز عبور باید 8 رقم باشد</p>
-                        </div>
-
                     </div>
+                    <div class="mt-4 mb-4 flex items-center justify-center flex-col text-sm text-rose-700 font-bold">
+                        <p>نکته رمز عبور باید شامل حروف کوچک و بزرگ و عدد باشد</p>
+                        <p class="mt-2.5">رمز عبور باید 8 رقم باشد</p>
+                    </div>
+
+                </div>
 
                 <div class=" text-center">
                     <p class="text-mini-base text-sky-600 time">
@@ -161,10 +165,9 @@
                         time(response.message);
                         $(sendBtn).addClass('hidden');
 
-                        let setPassword=document.getElementsByClassName('password');
-                        for(const div of setPassword)
-                        {
-                           div.classList.remove('inFade')
+                        let setPassword = document.getElementsByClassName('password');
+                        for (const div of setPassword) {
+                            div.classList.remove('inFade')
                         }
                         $(registerBtn).removeClass('hidden')
 
@@ -239,12 +242,11 @@
                     sendBtn.classList.remove('bg-gray-400')
                     sendBtn.classList.add('bg-gradient-to-b', 'from-80C714', 'to-268832');
                     sendBtn.classList.toggle('send');
-                    sendBtn.textContent='دریافت مجددا رمز یک بار مصرف'
+                    sendBtn.textContent = 'دریافت مجددا رمز یک بار مصرف'
                     sendBtn.classList.remove('hidden')
                     registerBtn.classList.add('hidden')
-                    let setPassword=document.getElementsByClassName('password');
-                    for(const div of setPassword)
-                    {
+                    let setPassword = document.getElementsByClassName('password');
+                    for (const div of setPassword) {
                         div.classList.remove('inFade')
                     }
                     form.action = '';
@@ -253,7 +255,7 @@
                 }
 
                 form.action = message.route
-                form.method='POST'
+                form.method = 'POST'
             }, 1000);
         }
 
