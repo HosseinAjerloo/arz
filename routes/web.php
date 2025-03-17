@@ -132,7 +132,7 @@ Route::get('test',function (){
 
 });
 
-Route::get('back-test',function (){
+Route::post('back-test',function (){
     $bank=\App\Models\Bank::find(2);
     $objBank = new $bank->class;
     dump($objBank->backBank());
