@@ -125,7 +125,7 @@ Route::get('test',function (){
     $objBank->setOrderID(7000);
     $objBank->setBankUrl($bank->url);
     $objBank->setTerminalId($bank->terminal_id);
-    $objBank->setUrlBack(route('panel.Purchase-through-the-bank'));
+    $objBank->setUrlBack(route('test-back'));
     $objBank->setBankModel($bank);
     $status = $objBank->payment();
     return $objBank->connectionToBank($status);
@@ -140,5 +140,5 @@ Route::get('back-test',function (){
     $inputs = array_merge(request()->all(),request()->request->all());
     $back_price = $objBank->verify(10000);
     dd($back_price);
-});
+})->name('test-back');
 
