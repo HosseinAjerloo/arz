@@ -70,13 +70,11 @@ class AdminController extends Controller
     {
         $currentUser=Auth::user();
         if ($currentUser->type=='admin'){
+            session(['previous_user'=>$currentUser->id]);
+        }
+        else{
             if (session()->has('previous_user'))
-            {
                 session()->remove('previous_user');
-            }
-            else{
-                session(['previous_user'=>$currentUser->id]);
-            }
         }
 
         Auth::loginUsingId($user->id);

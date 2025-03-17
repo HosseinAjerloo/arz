@@ -6,13 +6,15 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\User\SearchRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
     public function index()
     {
-        $users=User::orderBy('id','desc')->paginate(15,['*'],'pageUser');
-        return view('Admin.User.index',compact('users'));
+        $currentUser=Auth::user();
+        $users=User::orderBy('id','desc')->where('id','!=',$currentUser->id)->paginate(15,['*'],'pageUser');
+        return view('Admin.User.index',compact('users','currentUser'));
     }
     public function inactive(User $user)
     {
