@@ -3,7 +3,7 @@
     <section class="errors">
 
     </section>
-    <section class=" w-full border-2 border-black/15 rounded-lg mt-4">
+    <section class=" container mx-auto w-full border-2 border-black/15 rounded-lg mt-4">
         <header class="flex items-center justify-center h-10 bg-DFEDFF rounded-lg space-x-2 space-x-reverse p-1.5">
 
             <img src="{{asset('merikhArz/src/images/transmission.svg')}}" class="w-[54px]">
@@ -16,14 +16,14 @@
                 @csrf
                 <div class="flex items-center space-x-reverse space-x-2 ">
                     <p class="text-black font-bold text-mini-mini-base w-28 leading-4">آدرس حساب مقصد :</p>
-                    <input type="text" class="py-1.5 px-4 border border-black rounded-md text-black w-full"
+                    <input type="text" class="py-1.5 px-4 border border-black rounded-md text-black w-full  md:w-[30%] 2xl:w-[20%]"
                            name="transmission">
                     <img src="{{asset('merikhArz/src/images/pasteIcon.svg')}}" alt="">
                 </div>
                 <div class="flex items-center space-x-reverse space-x-2 ">
                     <p class="text-black font-bold text-mini-mini-base w-28 leading-4">مبلغ حواله (دلار) :</p>
                     <input type="text"
-                           class="customPayment py-1.5 px-4 border border-black rounded-md text-black w-full"
+                           class="customPayment py-1.5 px-4 border border-black rounded-md text-black w-full  md:w-[30%] 2xl:w-[20%]"
                            name="custom_payment">
                     <img src="{{asset('merikhArz/src/images/pasteIcon.svg')}}" alt="">
                 </div>
@@ -32,7 +32,7 @@
 
 
 
-                <div class="flex items-center space-x-reverse space-x-2 ">
+                <div class="flex items-center justify-center p-2 space-x-reverse space-x-2 border-2 border-rose-800 rounded-md w-36">
                     <p class=" font-bold text-mini-mini-base w-24 leading-4 text-sky-600 underline underline-offset-8">
                         قوانین را می پذیرم :</p>
                     <input type="checkbox" class="py-1.5 px-4 border border-black rounded-md text-black "
@@ -42,7 +42,12 @@
                 <div class="flex items-center rounded-lg space-x-2 space-x-reverse mt-4 ">
                     <img src="{{asset('merikhArz/src/images/seke.svg')}}" alt="">
                     <h1 class="text-sm">
-                        <span class="text-mini-base font-bold text-rose-700 amountPayment">0</span> ریال
+                        <span class="text-mini-base font-bold text-rose-700 amountPayment">
+                              @if(old('custom_payment'))
+                                مبلغ قابل پرداخت
+                                {{numberFormat((floor(($dollar->DollarRateWithAddedValue() * old('custom_payment')) /10000 )*10000))}}
+                            @endif
+                        </span> ریال
                     </h1>
                 </div>
 
@@ -57,27 +62,30 @@
                     </h1>
                 </div>
 
-                @foreach($banks as $bank)
+                <div class="flex flex-col  w-full md:flex-row md:space-x-reverse space-y-3 md:space-y-0 md:space-x-4  ">
 
-                    <div class="flex items-center justify-center action">
-                        <label for="bank-{{$bank->id}}" type="button" onclick="selectBank({{$bank->id}})"
-                               class="labelBank cursor-pointer bg-gradient-to-b from-268832 to-80C714 flex items-center justify-center space-x-reverse space-x-2 text-mini-mini-base px-4 py-2.5 text-white rounded-lg w-full">
-                            <span class="w-48 text-mini-base leading-4">پرداخت با {{$bank->name??''}}</span>
-                            <img src="{{asset('merikhArz/src/images/bankkart.svg')}}" alt="" class="bg-cover w-5 h-5 ">
-                        </label>
-                        <input type="radio" value="{{$bank->id}}"  name="bank" id="bank-{{$bank->id}}" class="action hidden">
+                        @foreach($banks as $bank)
+
+                            <div class="flex items-center justify-center action  md:w-[40%] lg:w-[30%] 2xl:w-[16%]">
+                                <label for="bank-{{$bank->id}}" type="button" onclick="selectBank({{$bank->id}})"
+                                       class="labelBank cursor-pointer bg-gradient-to-b from-268832 to-80C714 flex items-center justify-center space-x-reverse space-x-2 text-mini-mini-base px-4 py-2.5 text-white rounded-lg w-full">
+                                    <span class="w-48 text-mini-base leading-4">پرداخت با {{$bank->name??''}}</span>
+                                    <img src="{{asset('merikhArz/src/images/bankkart.svg')}}" alt="" class="bg-cover w-5 h-5 ">
+                                </label>
+                                <input type="radio" value="{{$bank->id}}"  name="bank" id="bank-{{$bank->id}}" class="action hidden">
+                            </div>
+
+                        @endforeach
+
+
+                        <div class="flex items-center justify-center action  md:w-[40%] lg:w-[30%] 2xl:w-[16%]">
+                            <button
+                                class="submitWallet bg-gradient-to-b from-DE9408 to-FFC98B flex items-center justify-center space-x-reverse space-x-2 text-mini-mini-base px-4 py-2.5 text-white rounded-lg w-full">
+                                <span class="w-48 text-mini-base leading-4">پرداخت از طریق کیف پول</span>
+                                <img src="{{asset('merikhArz/src/images/walletWhite.svg')}}" alt="" class="bg-cover w-5 h-5 ">
+                            </button>
+                        </div>
                     </div>
-
-                @endforeach
-
-
-                <div class="flex items-center justify-center action">
-                    <button
-                        class="submitWallet bg-gradient-to-b from-DE9408 to-FFC98B flex items-center justify-center space-x-reverse space-x-2 text-mini-mini-base px-4 py-2.5 text-white rounded-lg w-full">
-                        <span class="w-48 text-mini-base leading-4">پرداخت از طریق کیف پول</span>
-                        <img src="{{asset('merikhArz/src/images/walletWhite.svg')}}" alt="" class="bg-cover w-5 h-5 ">
-                    </button>
-                </div>
                 <div class="flex items-center justify-center  ">
                     <h1 class="font-bold text-xl flex items-center justify-center text-right loading">
 

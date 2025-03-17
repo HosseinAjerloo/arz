@@ -2,7 +2,7 @@
 
 @section('content')
 
-    <form class=" w-full border-2 border-black/15 rounded-lg mt-4" method="post" action="{{route('panel.wallet.charging.store')}}">
+    <form class="container mx-auto w-full md:w-1/2 lg:w-1/3 border-2 border-black/15 rounded-lg mt-4" method="post" action="{{route('panel.wallet.charging.store')}}">
         @csrf
         <header class="flex items-center justify-center h-10 bg-DFEDFF rounded-lg space-x-2 space-x-reverse p-1.5">
             <img src="{{asset('merikhArz/src/images/wallet.svg')}}" alt="" class="w-5 h-5">

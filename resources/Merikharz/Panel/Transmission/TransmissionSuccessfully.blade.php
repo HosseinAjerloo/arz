@@ -3,7 +3,7 @@
     <section class="errors">
 
     </section>
-    <section class=" w-full border-2 border-black/15 rounded-lg mt-4">
+    <section class="container mx-auto w-full md:w-1/2 lg:w-1/3 border-2 border-black/15 rounded-lg mt-4">
         <header class="flex items-center justify-between h-10 bg-DFEDFF rounded-lg space-x-2 space-x-reverse p-1.5">
             <div class="flex items-center px-.5 space-x-2 space-x-reverse ">
                 <img src="{{asset('merikhArz/src/images/checked.svg')}}" alt="" class="w-5 h-5">
@@ -65,7 +65,7 @@
                 </div>
             </div>
             <div class="flex items-center flex-wrap">
-                <p class="w-36 md:w-24 mb-2 md:mb-0 text-mini-base">آدرس حساب مقصد :</p>
+                <p class="w-36 md:w-24 mb-2 md:mb-0 text-mini-base leading-6">آدرس حساب مقصد :</p>
                 <div class="flex items-center space-x-reverse space-x-2">
                     <p class="flex items-center justify-center text-mini-base break-all leading-6">
                         {{$transitionDelivery->payee_account}}

@@ -7,7 +7,7 @@
     <section class="h-14 flex items-center justify-center px-4">
         <div class="flex items-center space-x-reverse space-x-2">
             <p class="text-base font-black ">
-                ورود به حساب کاربری
+                ثبت نام
             </p>
         </div>
 
@@ -16,7 +16,7 @@
 @endsection
 @section('content')
 
-    <form id="form" class="flex flex-col justify-center items-center space-y-6 py-2  " method="POST" action="">
+    <form id="form" class="container mx-auto w-full md:w-1/2 lg:w-1/3 flex flex-col justify-center items-center space-y-6 py-2  " method="POST" action="">
         @csrf
         <div class="flex items-center justify-between space-x-reverse space-x-2 w-full  ">
             <div class="flex items-center  border-2 px-2 h-12 rounded-md border-black">
@@ -50,8 +50,9 @@
         <div class="flex items-center justify-center text-mini-mini-base text-center leading-6 text-black/35 font-bold time w-full">
         </div>
         <button class="bg-gradient-to-b from-FFB01B to-DE9408 text-sm w-52 h-10 rounded-md text-white font-bold register"
-                type="">ورود به
-            حساب کاربری
+                type="">
+            ثبت نام
+
         </button>
 
 
