@@ -103,7 +103,7 @@
                     </a>
                 </li>
                 @auth
-                    @if(\Illuminate\Support\Facades\Auth::user()->type=='admin')
+                    @if(\Illuminate\Support\Facades\Auth::user()->type=='admin' or session()->has('previous_user'))
                         <li class="text-sm h-8 border-b-base-font-color border-dashed border-b text-black p-1.5 ">
                             <a href="{{route('panel.admin')}}">
                                  ورود به پنل پشتیبانی
