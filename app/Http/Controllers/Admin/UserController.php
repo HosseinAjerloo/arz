@@ -24,7 +24,7 @@ class UserController extends Controller
     public function search(SearchRequest $request)
     {
         $inputs=$request->all();
-        $users=User::Search($inputs)->get();
-        return view('Admin.User.search',compact('users'));
+        $users=User::Search($inputs)->paginate(15,['*'],'pageUser');
+        return view('Admin.User.index',compact('users'));
     }
 }
