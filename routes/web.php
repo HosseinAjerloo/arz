@@ -118,27 +118,3 @@ Route::fallback(function () {
     abort(404);
 });
 
-Route::get('test',function (){
-    $bank=\App\Models\Bank::find(2);
-    $objBank = new $bank->class;
-    $objBank->setTotalPrice(10000);
-    $objBank->setOrderID(7003);
-    $objBank->setBankUrl($bank->url);
-    $objBank->setTerminalId($bank->terminal_id);
-    $objBank->setUrlBack(route('test-back'));
-    $objBank->setBankModel($bank);
-    $status = $objBank->payment();
-    return $objBank->connectionToBank($status);
-
-});
-
-Route::post('back-test',function (){
-    $bank=\App\Models\Bank::find(2);
-    $objBank = new $bank->class;
-    dump($objBank->backBank());
-    $objBank->setBankModel($bank);
-    $inputs = array_merge(request()->all(),request()->request->all());
-    $back_price = $objBank->verify(10000);
-    dd($back_price,$inputs);
-})->name('test-back')->withoutMiddleware(Illuminate\Foundation\Http\Middleware\ValidateCsrfToken::class);
-
