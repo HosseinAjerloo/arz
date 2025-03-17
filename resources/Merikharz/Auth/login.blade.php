@@ -12,7 +12,7 @@
 </section>
 @endsection
 @section('content')
-<form class="flex flex-col justify-center items-center space-y-6 py-2 pb-6  border-b border-black/40" method="POST" action="{{route('login.simple-post')}}">
+<form class="container mx-auto w-full md:w-1/2 lg:w-1/3 flex flex-col justify-center items-center space-y-6 py-2 pb-6  border-b border-black/40" method="POST" action="{{route('login.simple-post')}}">
     @csrf
     <div class="flex items-center space-x-reverse space-x-2 w-full border-black border-2 px-2 h-12 rounded-md">
         <img src="{{asset('merikhArz/src/images/svgPhone.svg')}}" alt="" class="w-6 h-6">
@@ -46,7 +46,7 @@
         حساب کاربری
     </button>
 
-    <a class="text-sm w-52 h-10 rounded-md text-white font-bold bg-black flex items-center justify-center space-x-reverse space-x-2" >
+    <a class="hidden text-sm w-52 h-10 rounded-md text-white font-bold bg-black flex items-center justify-center space-x-reverse space-x-2" >
         <img src="../../src/images/google.svg" alt="">
         <span>
              ورود سریع با گوگل

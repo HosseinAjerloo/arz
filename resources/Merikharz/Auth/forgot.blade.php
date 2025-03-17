@@ -12,7 +12,7 @@
     </section>
 @endsection
 @section('content')
-    <form class="flex flex-col justify-center items-center space-y-6 py-2 pb-6  border-b border-black/40" method="POST" action="{{route('post.forgotPassword')}}">
+    <form class="container mx-auto w-full md:w-1/2 lg:w-1/3 flex flex-col justify-center items-center space-y-6 py-2 pb-6  border-b border-black/40" method="POST" action="{{route('post.forgotPassword')}}">
         @csrf
         <div class="flex items-center space-x-reverse space-x-2 w-full border-black border-2 px-2 h-12 rounded-md">
             <img src="{{asset('merikhArz/src/images/svgPhone.svg')}}" alt="" class="w-6 h-6">

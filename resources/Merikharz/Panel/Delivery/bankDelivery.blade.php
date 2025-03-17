@@ -27,7 +27,7 @@
     </section>
 @endsection
 @section('content')
-    <section class=" w-full border-2 border-black/15 rounded-lg mt-4 ">
+    <section class=" container mx-auto w-full md:w-1/2 lg:w-1/3 border-2 border-black/15 rounded-lg mt-4 ">
         <header class="flex items-center justify-center h-10 bg-DFEDFF rounded-lg space-x-2 space-x-reverse p-1.5">
             <img src="{{asset('merikhArz/src/images/checked.svg')}}" alt="" class="w-5 h-5 hidden image-success">
             <i class="fa-solid fa-spinner loading text-green-600"></i>
