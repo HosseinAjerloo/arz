@@ -122,7 +122,7 @@ Route::get('test',function (){
     $bank=\App\Models\Bank::find(2);
     $objBank = new $bank->class;
     $objBank->setTotalPrice(10000);
-    $objBank->setOrderID(7001);
+    $objBank->setOrderID(7002);
     $objBank->setBankUrl($bank->url);
     $objBank->setTerminalId($bank->terminal_id);
     $objBank->setUrlBack(route('test-back'));
