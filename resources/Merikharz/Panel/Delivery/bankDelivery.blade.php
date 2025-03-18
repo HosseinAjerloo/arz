@@ -88,7 +88,7 @@
         function copyToClipboard(text) {
 
             var textArea = document.createElement( "textarea" );
-            textArea.value = text;
+            textArea.value = text.trim()
             document.body.appendChild( textArea );
             textArea.select();
 
