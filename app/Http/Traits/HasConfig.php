@@ -73,6 +73,7 @@ trait HasConfig
 
     protected function verifay($token)
     {
+        $user=Auth::user();
         $voucher = Voucher::where('code', $token)->first();
         if ($voucher){
 
@@ -83,7 +84,8 @@ trait HasConfig
             $this->inputsConfig->hostValue=[
                 'utopia_voucher' => $token,
                 'validate' => $this->inputsConfig->type,
-                'amount' => $this->inputsConfig->payment_amount
+                'amount' => $this->inputsConfig->payment_amount,
+                'mobile'=>$user->mobile??null
             ];
 
             if (!$this->requestToHost()){
@@ -194,6 +196,7 @@ trait HasConfig
 
     protected function customVoucherTransfer($amount)
     {
+        $user=Auth::user();
         $this->inputsConfig->payment_amount = $amount;
         $this->inputsConfig->payment_batch_num=$this->generateTokenTransmissionUtopia();
         $this->inputsConfig->type = 'merikhArz';
@@ -201,7 +204,9 @@ trait HasConfig
         $this->inputsConfig->hostValue=[
             'hash' => $this->inputsConfig->payment_batch_num,
             'validate' => $this->inputsConfig->type,
-            'amount' => $this->inputsConfig->payment_amount
+            'amount' => $this->inputsConfig->payment_amount,
+            'mobile'=>$user->mobile??null
+
         ];
         if (!$this->requestToHost()){
             return false;
