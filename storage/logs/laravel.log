@@ -1,0 +1,203 @@
+[2025-04-05 09:33:09] local.EMERGENCY: panel Controller :{"VOUCHER_CODE":"USD-1ZWC-FP3Y-64SN-TJMD-OUAZ"}  
+[2025-04-05 09:36:04] local.EMERGENCY: panel Controller :{"VOUCHER_CODE":"USD-1YHP-PE23-RYSD-SKJA-ZCLR"}  
+[2025-04-05 09:37:03] local.EMERGENCY: panel Controller :{"VOUCHER_CODE":"USD-2D8T-RICI-YLYY-PDTY-YZBM"}  
+[2025-04-05 09:38:42] local.EMERGENCY: panel Controller :{"VOUCHER_CODE":"USD-7BNB-1R20-HZ7A-CFVU-UKOB"}  
+[2025-04-05 15:55:08] local.EMERGENCY: panel Controller :{"VOUCHER_CODE":"USD-85UK-N0WR-TEU8-ZBXT-M0OD"}  
+[2025-04-05 20:03:50] local.EMERGENCY: panel Controller :{"VOUCHER_CODE":"USD-8MLH-FRE8-833X-97OJ-XFYX"}  
+[2025-04-06 12:09:58] local.EMERGENCY: panel Controller :{"VOUCHER_CODE":"USD-2T72-IGYP-FRGT-ICFZ-SNLO"}  
+[2025-04-06 17:24:58] local.EMERGENCY: panel Controller :{"VOUCHER_CODE":"USD-3KQK-AMDZ-NJHE-XMW9-G4BE"}  
+[2025-04-07 19:24:15] local.EMERGENCY: panel Controller :{"VOUCHER_CODE":"USD-7JXF-TUD5-TANB-K1ZJ-5KL2"}  
+[2025-04-07 19:58:41] local.EMERGENCY: panel Controller :{"VOUCHER_CODE":"USD-32MO-WKVP-UM6T-8HRY-DYXM"}  
+[2025-04-08 16:00:51] local.EMERGENCY: panel Controller :{"VOUCHER_CODE":"USD-9ZBT-RFH4-ZYKI-AVYQ-3MCW"}  
+[2025-04-08 18:52:31] local.EMERGENCY: panel Controller :{"VOUCHER_CODE":"USD-54BJ-DSVQ-YEPA-CMIZ-JU03"}  
+[2025-04-08 20:55:08] local.EMERGENCY: panel Controller :{"VOUCHER_CODE":"USD-1I7Y-TVYQ-Y5FF-1CTR-AKHX"}  
+[2025-04-09 00:00:20] local.ERROR: cURL error 28: Resolving timed out after 10000 milliseconds (see https://curl.haxx.se/libcurl/c/libcurl-errors.html) for https://api.nobitex.ir/market/stats {"exception":"[object] (Illuminate\\Http\\Client\\ConnectionException(code: 0): cURL error 28: Resolving timed out after 10000 milliseconds (see https://curl.haxx.se/libcurl/c/libcurl-errors.html) for https://api.nobitex.ir/market/stats at /home/arz/vendor/laravel/framework/src/Illuminate/Http/Client/PendingRequest.php:941)
+[stacktrace]
+#0 /home/arz/vendor/laravel/framework/src/Illuminate/Support/helpers.php(338): Illuminate\\Http\\Client\\PendingRequest->Illuminate\\Http\\Client\\{closure}()
+#1 /home/arz/vendor/laravel/framework/src/Illuminate/Http/Client/PendingRequest.php(905): retry()
+#2 /home/arz/vendor/laravel/framework/src/Illuminate/Http/Client/PendingRequest.php(804): Illuminate\\Http\\Client\\PendingRequest->send()
+#3 /home/arz/vendor/laravel/framework/src/Illuminate/Http/Client/Factory.php(510): Illuminate\\Http\\Client\\PendingRequest->post()
+#4 /home/arz/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php(361): Illuminate\\Http\\Client\\Factory->__call()
+#5 /home/arz/app/Console/Commands/ExchangeRateUpdateCommand.php(34): Illuminate\\Support\\Facades\\Facade::__callStatic()
+#6 /home/arz/vendor/laravel/framework/src/Illuminate/Container/BoundMethod.php(36): App\\Console\\Commands\\ExchangeRateUpdateCommand->handle()
+#7 /home/arz/vendor/laravel/framework/src/Illuminate/Container/Util.php(43): Illuminate\\Container\\BoundMethod::Illuminate\\Container\\{closure}()
+#8 /home/arz/vendor/laravel/framework/src/Illuminate/Container/BoundMethod.php(95): Illuminate\\Container\\Util::unwrapIfClosure()
+#9 /home/arz/vendor/laravel/framework/src/Illuminate/Container/BoundMethod.php(35): Illuminate\\Container\\BoundMethod::callBoundMethod()
+#10 /home/arz/vendor/laravel/framework/src/Illuminate/Container/Container.php(696): Illuminate\\Container\\BoundMethod::call()
+#11 /home/arz/vendor/laravel/framework/src/Illuminate/Console/Command.php(213): Illuminate\\Container\\Container->call()
+#12 /home/arz/vendor/symfony/console/Command/Command.php(279): Illuminate\\Console\\Command->execute()
+#13 /home/arz/vendor/laravel/framework/src/Illuminate/Console/Command.php(182): Symfony\\Component\\Console\\Command\\Command->run()
+#14 /home/arz/vendor/symfony/console/Application.php(1094): Illuminate\\Console\\Command->run()
+#15 /home/arz/vendor/symfony/console/Application.php(342): Symfony\\Component\\Console\\Application->doRunCommand()
+#16 /home/arz/vendor/symfony/console/Application.php(193): Symfony\\Component\\Console\\Application->doRun()
+#17 /home/arz/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(198): Symfony\\Component\\Console\\Application->run()
+#18 /home/arz/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(1235): Illuminate\\Foundation\\Console\\Kernel->handle()
+#19 /home/arz/artisan(13): Illuminate\\Foundation\\Application->handleCommand()
+#20 {main}
+
+[previous exception] [object] (GuzzleHttp\\Exception\\ConnectException(code: 0): cURL error 28: Resolving timed out after 10000 milliseconds (see https://curl.haxx.se/libcurl/c/libcurl-errors.html) for https://api.nobitex.ir/market/stats at /home/arz/vendor/guzzlehttp/guzzle/src/Handler/CurlFactory.php:275)
+[stacktrace]
+#0 /home/arz/vendor/guzzlehttp/guzzle/src/Handler/CurlFactory.php(205): GuzzleHttp\\Handler\\CurlFactory::createRejection()
+#1 /home/arz/vendor/guzzlehttp/guzzle/src/Handler/CurlFactory.php(157): GuzzleHttp\\Handler\\CurlFactory::finishError()
+#2 /home/arz/vendor/guzzlehttp/guzzle/src/Handler/CurlHandler.php(47): GuzzleHttp\\Handler\\CurlFactory::finish()
+#3 /home/arz/vendor/guzzlehttp/guzzle/src/Handler/Proxy.php(28): GuzzleHttp\\Handler\\CurlHandler->__invoke()
+#4 /home/arz/vendor/guzzlehttp/guzzle/src/Handler/Proxy.php(48): GuzzleHttp\\Handler\\Proxy::GuzzleHttp\\Handler\\{closure}()
+#5 /home/arz/vendor/laravel/framework/src/Illuminate/Http/Client/PendingRequest.php(1339): GuzzleHttp\\Handler\\Proxy::GuzzleHttp\\Handler\\{closure}()
+#6 /home/arz/vendor/laravel/framework/src/Illuminate/Http/Client/PendingRequest.php(1305): Illuminate\\Http\\Client\\PendingRequest->Illuminate\\Http\\Client\\{closure}()
+#7 /home/arz/vendor/laravel/framework/src/Illuminate/Http/Client/PendingRequest.php(1291): Illuminate\\Http\\Client\\PendingRequest->Illuminate\\Http\\Client\\{closure}()
+#8 /home/arz/vendor/guzzlehttp/guzzle/src/PrepareBodyMiddleware.php(64): Illuminate\\Http\\Client\\PendingRequest->Illuminate\\Http\\Client\\{closure}()
+#9 /home/arz/vendor/guzzlehttp/guzzle/src/Middleware.php(38): GuzzleHttp\\PrepareBodyMiddleware->__invoke()
+#10 /home/arz/vendor/guzzlehttp/guzzle/src/RedirectMiddleware.php(71): GuzzleHttp\\Middleware::GuzzleHttp\\{closure}()
+#11 /home/arz/vendor/guzzlehttp/guzzle/src/Middleware.php(63): GuzzleHttp\\RedirectMiddleware->__invoke()
+#12 /home/arz/vendor/guzzlehttp/guzzle/src/HandlerStack.php(75): GuzzleHttp\\Middleware::GuzzleHttp\\{closure}()
+#13 /home/arz/vendor/guzzlehttp/guzzle/src/Client.php(333): GuzzleHttp\\HandlerStack->__invoke()
+#14 /home/arz/vendor/guzzlehttp/guzzle/src/Client.php(169): GuzzleHttp\\Client->transfer()
+#15 /home/arz/vendor/guzzlehttp/guzzle/src/Client.php(189): GuzzleHttp\\Client->requestAsync()
+#16 /home/arz/vendor/laravel/framework/src/Illuminate/Http/Client/PendingRequest.php(1137): GuzzleHttp\\Client->request()
+#17 /home/arz/vendor/laravel/framework/src/Illuminate/Http/Client/PendingRequest.php(907): Illuminate\\Http\\Client\\PendingRequest->sendRequest()
+#18 /home/arz/vendor/laravel/framework/src/Illuminate/Support/helpers.php(338): Illuminate\\Http\\Client\\PendingRequest->Illuminate\\Http\\Client\\{closure}()
+#19 /home/arz/vendor/laravel/framework/src/Illuminate/Http/Client/PendingRequest.php(905): retry()
+#20 /home/arz/vendor/laravel/framework/src/Illuminate/Http/Client/PendingRequest.php(804): Illuminate\\Http\\Client\\PendingRequest->send()
+#21 /home/arz/vendor/laravel/framework/src/Illuminate/Http/Client/Factory.php(510): Illuminate\\Http\\Client\\PendingRequest->post()
+#22 /home/arz/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php(361): Illuminate\\Http\\Client\\Factory->__call()
+#23 /home/arz/app/Console/Commands/ExchangeRateUpdateCommand.php(34): Illuminate\\Support\\Facades\\Facade::__callStatic()
+#24 /home/arz/vendor/laravel/framework/src/Illuminate/Container/BoundMethod.php(36): App\\Console\\Commands\\ExchangeRateUpdateCommand->handle()
+#25 /home/arz/vendor/laravel/framework/src/Illuminate/Container/Util.php(43): Illuminate\\Container\\BoundMethod::Illuminate\\Container\\{closure}()
+#26 /home/arz/vendor/laravel/framework/src/Illuminate/Container/BoundMethod.php(95): Illuminate\\Container\\Util::unwrapIfClosure()
+#27 /home/arz/vendor/laravel/framework/src/Illuminate/Container/BoundMethod.php(35): Illuminate\\Container\\BoundMethod::callBoundMethod()
+#28 /home/arz/vendor/laravel/framework/src/Illuminate/Container/Container.php(696): Illuminate\\Container\\BoundMethod::call()
+#29 /home/arz/vendor/laravel/framework/src/Illuminate/Console/Command.php(213): Illuminate\\Container\\Container->call()
+#30 /home/arz/vendor/symfony/console/Command/Command.php(279): Illuminate\\Console\\Command->execute()
+#31 /home/arz/vendor/laravel/framework/src/Illuminate/Console/Command.php(182): Symfony\\Component\\Console\\Command\\Command->run()
+#32 /home/arz/vendor/symfony/console/Application.php(1094): Illuminate\\Console\\Command->run()
+#33 /home/arz/vendor/symfony/console/Application.php(342): Symfony\\Component\\Console\\Application->doRunCommand()
+#34 /home/arz/vendor/symfony/console/Application.php(193): Symfony\\Component\\Console\\Application->doRun()
+#35 /home/arz/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(198): Symfony\\Component\\Console\\Application->run()
+#36 /home/arz/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(1235): Illuminate\\Foundation\\Console\\Kernel->handle()
+#37 /home/arz/artisan(13): Illuminate\\Foundation\\Application->handleCommand()
+#38 {main}
+"} 
+[2025-04-09 10:19:49] local.EMERGENCY: panel Controller :{"VOUCHER_CODE":"USD-9KLN-YP10-YLQL-I5WE-0F6E"}  
+[2025-04-09 10:56:22] local.EMERGENCY: panel Controller :{"VOUCHER_CODE":"USD-8LGK-DF9O-WWHL-QTSL-L5AV"}  
+[2025-04-09 14:20:22] local.EMERGENCY: panel Controller :{"VOUCHER_CODE":"USD-1S0P-Q679-D1JE-WU1K-1FG5"}  
+[2025-04-09 14:57:04] local.EMERGENCY: panel Controller :{"VOUCHER_CODE":"USD-6T7Y-N2E8-TDBA-PV7V-XFK5"}  
+[2025-04-09 20:09:53] local.EMERGENCY: panel Controller :{"VOUCHER_CODE":"USD-1THC-8BWG-RSBT-LSJN-US0U"}  
+[2025-04-10 01:00:12] local.ERROR: cURL error 28: Resolving timed out after 10000 milliseconds (see https://curl.haxx.se/libcurl/c/libcurl-errors.html) for https://api.nobitex.ir/market/stats {"exception":"[object] (Illuminate\\Http\\Client\\ConnectionException(code: 0): cURL error 28: Resolving timed out after 10000 milliseconds (see https://curl.haxx.se/libcurl/c/libcurl-errors.html) for https://api.nobitex.ir/market/stats at /home/arz/vendor/laravel/framework/src/Illuminate/Http/Client/PendingRequest.php:941)
+[stacktrace]
+#0 /home/arz/vendor/laravel/framework/src/Illuminate/Support/helpers.php(338): Illuminate\\Http\\Client\\PendingRequest->Illuminate\\Http\\Client\\{closure}()
+#1 /home/arz/vendor/laravel/framework/src/Illuminate/Http/Client/PendingRequest.php(905): retry()
+#2 /home/arz/vendor/laravel/framework/src/Illuminate/Http/Client/PendingRequest.php(804): Illuminate\\Http\\Client\\PendingRequest->send()
+#3 /home/arz/vendor/laravel/framework/src/Illuminate/Http/Client/Factory.php(510): Illuminate\\Http\\Client\\PendingRequest->post()
+#4 /home/arz/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php(361): Illuminate\\Http\\Client\\Factory->__call()
+#5 /home/arz/app/Console/Commands/ExchangeRateUpdateCommand.php(34): Illuminate\\Support\\Facades\\Facade::__callStatic()
+#6 /home/arz/vendor/laravel/framework/src/Illuminate/Container/BoundMethod.php(36): App\\Console\\Commands\\ExchangeRateUpdateCommand->handle()
+#7 /home/arz/vendor/laravel/framework/src/Illuminate/Container/Util.php(43): Illuminate\\Container\\BoundMethod::Illuminate\\Container\\{closure}()
+#8 /home/arz/vendor/laravel/framework/src/Illuminate/Container/BoundMethod.php(95): Illuminate\\Container\\Util::unwrapIfClosure()
+#9 /home/arz/vendor/laravel/framework/src/Illuminate/Container/BoundMethod.php(35): Illuminate\\Container\\BoundMethod::callBoundMethod()
+#10 /home/arz/vendor/laravel/framework/src/Illuminate/Container/Container.php(696): Illuminate\\Container\\BoundMethod::call()
+#11 /home/arz/vendor/laravel/framework/src/Illuminate/Console/Command.php(213): Illuminate\\Container\\Container->call()
+#12 /home/arz/vendor/symfony/console/Command/Command.php(279): Illuminate\\Console\\Command->execute()
+#13 /home/arz/vendor/laravel/framework/src/Illuminate/Console/Command.php(182): Symfony\\Component\\Console\\Command\\Command->run()
+#14 /home/arz/vendor/symfony/console/Application.php(1094): Illuminate\\Console\\Command->run()
+#15 /home/arz/vendor/symfony/console/Application.php(342): Symfony\\Component\\Console\\Application->doRunCommand()
+#16 /home/arz/vendor/symfony/console/Application.php(193): Symfony\\Component\\Console\\Application->doRun()
+#17 /home/arz/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(198): Symfony\\Component\\Console\\Application->run()
+#18 /home/arz/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(1235): Illuminate\\Foundation\\Console\\Kernel->handle()
+#19 /home/arz/artisan(13): Illuminate\\Foundation\\Application->handleCommand()
+#20 {main}
+
+[previous exception] [object] (GuzzleHttp\\Exception\\ConnectException(code: 0): cURL error 28: Resolving timed out after 10000 milliseconds (see https://curl.haxx.se/libcurl/c/libcurl-errors.html) for https://api.nobitex.ir/market/stats at /home/arz/vendor/guzzlehttp/guzzle/src/Handler/CurlFactory.php:275)
+[stacktrace]
+#0 /home/arz/vendor/guzzlehttp/guzzle/src/Handler/CurlFactory.php(205): GuzzleHttp\\Handler\\CurlFactory::createRejection()
+#1 /home/arz/vendor/guzzlehttp/guzzle/src/Handler/CurlFactory.php(157): GuzzleHttp\\Handler\\CurlFactory::finishError()
+#2 /home/arz/vendor/guzzlehttp/guzzle/src/Handler/CurlHandler.php(47): GuzzleHttp\\Handler\\CurlFactory::finish()
+#3 /home/arz/vendor/guzzlehttp/guzzle/src/Handler/Proxy.php(28): GuzzleHttp\\Handler\\CurlHandler->__invoke()
+#4 /home/arz/vendor/guzzlehttp/guzzle/src/Handler/Proxy.php(48): GuzzleHttp\\Handler\\Proxy::GuzzleHttp\\Handler\\{closure}()
+#5 /home/arz/vendor/laravel/framework/src/Illuminate/Http/Client/PendingRequest.php(1339): GuzzleHttp\\Handler\\Proxy::GuzzleHttp\\Handler\\{closure}()
+#6 /home/arz/vendor/laravel/framework/src/Illuminate/Http/Client/PendingRequest.php(1305): Illuminate\\Http\\Client\\PendingRequest->Illuminate\\Http\\Client\\{closure}()
+#7 /home/arz/vendor/laravel/framework/src/Illuminate/Http/Client/PendingRequest.php(1291): Illuminate\\Http\\Client\\PendingRequest->Illuminate\\Http\\Client\\{closure}()
+#8 /home/arz/vendor/guzzlehttp/guzzle/src/PrepareBodyMiddleware.php(64): Illuminate\\Http\\Client\\PendingRequest->Illuminate\\Http\\Client\\{closure}()
+#9 /home/arz/vendor/guzzlehttp/guzzle/src/Middleware.php(38): GuzzleHttp\\PrepareBodyMiddleware->__invoke()
+#10 /home/arz/vendor/guzzlehttp/guzzle/src/RedirectMiddleware.php(71): GuzzleHttp\\Middleware::GuzzleHttp\\{closure}()
+#11 /home/arz/vendor/guzzlehttp/guzzle/src/Middleware.php(63): GuzzleHttp\\RedirectMiddleware->__invoke()
+#12 /home/arz/vendor/guzzlehttp/guzzle/src/HandlerStack.php(75): GuzzleHttp\\Middleware::GuzzleHttp\\{closure}()
+#13 /home/arz/vendor/guzzlehttp/guzzle/src/Client.php(333): GuzzleHttp\\HandlerStack->__invoke()
+#14 /home/arz/vendor/guzzlehttp/guzzle/src/Client.php(169): GuzzleHttp\\Client->transfer()
+#15 /home/arz/vendor/guzzlehttp/guzzle/src/Client.php(189): GuzzleHttp\\Client->requestAsync()
+#16 /home/arz/vendor/laravel/framework/src/Illuminate/Http/Client/PendingRequest.php(1137): GuzzleHttp\\Client->request()
+#17 /home/arz/vendor/laravel/framework/src/Illuminate/Http/Client/PendingRequest.php(907): Illuminate\\Http\\Client\\PendingRequest->sendRequest()
+#18 /home/arz/vendor/laravel/framework/src/Illuminate/Support/helpers.php(338): Illuminate\\Http\\Client\\PendingRequest->Illuminate\\Http\\Client\\{closure}()
+#19 /home/arz/vendor/laravel/framework/src/Illuminate/Http/Client/PendingRequest.php(905): retry()
+#20 /home/arz/vendor/laravel/framework/src/Illuminate/Http/Client/PendingRequest.php(804): Illuminate\\Http\\Client\\PendingRequest->send()
+#21 /home/arz/vendor/laravel/framework/src/Illuminate/Http/Client/Factory.php(510): Illuminate\\Http\\Client\\PendingRequest->post()
+#22 /home/arz/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php(361): Illuminate\\Http\\Client\\Factory->__call()
+#23 /home/arz/app/Console/Commands/ExchangeRateUpdateCommand.php(34): Illuminate\\Support\\Facades\\Facade::__callStatic()
+#24 /home/arz/vendor/laravel/framework/src/Illuminate/Container/BoundMethod.php(36): App\\Console\\Commands\\ExchangeRateUpdateCommand->handle()
+#25 /home/arz/vendor/laravel/framework/src/Illuminate/Container/Util.php(43): Illuminate\\Container\\BoundMethod::Illuminate\\Container\\{closure}()
+#26 /home/arz/vendor/laravel/framework/src/Illuminate/Container/BoundMethod.php(95): Illuminate\\Container\\Util::unwrapIfClosure()
+#27 /home/arz/vendor/laravel/framework/src/Illuminate/Container/BoundMethod.php(35): Illuminate\\Container\\BoundMethod::callBoundMethod()
+#28 /home/arz/vendor/laravel/framework/src/Illuminate/Container/Container.php(696): Illuminate\\Container\\BoundMethod::call()
+#29 /home/arz/vendor/laravel/framework/src/Illuminate/Console/Command.php(213): Illuminate\\Container\\Container->call()
+#30 /home/arz/vendor/symfony/console/Command/Command.php(279): Illuminate\\Console\\Command->execute()
+#31 /home/arz/vendor/laravel/framework/src/Illuminate/Console/Command.php(182): Symfony\\Component\\Console\\Command\\Command->run()
+#32 /home/arz/vendor/symfony/console/Application.php(1094): Illuminate\\Console\\Command->run()
+#33 /home/arz/vendor/symfony/console/Application.php(342): Symfony\\Component\\Console\\Application->doRunCommand()
+#34 /home/arz/vendor/symfony/console/Application.php(193): Symfony\\Component\\Console\\Application->doRun()
+#35 /home/arz/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(198): Symfony\\Component\\Console\\Application->run()
+#36 /home/arz/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(1235): Illuminate\\Foundation\\Console\\Kernel->handle()
+#37 /home/arz/artisan(13): Illuminate\\Foundation\\Application->handleCommand()
+#38 {main}
+"} 
+[2025-04-11 00:59:31] local.EMERGENCY: panel Controller :{"VOUCHER_CODE":"USD-4FWQ-GKJC-DII1-GJDF-W0UF"}  
+[2025-04-11 03:42:18] local.EMERGENCY: panel Controller :{"VOUCHER_CODE":"USD-2OTH-AR3Y-OVB4-K1B0-YITB"}  
+[2025-04-12 11:57:10] local.EMERGENCY: 
+Attempt to read property "ResCode" on null
+  
+[2025-04-12 11:57:23] local.EMERGENCY: 
+Attempt to read property "ResCode" on null
+  
+[2025-04-12 14:02:08] local.EMERGENCY: 
+Attempt to read property "ResCode" on null
+  
+[2025-04-12 14:02:17] local.EMERGENCY: 
+Attempt to read property "ResCode" on null
+  
+[2025-04-12 14:02:24] local.EMERGENCY: 
+Attempt to read property "ResCode" on null
+  
+[2025-04-12 14:02:48] local.EMERGENCY: 
+Attempt to read property "ResCode" on null
+  
+[2025-04-12 14:02:54] local.EMERGENCY: 
+Attempt to read property "ResCode" on null
+  
+[2025-04-12 14:04:15] local.EMERGENCY: 
+Attempt to read property "ResCode" on null
+  
+[2025-04-12 14:08:13] local.EMERGENCY: 
+Attempt to read property "ResCode" on null
+  
+[2025-04-12 14:14:49] local.EMERGENCY: 
+Attempt to read property "ResCode" on null
+  
+[2025-04-12 14:17:28] local.EMERGENCY: 
+Attempt to read property "ResCode" on null
+  
+[2025-04-12 14:25:14] local.EMERGENCY: 
+Attempt to read property "ResCode" on null
+  
+[2025-04-12 14:25:44] local.EMERGENCY: 
+Attempt to read property "ResCode" on null
+  
+[2025-04-12 14:26:31] local.EMERGENCY: 
+Attempt to read property "ResCode" on null
+  
+[2025-04-12 14:41:37] local.EMERGENCY: 
+Attempt to read property "ResCode" on null
+  
+[2025-04-12 14:42:53] local.EMERGENCY: 
+Attempt to read property "ResCode" on null
+  
+[2025-04-12 14:52:31] local.EMERGENCY: 
+Attempt to read property "ResCode" on null
+  
