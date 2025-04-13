@@ -21,7 +21,7 @@ trait HasLogin
         $inputs['token'] = $token;
         $otp = Otp::create($inputs);
         if (!isset($message))
-            $message = $code.' کد تایید مریخ ارز'.PHP_EOL.
+            $message = ' : کد تایید مریخ ارز'.$code.PHP_EOL.
                 '@merikh.saina-shop.ir #'.$code;
         else
             $message .= route('forgotPassword.token', $otp);
