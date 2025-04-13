@@ -167,7 +167,6 @@ class Saman extends Service
 
     public function connectionToBank($token)
     {
-        dd(['token' => $token, 'url' => $this->getBankUrl()]);
         return view('welcome', ['token' => $token, 'url' => $this->getBankUrl()]);
     }
 
