@@ -7,11 +7,13 @@ use App\Http\Requests\Panel\Purchase\PurchaseRequest;
 use App\Http\Requests\Panel\Transmission\TransferRequest;
 use App\Http\Requests\Panel\Transmission\TransmissionRequest;
 use App\Http\Traits\HasConfig;
+use App\Http\Traits\HasLogin;
 use App\Jobs\SendAppAlertsJob;
 use App\Models\Bank;
 use App\Models\Doller;
 use App\Models\FinanceTransaction;
 use App\Models\Invoice;
+use App\Models\Otp;
 use App\Models\Payment;
 use App\Models\Service;
 use App\Models\SiteService;
@@ -30,12 +32,14 @@ use function Termwind\ask;
 
 class TransmissionController extends Controller
 {
-    use HasConfig;
+    use HasConfig,HasLogin;
+
     protected $inputsConfig;
+
     public function __construct()
     {
         $this->inputsConfig = $this;
-        $this->inputsConfig->type='merikhArz';
+        $this->inputsConfig->type = 'merikhArz';
     }
 
     public function index()
@@ -43,8 +47,8 @@ class TransmissionController extends Controller
         $banks = Bank::where('is_active', 1)->get();
         $services = Service::all();
         $dollar = Doller::orderBy('id', 'desc')->first();
-        $user=Auth::user();
-        return view('Panel.Transmission.index', compact('services', 'dollar', 'banks','user'));
+        $user = Auth::user();
+        return view('Panel.Transmission.index', compact('services', 'dollar', 'banks', 'user'));
     }
 
     public function store(TransmissionRequest $request)
@@ -60,7 +64,7 @@ class TransmissionController extends Controller
 
             if (isset($inputs['service_id'])) {
                 $service = Service::find($inputs['service_id']);
-                $voucherPrice =( floor(($dollar->DollarRateWithAddedValue() * $service->amount) /10000 )*10000);
+                $voucherPrice = (floor(($dollar->DollarRateWithAddedValue() * $service->amount) / 10000) * 10000);
                 if ($voucherPrice > $balance) {
                     return redirect()->route('panel.transmission.view')->withErrors(['Low_inventory' => "موجودی کیف پول شما کافی نیست"]);
                 }
@@ -110,7 +114,7 @@ class TransmissionController extends Controller
 
             } elseif (isset($inputs['custom_payment'])) {
 
-                $voucherPrice =( floor(($dollar->DollarRateWithAddedValue() * $inputs['custom_payment']) /10000 )*10000);
+                $voucherPrice = (floor(($dollar->DollarRateWithAddedValue() * $inputs['custom_payment']) / 10000) * 10000);
                 if ($voucherPrice > $balance) {
                     return redirect()->route('panel.transmission.view')->withErrors(['Low_inventory' => "موجودی کیف پول شما کافی نیست"]);
                 }
@@ -172,7 +176,6 @@ class TransmissionController extends Controller
 
     public function transferFromThePaymentGateway(TransmissionRequest $request)
     {
-
         try {
             $balance = Auth::user()->getCreaditBalance();
 
@@ -185,11 +188,11 @@ class TransmissionController extends Controller
 
             if (isset($inputs['service_id'])) {
                 $service = Service::find($inputs['service_id']);
-                $voucherPrice =( floor(($dollar->DollarRateWithAddedValue() * $service->amount) /10000 )*10000);
+                $voucherPrice = (floor(($dollar->DollarRateWithAddedValue() * $service->amount) / 10000) * 10000);
 
             } elseif (isset($inputs['custom_payment'])) {
                 $inputs['service_id_custom'] = $inputs['custom_payment'];
-                $voucherPrice =( floor(($dollar->DollarRateWithAddedValue() * $inputs['custom_payment']) /10000 )*10000);
+                $voucherPrice = (floor(($dollar->DollarRateWithAddedValue() * $inputs['custom_payment']) / 10000) * 10000);
             } else {
                 return redirect()->route('panel.transmission.view')->withErrors(['SelectInvalid' => "انتخاب شما معتبر نمیباشد"]);
             }
@@ -220,7 +223,6 @@ class TransmissionController extends Controller
             $objBank->setTerminalId($bank->terminal_id);
             $objBank->setUrlBack(route('panel.back.transferFromThePaymentGateway'));
             $objBank->setBankModel($bank);
-
 
 
             $status = $objBank->payment();
@@ -283,12 +285,12 @@ class TransmissionController extends Controller
                 'user ID :' . $user->id
                 . PHP_EOL
             );
-            $inputs = array_merge(request()->all(),request()->request->all());
+            $inputs = array_merge(request()->all(), request()->request->all());
             $invoice = $payment->invoice;
             if (!$objBank->backBank()) {
                 $payment->update(
                     [
-                        'RefNum' => $inputs['RefNum']??null,
+                        'RefNum' => $inputs['RefNum'] ?? null,
                         'ResNum' => $payment->order_id,
                         'state' => 'failed'
 
@@ -303,7 +305,7 @@ class TransmissionController extends Controller
             $back_price = $objBank->verify($payment->amount);
 
 
-            if ($back_price !==true or Payment::where("order_id", $payment->order_id)->count() > 1) {
+            if ($back_price !== true or Payment::where("order_id", $payment->order_id)->count() > 1) {
 
                 $bankErrorMessage = "درگاه بانک {$bank->name} تراکنش شمارا به دلیل " . $objBank->verifyTransaction($back_price) . " ناموفق اعلام کرد باتشکر سایناارز" . PHP_EOL . "پشتیبانی بانک {$bank->name}" . PHP_EOL . '021-6422';
                 $satiaService->send($bankErrorMessage, $user->mobile, env('SMS_Number'), env('SMS_Username'), env('SMS_Password'));
@@ -322,7 +324,7 @@ class TransmissionController extends Controller
 
             $payment->update(
                 [
-                    'RefNum' => $inputs['RefNum']??null,
+                    'RefNum' => $inputs['RefNum'] ?? null,
                     'ResNum' => $payment->order_id,
                     'state' => 'finished'
                 ]);
@@ -410,10 +412,10 @@ class TransmissionController extends Controller
 
     public function transmissionFail(Request $request, Invoice $invoice)
     {
-        $user=Auth::user();
-        $balance=$user->getCreaditBalance();
+        $user = Auth::user();
+        $balance = $user->getCreaditBalance();
         $invoice = $invoice->where("user_id", $user->id)->orderBy('id', 'desc')->first();
-        return view('Panel.Transmission.DeliveryFail', compact('invoice','balance'));
+        return view('Panel.Transmission.DeliveryFail', compact('invoice', 'balance'));
 
     }
 
@@ -458,7 +460,7 @@ class TransmissionController extends Controller
 
             if (isset($inputs['custom_payment'])) {
                 $inputs['service_id_custom'] = $inputs['custom_payment'];
-                $voucherPrice =( floor(($dollar->DollarRateWithAddedValue() * $inputs['custom_payment']) /10000 )*10000);
+                $voucherPrice = (floor(($dollar->DollarRateWithAddedValue() * $inputs['custom_payment']) / 10000) * 10000);
 
             } else {
                 return redirect()->route('panel.transfer.external', ['account' => $inputs['transmission'], 'amount' => $inputs['custom_payment']])->withErrors(['SelectInvalid' => "انتخاب شما معتبر نمیباشد"]);
@@ -490,7 +492,6 @@ class TransmissionController extends Controller
             $objBank->setTerminalId($bank->terminal_id);
             $objBank->setUrlBack(route('panel.transfer.external.back-bank'));
             $objBank->setBankModel($bank);
-
 
 
             $status = $objBank->payment();
@@ -553,13 +554,13 @@ class TransmissionController extends Controller
                 'user ID :' . $user->id
                 . PHP_EOL
             );
-            $inputs = array_merge(request()->all(),request()->request->all());
+            $inputs = array_merge(request()->all(), request()->request->all());
 
             $invoice = $payment->invoice;
             if (!$objBank->backBank()) {
                 $payment->update(
                     [
-                        'RefNum' => $inputs['RefNum']??null,
+                        'RefNum' => $inputs['RefNum'] ?? null,
                         'ResNum' => $payment->order_id,
                         'state' => 'failed'
 
@@ -573,10 +574,9 @@ class TransmissionController extends Controller
             }
 
 
-
             $back_price = $objBank->verify($payment->amount);
 
-            if ($back_price !==true or Payment::where("order_id", $payment->order_id)->count() > 1) {
+            if ($back_price !== true or Payment::where("order_id", $payment->order_id)->count() > 1) {
 
                 $bankErrorMessage = "درگاه بانک {$bank->name} تراکنش شمارا به دلیل " . $objBank->verifyTransaction($back_price) . " ناموفق اعلام کرد باتشکر سایناارز" . PHP_EOL . "پشتیبانی بانک {$bank->name}" . PHP_EOL . '021-6422';
                 $satiaService->send($bankErrorMessage, $user->mobile, env('SMS_Number'), env('SMS_Username'), env('SMS_Password'));
@@ -595,7 +595,7 @@ class TransmissionController extends Controller
 
             $payment->update(
                 [
-                    'RefNum' => $inputs['RefNum']??null,
+                    'RefNum' => $inputs['RefNum'] ?? null,
                     'ResNum' => $payment->order_id,
                     'state' => 'finished'
                 ]);
@@ -671,5 +671,151 @@ class TransmissionController extends Controller
             SendAppAlertsJob::dispatch('در انتقال ووچر از درگاه باتکی خطایی رخ داده است لطفا پیگیری شود.')->onQueue('perfectmoney');
             return redirect()->route('panel.transfer.external')->withErrors(['error' => 'یک خطای غیر منتظره رخ داد لفطا از طریق پشتیبانی تیکت برنید']);
         }
+    }
+
+    public function voucher_price(Request $request)
+    {
+        $dollar = Doller::orderBy('id', 'desc')->first();
+        $dollar_price = numberFormat((floor($dollar->DollarRateWithAddedValue() * 1) / 10000));
+        $carts = [['value' => 1], ['value' => 2], ['value' => 5]];
+        return view('Panel.Voucher.price', compact('dollar_price', 'carts'));
+    }
+
+    public function voucher(Request $request)
+    {
+        try {
+            $validation = $this->voucherValidation();
+            $inputs = $request->all();
+            $bank = Bank::where('is_active', 1)->first();
+            $dollar = Doller::orderBy('id', 'desc')->first();
+            $dollar_price =  (floor($dollar->amount_to_rials / 10000) * 1000) ;
+            if (!$validation->fails()) {
+                session()->put('voucher', $request->getUri());
+                if (isset($inputs['amount'])) {
+                    $inputs['rial'] = (floor(($dollar->DollarRateWithAddedValue() * $inputs['amount']) / 10000) * 10000);
+                    $inputs['rial'] = numberFormat(substr($inputs['rial'], 0, strlen($inputs['rial']) - 1));
+
+                    $inputs['amount_rial'] = (floor(($dollar->amount_to_rials * $inputs['amount']) / 10000) * 10000);
+                    $inputs['amount_rial'] = numberFormat(substr($inputs['amount_rial'], 0, strlen($inputs['amount_rial']) - 1));
+
+                    /*$inputs['Commission'] = $dollar->commissionCeil() * $inputs['amount'];
+                    $inputs['Commission'] = numberFormat(substr($inputs['Commission'], 0, strlen($inputs['Commission']) - 1));
+                    dd($inputs['amount']);*/
+                }
+                return view('Panel.Voucher.buy', compact('inputs', 'bank','dollar_price'));
+            }
+            return view('Panel.Voucher.buy', compact('inputs', 'bank','dollar_price'))->withErrors($validation->errors());
+
+        } catch (\Exception $e) {
+            return redirect()->route('panel.index')->withErrors(['Error' => 'خطایی رخ داد لطفا از طریق پشتیبانی تیکت ثبت کنید']);
+
+        }
+    }
+
+    public function mobile_submit(Request $request)
+    {
+        $validation = Validator::make($request->all(),
+            [
+                'mobile' => ['required', 'size:11', 'regex:/09\d{9}/'],
+            ],
+            [
+                'mobile.required' => 'وارد کردن شماره موبایل الزامی است',
+                'mobile.size' => 'شماره موبایل باید 11 رقم باشد',
+                'mobile' => 'سماره موبایل بدرستی وارد نشده است!'
+            ]
+        );
+        if ($validation->fails())
+            return response()->json([
+                'success' => false,
+                'message' => $validation->errors()->first()
+            ]);
+
+        if ($request->input('verify_User')) {
+            $user = User::firstOrCreate([
+                'mobile' => $request->input('mobile')
+            ], [
+
+            ]);
+            Auth::loginUsingId($user->id);
+            return response()->json([
+                'success' => true,
+                'message' => 'کاربر با موفقیت وارد شد'
+            ]);
+        }
+
+
+        $otp = $this->generateCode($request);
+        if (!isset($otp->token))
+            return response()->json([
+                'success' => false,
+                'message' => 'ارسال پیامک ناموفق لطفا به پشتیبانی اطلاع دهید'
+            ]);
+
+        return response()->json([
+            'success' => true,
+            'token' => $otp->token,
+            'message' => 'پیامک رمز ورود ارسال گردید'
+        ]);
+    }
+
+    public function verification_code_submit(Request $request)
+    {
+        $validation = Validator::make($request->all(),
+            [
+                'token' => ['required'],
+                'code' => ['required', 'size:5']
+            ],
+            [
+                'token.required' => 'وارد کردن توکن الزامی است',
+                'code.required' => 'وارد کردن کد پیامک شده الزامی است',
+                'code.sie' => 'کد وارد شده باید 5 رقم باشد!'
+            ]
+        );
+        if ($validation->fails())
+            return response()->json([
+                'success' => false,
+                'message' => $validation->errors()->first()
+            ]);
+
+        $otp = Otp::where('token', $request->token)->latest()->first();
+        if (!$otp)
+            return response()->json([
+                'success' => false,
+                'message' => 'توکن نا معتبر'
+            ]);
+        if ($otp->created_at < Carbon::now()->subMinutes(2))
+            return response()->json([
+                'success' => false,
+                'message' => 'اعتبار کد به پایان رسیده، لطفا کد جدید دریافت نمایید'
+            ]);
+        if ($otp->code != $request->code)
+            return response()->json([
+                'success' => false,
+                'message' => 'کد وارد شده صحیح نمی باشد!'
+            ]);
+
+
+        $user = User::firstOrCreate(['mobile' => $otp->mobile], [
+            'mobile' => $otp->mobile
+        ]);
+
+        $otp->update(['seen_at' => date('Y/m/d H:i:s', time())]);
+
+        Auth::loginUsingId($user->id);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'کد وارد شده صحیح است!'
+        ]);
+    }
+
+    public function transfer_logout(Request $request)
+    {
+        if (Auth::check())
+            Auth::logout();
+        return response()->json([
+            'success' => true,
+            'message' => 'خروج با موفقیت انجام شد'
+        ]);
     }
 }

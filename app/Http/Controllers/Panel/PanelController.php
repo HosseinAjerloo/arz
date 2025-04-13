@@ -70,7 +70,6 @@ class PanelController extends Controller
             $balance = Auth::user()->getCreaditBalance();
             $user = Auth::user();
             $inputs['user_id'] = $user->id;
-
             if (isset($inputs['service_id'])) {
                 $service = Service::find($inputs['service_id']);
                 $voucherPrice=( floor(($dollar->DollarRateWithAddedValue() *  $service->amount) /10000 )*10000);

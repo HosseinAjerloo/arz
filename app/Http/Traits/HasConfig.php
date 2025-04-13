@@ -193,7 +193,17 @@ trait HasConfig
             ]
         );
     }
-
+    protected function voucherValidation()
+    {
+        return Validator::make(request()->all(),
+            [
+                'amount' => [ 'numeric', "max:" . env('Safe_Daily_Purchase_Limit',60), 'min:0.1', new DecimalRule()],
+            ],
+            [
+                'amount.numeric' => 'مبلغ حواله باید به صورت عددی باشد',
+            ]
+        );
+    }
     protected function customVoucherTransfer($amount)
     {
         $user=Auth::user();

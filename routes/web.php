@@ -113,9 +113,12 @@ Route::prefix('admin')->middleware(['auth', 'AdminLogin'])->group(function () {
     });
 });
 
+Route::get('voucher-price', [App\Http\Controllers\Panel\TransmissionController::class, 'voucher_price'])->name('voucher-price');
+Route::get('voucher', [App\Http\Controllers\Panel\TransmissionController::class, 'voucher'])->name('voucher');
+Route::post('mobile-submit', [App\Http\Controllers\Panel\TransmissionController::class, 'mobile_submit'])->name('transfer.mobile-submit');
+Route::post('verification-code-submit', [App\Http\Controllers\Panel\TransmissionController::class, 'verification_code_submit'])->name('transfer.verification-code-submit');
+Route::post('transfer-logout', [App\Http\Controllers\Panel\TransmissionController::class, 'transfer_logout'])->name('transfer.logout');
 
 Route::fallback(function () {
     abort(404);
 });
-
-
