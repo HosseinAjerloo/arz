@@ -688,7 +688,7 @@ class TransmissionController extends Controller
             $inputs = $request->all();
             $bank = Bank::where('is_active', 1)->first();
             $dollar = Doller::orderBy('id', 'desc')->first();
-            $dollar_price =  (floor($dollar->amount_to_rials / 10000) * 1000) ;
+            $dollar_price = (floor($dollar->DollarRateWithAddedValue() /10000 )*10000) / 10 ; //rial to toman
             if (!$validation->fails()) {
                 session()->put('voucher', $request->getUri());
                 if (isset($inputs['amount'])) {
@@ -698,9 +698,8 @@ class TransmissionController extends Controller
                     $inputs['amount_rial'] = (floor(($dollar->amount_to_rials * $inputs['amount']) / 10000) * 10000);
                     $inputs['amount_rial'] = numberFormat(substr($inputs['amount_rial'], 0, strlen($inputs['amount_rial']) - 1));
 
-                    /*$inputs['Commission'] = $dollar->commissionCeil() * $inputs['amount'];
-                    $inputs['Commission'] = numberFormat(substr($inputs['Commission'], 0, strlen($inputs['Commission']) - 1));
-                    dd($inputs['amount']);*/
+//                    $inputs['Commission'] = $dollar->DollarRateWithAddedValue() * $inputs['amount'];
+//                    $inputs['Commission'] = numberFormat(substr($inputs['Commission'], 0, strlen($inputs['Commission']) - 1));
                 }
                 return view('Panel.Voucher.buy', compact('inputs', 'bank','dollar_price'));
             }
