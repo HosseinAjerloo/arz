@@ -117,3 +117,12 @@ Route::prefix('admin')->middleware(['auth', 'AdminLogin'])->group(function () {
 Route::fallback(function () {
     abort(404);
 });
+
+Route::get('test',function (){
+    try {
+        $client = new SoapClient(null);
+        echo "SOAP فعال است.";
+    } catch (Exception $e) {
+        echo "خطا: " . $e->getMessage();
+    }
+});
