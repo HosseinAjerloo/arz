@@ -107,6 +107,7 @@
                         <span><span id="price_toman" class="price_comma">{{ $inputs['rial']??'0'}}</span> تومان</span>
                     </div>
                 </div>
+
             </div>
             <div class="w-full rounded-md bg-F5F5F5 border-base-font-color border-2  p-8 relative ">
                 <div
