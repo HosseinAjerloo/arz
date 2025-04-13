@@ -1,4 +1,4 @@
-@extends('Panel.layout.master')
+@extends('Panel.Layout.master')
 @section('head')
     <style>
         input[type="number"]::-webkit-outer-spin-button,

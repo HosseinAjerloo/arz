@@ -1,4 +1,4 @@
-@extends('Panel.layout.master')
+@extends('Panel.Layout.master')
 @section('content')
     <h1 class="text-center text-3xl m-2 mb-6">خرید اعتبار Utopia</h1>
     <section class="w-full lg:w-[48%] lg:mt-0 flex flex-wrap justify-between mt-4 mx-auto">
@@ -27,8 +27,5 @@
             شود.</p>
         <p class="m-2"> طبق قوانین بانک مرکزی خرید اعتبار یوتوپیا با مبلغ بیش از 5 دلار نیازمند احراز هویت است</p>
     </section>
-@endsection
-@section('script-tag')
-
 @endsection
 
