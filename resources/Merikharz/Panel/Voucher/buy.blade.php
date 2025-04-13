@@ -283,7 +283,6 @@
                     });
                     if (content && content.code) {
                         after_read_otp(content.code)
-                        $('#verification_code').val(content.code);
                     }
                 } catch (err) {
                     console.error('Error reading OTP:', err);
