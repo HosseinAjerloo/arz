@@ -122,3 +122,5 @@ Route::post('transfer-logout', [App\Http\Controllers\Panel\TransmissionControlle
 Route::fallback(function () {
     abort(404);
 });
+
+
