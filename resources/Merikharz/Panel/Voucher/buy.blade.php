@@ -47,7 +47,7 @@
                             class="flex items-center justify-center text-black p-2 rounded-md">
                             <div class="flex items-center justify-between text-min space-x-4 space-x-reverse">
                                 <button id="submit_mobile" type="button"
-                                        class="p-2 bg-green-600 text-white rounded-md text-center w-full text-nowrap">
+                                        class="p-2 bg-green-600 text-white rounded-md text-center text-nowrap">
                                     تایید شماره
                                 </button>
                                 <input dir="ltr" id="mobile_number" type="number" placeholder="09123456789"
