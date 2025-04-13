@@ -197,11 +197,10 @@
             }
             const data_ = {
                 "mobile": mobile,
-                @if(isset($inputs['amount']) and $inputs['amount']<env('Daily_Purchase_Limit'))
-                'verify_User': true
-                @endif
+                {{--@if(isset($inputs['amount']) and $inputs['amount']<env('Daily_Purchase_Limit'))
+                'verify_User': false
+                @endif--}}
             }
-
             submit_mobile_element.prop('disabled', true);
             $.ajax({
                 type: "post",
