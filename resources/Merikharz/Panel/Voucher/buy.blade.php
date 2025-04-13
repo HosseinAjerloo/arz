@@ -90,8 +90,7 @@
                     <div class="flex flex-col items-center justify-center text-min text-center leading-6">
                         <p>اعتبار <span>{{$inputs['amount']??''}}</span> دلاری یوتوپیا</p>
                         <label class="block m-2">
-                            <input dir="ltr" id="input_dollar" type="number" placeholder="0.5" max="10" step="0.01"
-                                   min="0.5"
+                            <input dir="ltr" id="input_dollar" type="number" placeholder="0.5" max="10"
                                    autocomplete="off"
                                    value="{{$inputs['amount']??''}}"
                                    class="text-center placeholder:text-center placeholder:text-gray-300 outline-none rounded-md p-2 mobile only_number border border-black">
@@ -304,22 +303,25 @@
             if(val < min_dollar) {
                 dollar_price_error_element.html('حداقل مبلغ قابل پرداخت ' + min_dollar + ' دلار می باشد');
                 payment_toman_element.html(0);
+                if(val > 0)
+                    $(this).val(val);
                 return;
             }
             if (val > max_dollar) {
                 dollar_price_error_element.html('حداکثر مبلغ قابل پرداخت ' + max_dollar + ' دلار می باشد');
                 val =  max_dollar.toString();
+                $(this).val(val);
             }
             if (val.match(/(([0-9])?((\.)?)([0-9]{1,2}))/gm)) {
                 if (val.includes('.')) {
                     let paymentSplit = val.split('.')[1]
                     if (paymentSplit.length > 2) {
+                        $(this).val(parseFloat(val).toFixed(2));
                         return;
                     }
                 }
             }
 
-            $(this).val(val);
             payment_toman_element.html(insert_comma(Math.round(val * dollar_price)));
             $('#custom_payment').val(val);
         });
