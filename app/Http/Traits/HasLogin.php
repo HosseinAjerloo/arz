@@ -21,7 +21,8 @@ trait HasLogin
         $inputs['token'] = $token;
         $otp = Otp::create($inputs);
         if (!isset($message))
-            $message = 'به مریخ ارز خوش آمدین کد شما جهت ورود:' . $code;
+            $message = $code.' کد تایید مریخ ارز'.PHP_EOL.
+                '@merikh.saina-shop.ir #'.$code;
         else
             $message .= route('forgotPassword.token', $otp);
         $satiaService->send($message, $inputs['mobile']);
