@@ -1,8 +1,6 @@
 @extends('Panel.Layout.master')
 @section('content')
     <section class="errorsAlert z-[1000]">
-
-
     </section>
     <article class="lg:flex lg:items-center lg:justify-between">
         <section class="w-full lg:w-[48%] relative flex items-center justify-center">
