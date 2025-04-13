@@ -66,7 +66,6 @@
                             class="flex items-center justify-center text-black border border-black border-dashed p-2 rounded-md">
                             <div class="flex items-center justify-between text-min space-x-4 space-x-reverse">
                                 <input dir="ltr" id="verification_code" type="number" placeholder="کد تایید"
-                                       oninput="if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
                                        autocomplete="off" maxlength="5"
                                        class="text-center placeholder:text-center placeholder:text-gray-300 outline-none rounded-md py-2 px-4 w-full mobile">
                                 <button type="button" id="change_mobile"
@@ -104,7 +103,7 @@
 
                 <div class="rounded-md  text-black bg-green-400 py-2 px-4 mt-5">
                     <div class=" flex items-center justify-between text-min  leading-6">
-                        <span>جمع کل:</span>
+                        <span>مبلغ پرداختی :</span>
                         <span><span id="price_toman" class="price_comma">{{ $inputs['rial']??'0'}}</span> تومان</span>
                     </div>
                 </div>
@@ -149,15 +148,24 @@
 @section('script')
     <script>
         const max_dollar = Number('{{env('Daily_Purchase_Limit',10)}}');
+        const min_dollar = 0.2;
         const dollar_price = '{{$dollar_price}}';
         var verification_token = '';
         const is_login = '{{auth()->check()}}';
         const submit_error = $('.submit-error');
+        const input_dollar_element = $('#input_dollar');
         submit_error.empty();
         $(document).ready(function () {
             $(".submit").click(function (e) {
-                if ($('#input_dollar').val() == '') {
+                if (input_dollar_element.val() == '') {
                     submit_error.html('مبلغ پرداختی را به دلار وارد نمایید');
+                }else if(input_dollar_element.val() < min_dollar){
+                    submit_error.html('مبلغ پرداختی حداقل '+min_dollar+' دلار می باشد');
+                }
+                if(input_dollar_element.val() == '' || input_dollar_element.val() < min_dollar){
+                    setTimeout(function (){
+                        submit_error.empty();
+                    },4000);
                     $('#input_dollar').focus();
                     e.preventDefault();
                 }
@@ -289,15 +297,30 @@
         }
 
         $('#input_dollar').on('input', function (e) {
-            var val = $(this).val();
+            const payment_toman_element = $('#price_toman');
             const dollar_price_error_element = $('#dollar_price_error');
             dollar_price_error_element.empty();
+            var val = $(this).val();
+            if(val < min_dollar) {
+                dollar_price_error_element.html('حداقل مبلغ قابل پرداخت ' + min_dollar + ' دلار می باشد');
+                payment_toman_element.html(0);
+                return;
+            }
             if (val > max_dollar) {
                 dollar_price_error_element.html('حداکثر مبلغ قابل پرداخت ' + max_dollar + ' دلار می باشد');
-                val = max_dollar;
+                val =  max_dollar.toString();
+            }
+            if (val.match(/(([0-9])?((\.)?)([0-9]{1,2}))/gm)) {
+                if (val.includes('.')) {
+                    let paymentSplit = val.split('.')[1]
+                    if (paymentSplit.length > 2) {
+                        return;
+                    }
+                }
             }
 
-            $('#price_toman').html(insert_comma(val * dollar_price));
+            $(this).val(val);
+            payment_toman_element.html(insert_comma(Math.round(val * dollar_price)));
             $('#custom_payment').val(val);
         });
 
