@@ -21,7 +21,7 @@
     <section class="w-full flex items-center justify-center">
         <div
             class="w-full sm:w-4/5 md:w-3/5 lg:w-1/2 xl:w-1/3 flex items-center flex-col justify-center  p-8 rounded-lg space-y-8 bg-F5F5F5">
-            <div class="w-full rounded-md bg-F5F5F5 border-base-font-color border-2  p-8 relative ">
+            <div class="w-full rounded-md bg-F5F5F5 border-base-font-color border-2  px-2 pt-8 pb-4 relative ">
                 <div
                     class="border-base-font-color border absolute -right-[-50%] -top-[15px] transform translate-x-[50%] flex space-x-4 space-x-reverse bg-white py-1.5 px-3 text-black text-min rounded-2xl">
                     <h1 class="font-bold">
@@ -47,7 +47,7 @@
                             class="flex items-center justify-center text-black p-2 rounded-md">
                             <div class="flex items-center justify-between text-min space-x-4 space-x-reverse">
                                 <button id="submit_mobile" type="button"
-                                        class="p-2 bg-green-600 text-white rounded-md text-center text-nowrap">
+                                        class="p-2 bg-green-600 text-white rounded-md text-center text-nowrap text-sm">
                                     تایید شماره
                                 </button>
                                 <input dir="ltr" id="mobile_number" type="number" placeholder="09123456789"
@@ -103,7 +103,7 @@
                 <div class="rounded-md  text-black bg-green-400 py-2 px-4 mt-5">
                     <div class=" flex items-center justify-between text-min  leading-6">
                         <span>مبلغ پرداختی :</span>
-                        <span><span id="price_toman" class="price_comma">{{ $inputs['rial']??'0'}}</span> تومان</span>
+                        <span class="text-left"><span id="price_toman" class="price_comma">{{ $inputs['rial']??'0'}}</span> تومان</span>
                     </div>
                 </div>
 
@@ -119,7 +119,7 @@
                 <div class="rounded-md  w-full flex items-center justify-center  text-black">
                     <div class=" flex w-full items-center justify-between text-min space-x-4 space-x-reverse">
                         <form action="{{route('panel.PurchaseThroughTheBank')}}" method="post"
-                              class="flex items-center justify-between space-x-reverse space-x-2 w-full">
+                              class="flex flex-col items-center justify-between space-x-reverse space-x-2 w-full">
                             @csrf
                             <input id="custom_payment" type="hidden" name="custom_payment" value="{{$inputs['amount']??''}}">
                             <input type="hidden" value="{{$bank->where('is_active',1)->first()->id}}"  name="bank" id="bank-{{$bank->where('is_active',1)->first()->id}}" class="action hidden">
@@ -128,11 +128,11 @@
                             <input type="hidden" id="mobile" name="mobile" value="{{auth()->user()?->mobile}}">
 
                             <button
-                                class="px-2 py-1.5 bg-green-600 text-white p-4 rounded-md text-center w-full submit">
+                                class="px-2 py-1.5 bg-green-600 text-white p-4 rounded-md text-center w-full submit m-2">
                                 تایید پرداخت
                             </button>
                             <a href="{{route('panel.index')}}"
-                               class="px-2 py-1.5 bg-rose-600 text-white p-4 rounded-md text-center w-full">
+                               class="px-2 py-1.5 bg-rose-600 text-white p-4 rounded-md text-center w-full m-2">
                                 برگشت
                             </a>
                         </form>
@@ -316,7 +316,7 @@
                 if (val.includes('.')) {
                     let paymentSplit = val.split('.')[1]
                     if (paymentSplit.length > 2) {
-                        $(this).val(parseFloat(val).toFixed(2));
+                        $(this).val(Math.floor(val * 100) / 100);
                         return;
                     }
                 }
