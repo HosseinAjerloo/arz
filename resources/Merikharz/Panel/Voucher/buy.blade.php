@@ -201,7 +201,6 @@
                 'verify_User': false
                 @endif--}}
             }
-
             submit_mobile_element.prop('disabled', true);
             $.ajax({
                 type: "post",
