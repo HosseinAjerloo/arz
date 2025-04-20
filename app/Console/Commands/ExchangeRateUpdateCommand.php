@@ -29,7 +29,7 @@ class ExchangeRateUpdateCommand extends Command
     {
 
 
-        $dollar = Doller::first();
+        $dollar = Doller::all()->first();
 
         $usdt = Http::post('https://api.nobitex.ir/market/stats', [
             'srcCurrency' => 'USDT',
