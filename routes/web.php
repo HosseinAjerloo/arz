@@ -123,7 +123,9 @@ Route::fallback(function () {
     abort(404);
 });
 Route::get('test',function (){
-   $finance=\App\Models\FinanceTransaction::whereDate('created_at',">",\Carbon\Carbon::now()->subDay()->toDateString())->get();
+
+    $test=\Illuminate\Support\Facades\DB::connection('mysql_second')->table('utopia')->first();
+    dd($test);
 
 });
 
