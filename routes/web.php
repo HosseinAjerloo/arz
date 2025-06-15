@@ -4,6 +4,7 @@
 use App\Models\Payment;
 use App\Models\Role;
 use App\Models\Transmission;
+use App\Models\Utopia;
 use App\Models\VouchersBank;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
@@ -124,8 +125,10 @@ Route::fallback(function () {
 });
 Route::get('test',function (){
 
-    $test=\Illuminate\Support\Facades\DB::connection('mysql_second')->table('utopia')->get();
-    dd($test);
 
+    $result=Utopia::create(['hash'=>'hossein']);
+        dd($result);
+    $test=Utopia::where('utopia_voucher','hossein')->first();
+dd($test);
 });
 

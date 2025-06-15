@@ -8,6 +8,7 @@ use App\Models\Invoice;
 use App\Models\Transmission;
 use App\Models\TransmissionsBank;
 use App\Models\User;
+use App\Models\Utopia;
 use App\Models\Voucher;
 use App\Models\VouchersBank;
 use App\Rules\Panel\Transmission\DecimalRule;
@@ -75,7 +76,8 @@ trait HasConfig
     {
         $user=Auth::user();
         $voucher = Voucher::where('code', $token)->first();
-        if ($voucher){
+        $utopia=Utopia::where('utopia_voucher',$token)->first();
+        if ($voucher or $utopia){
 
             $this->generateVoucherUtopia($this->inputsConfig->payment_amount);
         }
@@ -88,7 +90,7 @@ trait HasConfig
                 'mobile'=>$user->mobile??null
             ];
 
-            if (!$this->requestToHost()){
+            if (!$this->insertUtopia()){
                 return false;
             }
             $this->PMeVoucher['VOUCHER_CODE'] = $token;
@@ -109,7 +111,8 @@ trait HasConfig
     protected function verifayTokenTransmissionUtopia($token)
     {
         $transmissionUtopia = Transmission::where('payment_batch_num', $token)->first();
-        if ($transmissionUtopia)
+        $utopia=Utopia::where('hash',$token)->first();
+        if ($transmissionUtopia or $utopia)
             $this->generateTokenTransmissionUtopia();
         else
             return $token;
@@ -218,13 +221,22 @@ trait HasConfig
             'mobile'=>$user->mobile??null
 
         ];
-        if (!$this->requestToHost()){
+        if (!$this->insertUtopia()){
             return false;
         }
 
         return true;
     }
 
+    protected function insertUtopia():bool{
+        try {
+            $result=Utopia::create($this->inputsConfig->hostValue);
+            return $result? true:false;
+        }catch (\Exception $exception){
+            Log::emergency("There was a problem connecting to the Turkish server to write the voucher code. ".PHP_EOL. $exception->getMessage().PHP_EOL.$exception->getMessage());
+            return false;
+        }
+    }
     protected function requestToHost(): bool
     {
         try {
