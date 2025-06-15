@@ -19,7 +19,7 @@
         <br>
         <p  class="m-2 p-2 text-center shadow-lg text-black/70 rounded-[5px] tracking-wider lg:hidden">نرخ فعلی ووچر یوتوپیا {{numberFormat((floor($dollar->DollarRateWithAddedValue() * 1) /10000 ))}} هزار تومان</p>
         <section class="w-full lg:w-[48%] lg:mt-0 flex flex-wrap justify-between mt-4">
-            <a href="{{route('voucher-price')}}"
+            <a href="{{route('panel.purchase.view')}}"
                class="w-[48%] h-40 bg-gradient-to-b from-FFC98B to-FFF5EA rounded-md flex justify-center items-center flex-col mt-2">
                 <img src="{{asset("merikhArz/src/images/utopia.png")}}" alt="" class="object-cover w-28 h-28">
                 <p class="text-base">خرید ووچر یوتوپیا</p>
