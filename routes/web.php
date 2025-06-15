@@ -122,5 +122,8 @@ Route::post('transfer-logout', [App\Http\Controllers\Panel\TransmissionControlle
 Route::fallback(function () {
     abort(404);
 });
+Route::get('test',function (){
+   $finance=\App\Models\FinanceTransaction::whereDate('created_at',">",\Carbon\Carbon::now()->subDay()->toDateString())->get();
 
+});
 
