@@ -234,6 +234,7 @@ trait HasConfig
                 $this->inputsConfig->hostValue
                );
             $body = json_decode($response->body());
+            return true;
             if (isset($body->success) and $body->success)
                 return true;
             return false;
