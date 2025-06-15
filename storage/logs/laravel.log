@@ -2599,3 +2599,5 @@ Undefined array key 0
 #58 H:\\arz\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\resources\\server.php(23): require_once('H:\\\\arz\\\\public\\\\i...')
 #59 {main}
 "} 
+[2025-06-15 16:37:58] local.EMERGENCY: panel Controller :{"VOUCHER_CODE":"USD-9CZW-SVXN-IL7W-AFJN-YIVS"}  
+[2025-06-15 16:38:52] local.EMERGENCY: panel Controller :{"VOUCHER_CODE":"USD-2T4H-C5J6-S21Q-IN3P-GCQ7"}  
