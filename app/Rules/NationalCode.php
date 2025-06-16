@@ -27,7 +27,8 @@ class NationalCode implements ValidationRule
             if ($result >= 2) {
                 $result = 11 - $result;
             }
-            $result==$value[9]?'':  $fail('   نامعتبر است');
+                        $result==$value[9]?'':  $fail('کدملی نامعتبر میباشد');
+
 
         } else {
             $fail('   کد ملی باید از نوع عددی و تعداد رقم آن برابر با 10 باشد');

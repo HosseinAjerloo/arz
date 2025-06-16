@@ -123,17 +123,5 @@ Route::post('transfer-logout', [App\Http\Controllers\Panel\TransmissionControlle
 Route::fallback(function () {
     abort(404);
 });
-Route::get('test',function (){
 
-<<<<<<< HEAD
-    $test=\Illuminate\Support\Facades\DB::connection('mysql_second')->table('utopia')->first();
-    dd($test);
-=======
->>>>>>> dddeb705188627036d09dd70834c1887c51a1f48
-
-    $result=Utopia::create(['hash'=>'hossein']);
-        dd($result);
-    $test=Utopia::where('utopia_voucher','hossein')->first();
-dd($test);
-});
 
