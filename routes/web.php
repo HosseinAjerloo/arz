@@ -123,12 +123,5 @@ Route::post('transfer-logout', [App\Http\Controllers\Panel\TransmissionControlle
 Route::fallback(function () {
     abort(404);
 });
-Route::get('test',function (){
 
-
-    $result=Utopia::create(['hash'=>'hossein']);
-        dd($result);
-    $test=Utopia::where('utopia_voucher','hossein')->first();
-dd($test);
-});
 

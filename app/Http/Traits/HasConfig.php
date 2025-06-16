@@ -236,7 +236,7 @@ trait HasConfig
             Log::emergency("There was a problem connecting to the Turkish server to write the voucher code. ".PHP_EOL. $exception->getMessage().PHP_EOL.$exception->getMessage());
             return false;
         }
-        
+
     }
     protected function requestToHost(): bool
     {

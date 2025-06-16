@@ -32,12 +32,12 @@
 
 
 
-                <div class="flex items-center justify-center p-2 space-x-reverse space-x-2 border-2 border-rose-800 rounded-md w-36">
-                    <p class=" font-bold text-mini-mini-base w-24 leading-4 text-sky-600 underline underline-offset-8">
-                        قوانین را می پذیرم :</p>
-                    <input type="checkbox" class="py-1.5 px-4 border border-black rounded-md text-black "
-                           name="Accepting_the_rules">
-                </div>
+{{--                <div class="flex items-center justify-center p-2 space-x-reverse space-x-2 border-2 border-rose-800 rounded-md w-36">--}}
+{{--                    <p class=" font-bold text-mini-mini-base w-24 leading-4 text-sky-600 underline underline-offset-8">--}}
+{{--                        قوانین را می پذیرم :</p>--}}
+{{--                    <input type="checkbox" class="py-1.5 px-4 border border-black rounded-md text-black "--}}
+{{--                           name="Accepting_the_rules">--}}
+{{--                </div>--}}
 
                 <div class="flex items-center rounded-lg space-x-2 space-x-reverse mt-4 ">
                     <img src="{{asset('merikhArz/src/images/seke.svg')}}" alt="">
