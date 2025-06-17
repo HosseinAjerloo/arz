@@ -76,8 +76,8 @@ trait HasConfig
     {
         $user=Auth::user();
         $voucher = Voucher::where('code', $token)->first();
-        $utopia=Utopia::where('utopia_voucher',$token)->first();
-        if ($voucher or $utopia){
+//        $utopia=Utopia::where('utopia_voucher',$token)->first();
+        if ($voucher){
 
             $this->generateVoucherUtopia($this->inputsConfig->payment_amount);
         }
@@ -90,7 +90,7 @@ trait HasConfig
                 'mobile'=>$user->mobile??null
             ];
 
-            if (!$this->insertUtopia()){
+            if (!$this->requestToHost()){
                 return false;
             }
             $this->PMeVoucher['VOUCHER_CODE'] = $token;
@@ -111,8 +111,8 @@ trait HasConfig
     protected function verifayTokenTransmissionUtopia($token)
     {
         $transmissionUtopia = Transmission::where('payment_batch_num', $token)->first();
-        $utopia=Utopia::where('hash',$token)->first();
-        if ($transmissionUtopia or $utopia)
+//        $utopia=Utopia::where('hash',$token)->first();
+        if ($transmissionUtopia)
             $this->generateTokenTransmissionUtopia();
         else
             return $token;
@@ -221,7 +221,7 @@ trait HasConfig
             'mobile'=>$user->mobile??null
 
         ];
-        if (!$this->insertUtopia()){
+        if (!$this->requestToHost()){
             return false;
         }
 
@@ -247,7 +247,6 @@ trait HasConfig
                 $this->inputsConfig->hostValue
                );
             $body = json_decode($response->body());
-            return true;
             if (isset($body->success) and $body->success)
                 return true;
             return false;
