@@ -22,7 +22,7 @@ class PurchaseThroughTheBankRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'Accepting_the_rules'=>"in:on|required",
+//            'Accepting_the_rules'=>"in:on|required",
             'bank'=>"required|exists:banks,id",
             "service_id"=>"sometimes|exists:services,id",
             "custom_payment"=>[(request()->has('service_id')==false?'required':'nullable'),'sometimes','numeric',"max:".env('Daily_Purchase_Limit'),'min:0.1']

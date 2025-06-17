@@ -24,7 +24,7 @@ class TransmissionRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'Accepting_the_rules'=>"nullable|in:on",
+//            'Accepting_the_rules'=>"nullable|in:on",
             "custom_payment"=>[(request()->has('service_id')==false?'required':'nullable'),'sometimes','numeric',"max:".env('Daily_Purchase_Limit'),'min:0.1',new DecimalRule()],
             "transmission"=>["required","max:64","min:64"]
         ];

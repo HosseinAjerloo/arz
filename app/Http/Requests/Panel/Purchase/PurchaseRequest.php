@@ -22,7 +22,7 @@ class PurchaseRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'Accepting_the_rules'=>"nullable",
+//            'Accepting_the_rules'=>"nullable",
             "service_id"=>"sometimes|exists:services,id",
             "custom_payment"=>[(request()->has('service_id')==false?'required':'nullable'),'sometimes','numeric',"max:".env('Daily_Purchase_Limit'),'min:0.1']
         ];
