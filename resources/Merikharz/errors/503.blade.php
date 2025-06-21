@@ -9,8 +9,8 @@
     <title>Document</title>
 </head>
 <body>
-    <div class="w-full h-screen relative">
-        <img src="{{asset('merikhArz/src/images/errors/503.jpg')}}" alt="" class="w-full h-full object-cover">
+    <div class="w-full h-screen relative bg-center  flex items-center justify-center">
+        <img src="{{asset('merikhArz/src/images/errors/503.jpg')}}" alt="" class="w-1/2 ">
     </div>
 </body>
 </html>
