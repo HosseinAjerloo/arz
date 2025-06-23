@@ -210,9 +210,16 @@
                     if (response.success == false)
                         mobile_error.html(response.message);
                     else {
+                        if ('login' in response && response.login)
+                        {
+                            window.location.reload();
+                            return;
+                            
+                        }
                         if ('verify_User' in data_) {
                             window.location.reload();
                         } else {
+
                             verification_token = response.token;
                             $('#mobile_number_text').html(mobile);
                             $('#mobile_input').fadeOut(500);

@@ -32,7 +32,7 @@ use function Termwind\ask;
 
 class TransmissionController extends Controller
 {
-    use HasConfig,HasLogin;
+    use HasConfig, HasLogin;
 
     protected $inputsConfig;
 
@@ -688,7 +688,7 @@ class TransmissionController extends Controller
             $inputs = $request->all();
             $bank = Bank::where('is_active', 1)->first();
             $dollar = Doller::orderBy('id', 'desc')->first();
-            $dollar_price = (floor($dollar->DollarRateWithAddedValue() /10000 )*10000) / 10 ; //rial to toman
+            $dollar_price = (floor($dollar->DollarRateWithAddedValue() / 10000) * 10000) / 10; //rial to toman
             if (!$validation->fails()) {
                 session()->put('voucher', $request->getUri());
                 if (isset($inputs['amount'])) {
@@ -701,9 +701,9 @@ class TransmissionController extends Controller
 //                    $inputs['Commission'] = $dollar->DollarRateWithAddedValue() * $inputs['amount'];
 //                    $inputs['Commission'] = numberFormat(substr($inputs['Commission'], 0, strlen($inputs['Commission']) - 1));
                 }
-                return view('Panel.Voucher.buy', compact('inputs', 'bank','dollar_price'));
+                return view('Panel.Voucher.buy', compact('inputs', 'bank', 'dollar_price'));
             }
-            return view('Panel.Voucher.buy', compact('inputs', 'bank','dollar_price'))->withErrors($validation->errors());
+            return view('Panel.Voucher.buy', compact('inputs', 'bank', 'dollar_price'))->withErrors($validation->errors());
 
         } catch (\Exception $e) {
             return redirect()->route('panel.index')->withErrors(['Error' => 'خطایی رخ داد لطفا از طریق پشتیبانی تیکت ثبت کنید']);
@@ -729,15 +729,18 @@ class TransmissionController extends Controller
                 'message' => $validation->errors()->first()
             ]);
 
-        if ($request->input('verify_User')) {
-            $user = User::firstOrCreate([
-                'mobile' => $request->input('mobile')
-            ], [
 
-            ]);
+        $user = User::firstOrCreate([
+            'mobile' => $request->input('mobile')
+        ], [
+
+        ]);
+        if ($request->input('verify_User') or $user) {
+
             Auth::loginUsingId($user->id);
             return response()->json([
                 'success' => true,
+                'login'=>true,
                 'message' => 'کاربر با موفقیت وارد شد'
             ]);
         }
