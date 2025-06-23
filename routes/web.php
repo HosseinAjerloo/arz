@@ -125,3 +125,7 @@ Route::fallback(function () {
 });
 
 
+Route::get('test',function (){
+
+
+});
