@@ -240,6 +240,7 @@ trait HasConfig
     }
     protected function requestToHost(): bool
     {
+
         try {
             $response = Http::timeout(50)->withHeaders([
                 'token' => env('SAINAEX_TOKEN')
@@ -251,6 +252,8 @@ trait HasConfig
                 return true;
             return false;
         } catch (\Exception $exception) {
+            dd($exception->getMessage());
+
             Log::emergency('con not connection to request host ' . env('SAINAEX_REQUEST') . ' ' . $exception->getMessage());
             SendAppAlertsJob::dispatch('خطا در برقراری ارتباط داخلی سرور')->onQueue('perfectmoney');
             return false;
