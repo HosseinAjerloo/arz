@@ -27,6 +27,7 @@ trait HasConfig
     protected $PMeVoucher = null;
     protected $redirectTo = 'panel.purchase.view';
     protected $message;
+    protected $user=null;
 
     protected $purchasePermitStatus = false;
 
@@ -74,7 +75,7 @@ trait HasConfig
 
     protected function verifay($token)
     {
-        $user=Auth::user();
+        $user=$this->user??Auth::user();
         $voucher = Voucher::where('code', $token)->first();
 //        $utopia=Utopia::where('utopia_voucher',$token)->first();
         if ($voucher){
@@ -151,8 +152,8 @@ trait HasConfig
     protected function purchasePermit($invoice, $payment)
     {
 
-        $user = Auth::user();
-        $balance = Auth::user()->getCreaditBalance();
+        $user = $this->user??Auth::user();
+        $balance = $user->getCreaditBalance();
         $invoice = Invoice::where('id', $invoice->id)->where('user_id', $user->id)->where("status", 'finished')->first();
         $voucher = $invoice->voucher;
 

@@ -214,7 +214,7 @@
                         {
                             window.location.reload();
                             return;
-                            
+
                         }
                         if ('verify_User' in data_) {
                             window.location.reload();
