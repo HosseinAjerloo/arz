@@ -7,6 +7,7 @@ use App\Http\Requests\Panel\Purchase\PurchaseRequest;
 use App\Http\Requests\Panel\Purchase\PurchaseThroughTheBankRequest;
 use App\Http\Requests\Panel\WalletCharging\WalletChargingRequest;
 use App\Http\Traits\HasConfig;
+use App\Jobs\BuyUtopiaCouponsWithJob;
 use App\Jobs\SendAppAlertsJob;
 use App\Models\Bank;
 use App\Models\Doller;
@@ -417,6 +418,8 @@ class PanelController extends Controller
             if ($validationPurchasePermit->purchasePermitStatus) {
                 return $validationPurchasePermit->redirectFunction();
             }
+            BuyUtopiaCouponsWithJob::dispatch($invoice,$payment)->onQueue('BuyUtopiaCouponsWithJob');
+
             $balance = Auth::user()->getCreaditBalance();
             $dollar = Doller::orderBy('id', 'desc')->first();
             $user = Auth::user();
@@ -679,11 +682,13 @@ class PanelController extends Controller
 
     public function error(Request $request, Payment $payment)
     {
-        $user = Auth::user();
-        if ($payment->invoice->user->id == $user->id)
-            return view('bank.bankErrorPage', compact('payment'));
-        else
-            return redirect()->route('panel.index');
+        return redirect()->route('panel.index')->withErrors(['error' => "خطایی رخ داد از صبر و شکیبایی شما مچکریم لطفا جهت پیگیری در خواست تیکت ثبت کنید"]);
+
+//        $user = Auth::user();
+//        if ($payment->invoice->user->id == $user->id)
+//            return view('bank.bankErrorPage', compact('payment'));
+//        else
+//            return redirect()->route('panel.index');
     }
 
     public function rules()

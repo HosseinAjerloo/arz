@@ -86,7 +86,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('ticket-chat/{ticket}', [App\Http\Controllers\Panel\TicketController::class, 'ticketChat'])->name('panel.ticket-chat');
     Route::post('ticket-client-message', [App\Http\Controllers\Panel\TicketController::class, 'ticketMessage'])->name('panel.ticket-client-message');
-    Route::get('ticket-add', [App\Http\Controllers\Panel\TicketController::class,'ticketAdd'])->name('panel.ticket-add');
+    Route::get('ticket-add', [App\Http\Controllers\Panel\TicketController::class, 'ticketAdd'])->name('panel.ticket-add');
     Route::post('ticket-add-submit', [App\Http\Controllers\Panel\TicketController::class, 'ticketAddSubmit'])->name('panel.ticket-add-submit');
     Route::get('download/{file}', [App\Http\Controllers\Panel\TicketController::class, 'download'])->name('panel.ticket.download');
     Route::get('faq', [App\Http\Controllers\Panel\FaqController::class, 'index'])->name('panel.faq');
