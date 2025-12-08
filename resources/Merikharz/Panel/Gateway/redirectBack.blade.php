@@ -80,7 +80,7 @@
 
 @endsection
 
-@section('script-tag')
+@section('script')
 
     <script>
         setTimeout(function (){
