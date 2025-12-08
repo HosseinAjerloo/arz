@@ -257,7 +257,7 @@ class FastPaymentController extends Controller
     }
 
     public function fastPaymentStatus(FastPayment $fastPayment){
-        dd($fastPayment);
+        return view('Panel.Gateway.redirectBack',compact('fastPayment'));
     }
     protected function voucherValidation()
     {

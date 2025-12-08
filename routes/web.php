@@ -123,12 +123,12 @@ Route::post('transfer-logout', [App\Http\Controllers\Panel\TransmissionControlle
 
 Route::get('fast-gateway',[App\Http\Controllers\Panel\FastPaymentController::class,'index'])->name('panel.fast-gateway-view');
 Route::post('fast-gateway',[App\Http\Controllers\Panel\FastPaymentController::class,'gatewayFastPayment'])->name('panel.fast-gateway-payment');
-Route::post('fast-gateway-back',[App\Http\Controllers\Panel\FastPaymentController::class,'gatewayFastPaymentBack'])->name('panel.fast-gateway-payment-back');
-Route::get('fast-gateway-back/status/{fastPayment}', [App\Http\Controllers\Panel\TransmissionController::class, 'fastPaymentStatus'])->name('panel.fast-gateway-status');
+Route::post('fast-gateway-back',[App\Http\Controllers\Panel\FastPaymentController::class,'gatewayFastPaymentBack'])->name('panel.fast-gateway-payment-back')->withoutMiddleware(Illuminate\Foundation\Http\Middleware\ValidateCsrfToken::class);
+Route::get('fast-gateway-back/status/{fastPayment}', [App\Http\Controllers\Panel\FastPaymentController::class, 'fastPaymentStatus'])->name('panel.fast-gateway-status');
 
 
 Route::post('gateway-out',[App\Http\Controllers\Panel\TransmissionController::class,'gatewayOut'])->name('gateway-out')->withoutMiddleware(Illuminate\Foundation\Http\Middleware\ValidateCsrfToken::class);;
-Route::post('gateway-out-back',[App\Http\Controllers\Panel\TransmissionController::class,'gatewayOutBack'])->name('gateway-out-back')->withoutMiddleware(Illuminate\Foundation\Http\Middleware\ValidateCsrfToken::class);;
+Route::post('gateway-out-back',[App\Http\Controllers\Panel\TransmissionController::class,'gatewayOutBack'])->name('gateway-out-back')->withoutMiddleware(Illuminate\Foundation\Http\Middleware\ValidateCsrfToken::class);
 
 Route::post('form',function (\Illuminate\Http\Request $request){;
     return view('form',compact('request'));

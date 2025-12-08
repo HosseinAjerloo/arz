@@ -115,10 +115,10 @@
             copyToClipboard(spanText);
         });
 
-        {{--setTimeout(function (){--}}
-        {{--    --}}{{--window.location.replace("{{$fastPayment->url_back?$fastPayment->url_back:route('panel.index')}}");--}}
+        setTimeout(function (){
+            window.location.replace("{{$fastPayment->url_back?$fastPayment->url_back:route('panel.index')}}");
 
-        {{--},2000)--}}
+        },2000)
 
     </script>
 @endsection
