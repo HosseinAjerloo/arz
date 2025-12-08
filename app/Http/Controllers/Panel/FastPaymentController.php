@@ -134,7 +134,7 @@ class FastPaymentController extends Controller
             session()->put('financeTransaction', $financeTransaction->id);
             session()->put('fastPayment', $fastPayment->id);
 
-            Log::channel('bankLog')->emergency(PHP_EOL . 'Connect to the bank to transfer the voucher '
+            Log::channel('bankLog')->emergency(PHP_EOL . 'Connect to the bank width fastPayment '
                 . PHP_EOL .
                 'Name of the bank: ' . $bank->name
                 . PHP_EOL .
@@ -170,7 +170,7 @@ class FastPaymentController extends Controller
             $objBank = new $bank->class;
             $objBank->setBankModel($bank);
 
-            Log::channel('bankLog')->emergency(PHP_EOL . " Bank return response from voucher transfer " . PHP_EOL . json_encode($request->all()) . PHP_EOL .
+            Log::channel('bankLog')->emergency(PHP_EOL . " Bank return response from fastPayment " . PHP_EOL . json_encode($request->all()) . PHP_EOL .
                 'Bank message: ' . PHP_EOL . $objBank->transactionStatus() . PHP_EOL .
                 'user ID :' . $user->id
                 . PHP_EOL
@@ -203,7 +203,7 @@ class FastPaymentController extends Controller
                 $invoice->update(['status' => 'failed', 'description' => ' پرداخت موفقیت آمیز نبود ' . $objBank->verifyTransaction($back_price)]);
                 $financeTransaction->update(['description' => ' پرداخت موفقیت آمیز نبود ' . $objBank->verifyTransaction($back_price), 'status' => 'fail']);
 
-                Log::channel('bankLog')->emergency(PHP_EOL . "Bank Credit VerifyTransaction from voucher transfer : " . json_encode($request->all()) . PHP_EOL .
+                Log::channel('bankLog')->emergency(PHP_EOL . "Bank Credit VerifyTransaction from fastPayment : " . json_encode($request->all()) . PHP_EOL .
                     'Bank message: ' . $objBank->verifyTransaction($back_price) .
                     PHP_EOL .
                     'user Id: ' . $user->id
@@ -252,7 +252,7 @@ class FastPaymentController extends Controller
         } catch (\Exception $e) {
             Log::emergency(PHP_EOL . $e->getMessage() . PHP_EOL);
             SendAppAlertsJob::dispatch('در پرداخت سریع از درگاه باتکی خطایی رخ داده است لطفا پیگیری شود.')->onQueue('perfectmoney');
-            return redirect()->route('panel.transfer.external')->withErrors(['error' => 'یک خطای غیر منتظره رخ داد لفطا از طریق پشتیبانی تیکت برنید']);
+            return redirect()->route('panel.fast-gateway-status', $fastPayment)->withErrors(['error' => 'یک خطای غیر منتظره رخ داد لفطا از طریق پشتیبانی تیکت برنید']);
         }
     }
 
