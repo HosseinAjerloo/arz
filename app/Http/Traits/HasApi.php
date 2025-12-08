@@ -1,5 +1,7 @@
 <?php
 namespace App\Http\Traits;
+use Illuminate\Http\Request;
+
 trait HasApi{
     protected function failMessage($message='رکورد یافت نشد')
     {
