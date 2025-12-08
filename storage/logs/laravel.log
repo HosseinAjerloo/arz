@@ -500,3 +500,5 @@
 #36 H:\\arz\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\resources\\server.php(23): require_once('H:\\\\arz\\\\public\\\\i...')
 #37 {main}
 "} 
+[2025-12-08 12:17:01] local.EMERGENCY: An error occurred while connecting to National Bank :
+آدرس IP پرداخت در محدوده آدرس های معتبر اعلام شده توسط پذیرنده نیست .لطفا مسئول فني پذيرنده با بانک تماس حاصل فرمايند  

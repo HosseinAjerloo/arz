@@ -322,7 +322,7 @@
             if (val.match(/(([0-9])?((\.)?)([0-9]{1,2}))/gm)) {
                 if (val.includes('.')) {
                     let paymentSplit = val.split('.')[1]
-                    if (paymentSplit.length > 2) {
+                    if (paymentSplit.length > 3) {
                         $(this).val(Math.floor(val * 100) / 100);
                         return;
                     }

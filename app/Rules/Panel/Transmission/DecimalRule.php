@@ -16,8 +16,8 @@ class DecimalRule implements ValidationRule
     {
         if (str_contains($value, '.')) {
             $decimal = explode('.', $value);
-            if (strlen($decimal[1]) > 1)
-                $fail('شمامجاز هستید تایک رقم اعشار پیش بروید');
+            if (strlen($decimal[1]) > 3)
+                $fail('شمامجاز هستید سه رقم اعشار پیش بروید');
         }
     }
 }
