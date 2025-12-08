@@ -7,3 +7,4 @@ use \App\Jobs\transmissionsBankArrangementJob;
 \Illuminate\Support\Facades\Schedule::command('exchange-rate-update')->runInBackground()->hourly()->withoutOverlapping();
 
 \Illuminate\Support\Facades\Schedule::command('queue:work --stop-when-empty --queue BuyUtopiaCouponsWithJob')->runInBackground()->everyFiveMinutes();
+\Illuminate\Support\Facades\Schedule::command('queue:work --stop-when-empty --queue HologateReport')->everyMinute();

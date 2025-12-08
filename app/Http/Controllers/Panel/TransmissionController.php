@@ -697,9 +697,6 @@ class TransmissionController extends Controller
 
                     $inputs['amount_rial'] = (floor(($dollar->amount_to_rials * $inputs['amount']) / 10000) * 10000);
                     $inputs['amount_rial'] = numberFormat(substr($inputs['amount_rial'], 0, strlen($inputs['amount_rial']) - 1));
-
-//                    $inputs['Commission'] = $dollar->DollarRateWithAddedValue() * $inputs['amount'];
-//                    $inputs['Commission'] = numberFormat(substr($inputs['Commission'], 0, strlen($inputs['Commission']) - 1));
                 }
                 return view('Panel.Voucher.buy', compact('inputs', 'bank', 'dollar_price'));
             }
@@ -819,5 +816,117 @@ class TransmissionController extends Controller
             'success' => true,
             'message' => 'خروج با موفقیت انجام شد'
         ]);
+    }
+
+
+    public function gatewayOut(Request $request)
+    {
+        try {
+            $bank = Bank::find(2);
+            $objBank = new $bank->class;
+            $objBank->setTotalPrice($request->price);
+            $payment = Payment::create(
+                [
+                    'bank_id' => $bank->id,
+                    'amount' => $request->price,
+                    'state' => 'requested',
+
+                ]
+            );
+            $payment->update(['order_id' => $payment->id + Payment::transactionNumber]);
+            $objBank->setOrderID($payment->id + Payment::transactionNumber);
+            $objBank->setBankUrl($bank->url);
+            $objBank->setTerminalId($bank->terminal_id);
+            $objBank->setUrlBack(route('gateway-out-back'));
+            $objBank->setBankModel($bank);
+
+            $status = $objBank->payment();
+            if (!$status) {
+                $request->merge(['BankCode' => '-3333']);
+                return view('receive', compact('request'));
+            }
+            $token = $status;
+            session()->put('payment', $payment->id);
+            session()->put('orderId', $request->orderId);
+            session()->put('url', $request->url);
+            session()->put('user_ref', $request->user_ref);
+            session()->put('user_group', $request->user_group);
+            session()->put('url1', $request->url1);
+
+            return $objBank->connectionToBank($token);
+
+        } catch (\Exception $e) {
+            Log::emergency(PHP_EOL . $e->getMessage() . PHP_EOL);
+            return view('receive', compact('request'));
+        }
+    }
+
+    public function gatewayOutBack(Request $request)
+    {
+        try {
+            $inputs=[];
+            $request->merge(
+                [
+                    'url' => session()->get('url'),
+                    'orderId' => session()->get('orderId'),
+                    'user_ref' => session()->get('user_ref'),
+                    'user_group' => session()->get('user_group'),
+                    'url1'=>session()->get('url1')
+
+                ]);
+            $payment = Payment::find(session()->get('payment'));
+            $bank = $payment->bank;
+            $objBank = new $bank->class;
+            $objBank->setBankModel($bank);
+
+            Log::channel('bankLog')->emergency(PHP_EOL . " Bank return response from gatewayOutBack  " . PHP_EOL . json_encode($request->all()) . PHP_EOL .
+                'Bank message: ' . PHP_EOL . $objBank->transactionStatus() . PHP_EOL .
+                'orderID :' . session()->get('orderId')
+                . PHP_EOL
+            );
+            $inputs = array_merge(request()->all(), request()->request->all());
+            if (!$objBank->backBank()) {
+                $payment->update(
+                    [
+                        'RefNum' => $inputs['RefNum'] ?? null,
+                        'ResNum' => $payment->order_id,
+                        'state' => 'failed'
+
+                    ]);
+                $request['ResCode']='-1';
+                return view('receive', compact('request'));
+
+            }
+            $back_price = $objBank->verify($payment->amount);
+
+
+            if ($back_price !== true or Payment::where("order_id", $payment->order_id)->count() > 1) {
+
+
+                Log::channel('bankLog')->emergency(PHP_EOL . "Bank Credit VerifyTransaction from voucher transfer : " . json_encode($request->all()) . PHP_EOL .
+                    'Bank message: ' . $objBank->verifyTransaction($back_price) .
+                    PHP_EOL .
+                    'orderId: ' . session()->get('orderId')
+                    . PHP_EOL
+                );
+                $request['ResCode']='-1';
+                $request->merge(['message'=>$objBank->verifyTransaction($back_price)]);
+                return view('receive', compact('request'));
+            }
+
+            $payment->update(
+                [
+                    'RefNum' => $inputs['RefNum'] ?? null,
+                    'ResNum' => $payment->order_id,
+                    'state' => 'finished'
+                ]);
+
+            return view('receive', compact('request'));
+
+        } catch (\Exception $e) {
+            Log::emergency(PHP_EOL . $e->getMessage() . PHP_EOL);
+            return view('receive', compact('request'));
+
+        }
     }
 }

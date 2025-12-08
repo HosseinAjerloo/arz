@@ -217,7 +217,7 @@ trait HasConfig
 
         $this->inputsConfig->hostValue=[
             'hash' => $this->inputsConfig->payment_batch_num,
-            'validate' => $this->inputsConfig->type,
+            'validate' => $this->inputsConfigf->type,
             'amount' => $this->inputsConfig->payment_amount,
             'mobile'=>$user->mobile??null
 
