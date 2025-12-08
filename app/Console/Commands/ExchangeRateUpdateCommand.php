@@ -29,19 +29,15 @@ class ExchangeRateUpdateCommand extends Command
     {
 
 
-        $dollar = Doller::all()->first();
+          $dollar = Doller::first();
 
-        $usdt = Http::post('https://api.nobitex.ir/market/stats', [
-            'srcCurrency' => 'USDT',
-            'dstCurrency' => 'IRT'
-        ]);
-        if ($usdt->status() == 200) {
-            if ($USDTIR = $usdt->json('stats') and is_array($usdt->json('stats'))) {
-                if (isset($USDTIR['USDT-IRT'])) {
-                    $USDTIR = $USDTIR['USDT-IRT'];
-                    $dollar->update(['amount_to_rials' => $USDTIR['bestSell']]);
-                }
-            }
+        $response=\Illuminate\Support\Facades\Http::get('https://api.tetherland.com/currencies');
+        $body=$response->json();
+        if ($response->status()==200 and isset($body['status']) and $body['status']==200)
+        {
+            $price=$body['data']['currencies']['USDT']['price'];
+            $dollar->update(['amount_to_rials' => $price."0"]);
+
         }
 
     }
