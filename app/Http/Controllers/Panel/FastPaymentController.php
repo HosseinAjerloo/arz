@@ -161,7 +161,7 @@ class FastPaymentController extends Controller
             $dollar = Doller::orderBy('id', 'desc')->first();
             $user = Auth::user();
             $balance = Auth::user()->getCreaditBalance();
-            $inputs = $request->all();
+            $inputs = array_merge(request()->all(), request()->request->all());
             $payment = Payment::find(session()->get('payment'));
             $financeTransaction = FinanceTransaction::find(session()->get('financeTransaction'));
             $fastPayment = FastPayment::find(session()->get('fastPayment'));
@@ -180,7 +180,7 @@ class FastPaymentController extends Controller
                 $payment->update(
                     [
                         'RefNum' => null,
-                        'ResNum' => $inputs['ResNum'],
+                        'ResNum' => $payment->order_id,
                         'state' => 'failed'
 
                     ]);
@@ -195,7 +195,7 @@ class FastPaymentController extends Controller
 
             $back_price = $objBank->verify($payment->amount);
 
-            if ($back_price !== true or Payment::where("order_id", $inputs['ResNum'])->count() > 1) {
+            if ($back_price !== true or Payment::where("order_id", $payment->order_id)->count() > 1) {
 
                 $bankErrorMessage = "درگاه بانک {$bank->name} تراکنش شمارا به دلیل " . $objBank->verifyTransaction($back_price);
                 $satiaService->send($bankErrorMessage, $user->mobile, env('SMS_Number'), env('SMS_Username'), env('SMS_Password'));
@@ -215,7 +215,7 @@ class FastPaymentController extends Controller
             $payment->update(
                 [
                     'RefNum' => $inputs['RefNum'],
-                    'ResNum' => $inputs['ResNum'],
+                    'ResNum' => $payment->order_id,
                     'state' => 'finished'
                 ]);
 

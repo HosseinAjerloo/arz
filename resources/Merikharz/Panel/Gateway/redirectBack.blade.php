@@ -83,38 +83,6 @@
 @section('script-tag')
 
     <script>
-        $(".share").click(function () {
-            let body = $("body").html();
-            let htmlPrint = $('.print').html();
-            $("body").html(htmlPrint);
-            window.print()
-            $("body").html(body);
-
-        })
-
-        function copyToClipboard(text) {
-
-            var textArea = document.createElement("textarea");
-            textArea.value = text;
-            document.body.appendChild(textArea);
-            textArea.select();
-
-            try {
-                var successful = document.execCommand('copy');
-                var msg = successful ? 'successful' : 'unsuccessful';
-                console.log('Copying text command was ' + msg);
-            } catch (err) {
-                console.log('Oops, unable to copy', err);
-            }
-            document.body.removeChild(textArea);
-        }
-
-        $('.copy').click(function () {
-
-            let spanText = $(this).siblings('span').text();
-            copyToClipboard(spanText);
-        });
-
         setTimeout(function (){
             window.location.replace("{{$fastPayment->url_back?$fastPayment->url_back:route('panel.index')}}");
 
