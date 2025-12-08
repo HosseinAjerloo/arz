@@ -161,7 +161,6 @@ class FastPaymentController extends Controller
             $dollar = Doller::orderBy('id', 'desc')->first();
             $user = Auth::user();
             $balance = Auth::user()->getCreaditBalance();
-            $inputs = array_merge(request()->all(), request()->request->all());
             $payment = Payment::find(session()->get('payment'));
             $financeTransaction = FinanceTransaction::find(session()->get('financeTransaction'));
             $fastPayment = FastPayment::find(session()->get('fastPayment'));
@@ -175,6 +174,8 @@ class FastPaymentController extends Controller
                 'user ID :' . $user->id
                 . PHP_EOL
             );
+            $inputs = array_merge(request()->all(), request()->request->all());
+
             $invoice = $payment->invoice;
             if (!$objBank->backBank()) {
                 $payment->update(
@@ -214,7 +215,7 @@ class FastPaymentController extends Controller
 
             $payment->update(
                 [
-                    'RefNum' => $inputs['RefNum'],
+                    'RefNum' => $inputs['RefNum']??null,
                     'ResNum' => $payment->order_id,
                     'state' => 'finished'
                 ]);
