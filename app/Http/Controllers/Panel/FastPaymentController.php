@@ -4,6 +4,7 @@ namespace App\Http\Controllers\panel;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Panel\Transmission\TransferRequest;
+use App\Http\Traits\HasApi;
 use App\Jobs\SendAppAlertsJob;
 use App\Models\Bank;
 use App\Models\Doller;
@@ -23,6 +24,7 @@ use Illuminate\Support\Facades\Validator;
 
 class FastPaymentController extends Controller
 {
+    use HasApi;
     public function index(Request $request){
         try {
             $request->request->add(['amount' => $request->get('amount')]);
@@ -282,5 +284,34 @@ class FastPaymentController extends Controller
             ]
 
         );
+    }
+
+    public function VerifyFastPayment(Request $request)
+    {
+        try {
+            if ($this->validationToken($request) and $request->has('pay_id'))
+            {
+                $fastPayment=FastPayment::where('pay_id',$request->pay_id)->latest()->first();
+                if ($fastPayment)
+                {
+                    if ($fastPayment->financeTransaction->payment)
+                    {
+                        $success=($fastPayment->financeTransaction->payment->state)!='finished'?false:true;
+                        return response()->json(['success'=>$success,'message'=>$fastPayment->financeTransaction->description,'amount'=>$fastPayment->amount]);
+                    }
+                    else{
+                        return $this->failMessage('پرداخت یافت نشد');
+                    }
+                }
+                else{
+                    return $this->failMessage();
+                }
+            }
+            else{
+                return $this->failMessage();
+            }
+        }catch (\Exception $exception){
+            Log::emergency(PHP_EOL.'fastPayment'.PHP_EOL.$exception->getMessage().PHP_EOL);
+        }
     }
 }
