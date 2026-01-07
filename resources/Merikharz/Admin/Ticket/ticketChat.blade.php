@@ -36,10 +36,14 @@
                         class="bg-gradient-to-b from-F4F7FB to-8EBFFC text-mini-base p-2 leading-6 w-11/12 rounded-ss-md rounded-es-md">
                             <div class="flex items-center space-x-2">
                                 <span class="font-semibold flex">
-                                    نام کاربری:
+                                    نام کاربری و شماره موبایل:
                                 </span>
+                                <h1 class="font-bold space-x-2 space-x-reverse">
+                                   {{$ticket_message->user->fullName??''}}
+                                   ({{$ticket_message->user->mobile??''}})
+
+                                </h1>
                                 <h1 class="font-bold">
-                                   {{$ticket_message->user->fullName}}
                                 </h1>
                             </div>
                         <p class=" text-black/45 text-center mb-2">{{Morilog\Jalali\Jalalian::forge($ticket_message->created_at)->format('Y/m/d')}}</p>
