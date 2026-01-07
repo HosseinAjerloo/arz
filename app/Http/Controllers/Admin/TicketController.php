@@ -64,7 +64,7 @@ class TicketController extends Controller
         $clientUser=$ticket->messages()->whereNotNull('user_id')->first()?->user;
         if ($clientUser)
         {
-            $satiaService->send('کاربر گرامی تیک شما پاسخ داده شد '.PHP_EOL.'با تشکر پشتیبانی مریخ ارز',$clientUser->mobile);
+            $satiaService->send('کاربر گرامی تیکت شما پاسخ داده شد '.PHP_EOL.'با تشکر پشتیبانی مریخ ارز',$clientUser->mobile);
         }
         if ($request->hasFile('image')) {
             $imageService->setFileFolder('ticket');
