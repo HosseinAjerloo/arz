@@ -7,6 +7,7 @@ use App\Http\Requests\Admin\Ticket\TicketRequest;
 use App\Models\Ticket;
 use App\Models\TicketMessage;
 use App\Services\ImageService\ImageService;
+use App\Services\SmsService\SatiaService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Morilog\Jalali\Jalalian;
@@ -49,17 +50,22 @@ class TicketController extends Controller
         return view('Admin.Ticket.ticketChat', compact('ticket', 'ticket_messages'));
     }
 
-    public function ticketMessage(TicketRequest $request, ImageService $imageService)
+    public function ticketMessage(TicketRequest $request, ImageService $imageService,SatiaService $satiaService)
     {
 
         $user = Auth::user();
         $ticket = Ticket::find($request->ticket_id);
-        if (!$ticket)
+       if (!$ticket)
             abort(404);
         $inputs = $request->all();
         $ticket->update(['status' => 'has_been_answered']);
         $inputs['ticket_id'] = $ticket->id;
         $inputs['admin_id'] = $user->id;
+        $clientUser=$ticket->messages()->whereNotNull('user_id')->first()?->user;
+        if ($clientUser)
+        {
+            $satiaService->send('کاربر گرامی تیک شما پاسخ داده شد '.PHP_EOL.'با تشکر پشتیبانی مریخ ارز',$clientUser->mobile);
+        }
         if ($request->hasFile('image')) {
             $imageService->setFileFolder('ticket');
             $imageService->saveImage($request->file('image'));

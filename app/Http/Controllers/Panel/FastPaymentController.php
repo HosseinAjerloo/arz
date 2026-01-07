@@ -27,10 +27,11 @@ class FastPaymentController extends Controller
     use HasApi;
     public function index(Request $request){
         try {
+
             $request->request->add(['amount' => $request->get('amount')]);
             $request->request->add(['account' => $request->get('account')]);
             $request->request->add(['pay_id' => $request->get('pay_id')]);
-            $request->request->add(['url_back' => $request->get('url_back')]);
+            $request->request->add(['url_back' => urldecode($request->get('url_back'))]);
             $validation = $this->voucherValidation();
             $inputs = $request->all();
             $bank = Bank::find(2);
@@ -56,7 +57,6 @@ class FastPaymentController extends Controller
 
     public function gatewayFastPayment(TransferRequest $request){
         try {
-            $balance = Auth::user()->getCreaditBalance();
 
             $dollar = Doller::orderBy('id', 'desc')->first();
             $inputs = $request->all();
@@ -67,6 +67,9 @@ class FastPaymentController extends Controller
             {
                 Auth::loginUsingId($user->id);
             }
+
+            $balance = Auth::user()->getCreaditBalance();
+
             $bank = Bank::find(2);
             $inputs['user_id'] = $user->id;
             $inputs['description'] = " انتقال سریع ووچر $bank->name";
@@ -269,7 +272,7 @@ class FastPaymentController extends Controller
                 'amount' => [ 'numeric', "max:" . env('Safe_Daily_Purchase_Limit',60), 'min:0.1', new DecimalRule()],
                 'account' => ["required", "min:9", "max:9", new PAYERACCOUNTRule()],
                 'pay_id' => ["required"],
-                'url_back' => ["required"],
+                'url_back' => ["required","url:http,https"],
             ],
             [
                 'amount.required' => 'وارد کردن مبلغ حواله الزامی است',

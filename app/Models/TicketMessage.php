@@ -19,4 +19,7 @@ class TicketMessage extends Model
     {
         return $dateTime->setTimezone('Asia/Tehran')->format('Y-m-d H:i:s');
     }
+    public function user(){
+        return $this->belongsTo(User::class,'user_id');
+    }
 }

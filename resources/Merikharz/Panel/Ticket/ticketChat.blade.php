@@ -32,8 +32,17 @@
 
             @if($ticket_message->user_id)
                 <article class="w-full flex ">
+
                     <div
                         class="bg-gradient-to-b from-FFB01B to-blue-DE9408 text-mini-base p-2 leading-6 w-11/12 rounded-se-md  rounded-ee-md  ">
+                        <div class="flex items-center space-x-2">
+                                <span class="font-semibold flex">
+                                    نام کاربری:
+                                </span>
+                            <h1 class="font-bold">
+                                {{$ticket_message->user->fullName}}
+                            </h1>
+                        </div>
                         <p class=" text-black/45 text-center mb-2">{{Morilog\Jalali\Jalalian::forge($ticket_message->created_at)->format('Y/m/d')}}</p>
                         @if($ticket_message->type=='file' and $ticket_message->image)
                             <img src="{{asset($ticket_message->image->path)}}" alt="" class="w-52	">
@@ -52,6 +61,12 @@
                 <article class="w-full flex justify-end ">
                     <div
                         class="bg-gradient-to-b from-F4F7FB to-8EBFFC text-mini-base p-2 leading-6 w-11/12 rounded-ss-md rounded-es-md">
+                        <div class="flex items-center space-x-2">
+
+                            <h1 class="font-bold">
+                              پاسخ ادمین
+                            </h1>
+                        </div>
                         <p class=" text-black/45 text-center mb-2">{{Morilog\Jalali\Jalalian::forge($ticket_message->created_at)->format('Y/m/d')}}</p>
                         @if($ticket_message->type=='file' and $ticket_message->image)
                             <img src="{{asset($ticket_message->image->path)}}" alt="" class="w-52	">
