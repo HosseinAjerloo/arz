@@ -501,6 +501,8 @@ class PanelController extends Controller
     public function walletCharging(Request $request)
     {
         $bank = Bank::where('is_active', 1)->first();
+        if (!$bank)
+            return redirect()->route('panel.index')->withErrors(['error'=>'به دلیل خاموش بودن درگاه این روش غیر فعال میباشد']);
         $user = Auth::user();
         return view("Panel.RechargeWallet.index", compact('user', 'bank'));
     }

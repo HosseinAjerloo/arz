@@ -687,6 +687,10 @@ class TransmissionController extends Controller
             $validation = $this->voucherValidation();
             $inputs = $request->all();
             $bank = Bank::where('is_active', 1)->first();
+
+            if (!$bank)
+                return redirect()->route('panel.index')->withErrors(['error'=>'به دلیل غیر فعال بودن درگاهپرداخت این روش غیر فعال شده است']);
+
             $dollar = Doller::orderBy('id', 'desc')->first();
             $dollar_price = (floor($dollar->DollarRateWithAddedValue() / 10000) * 10000) / 10; //rial to toman
             if (!$validation->fails()) {

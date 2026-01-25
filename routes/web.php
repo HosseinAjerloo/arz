@@ -8,10 +8,11 @@ use App\Models\Utopia;
 use App\Models\VouchersBank;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
-
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Client\Response;
 use Illuminate\Http\Client\RequestException;
 use AyubIRZ\PerfectMoneyAPI\PerfectMoneyAPI;
+use Illuminate\Support\Str;
 
 Route::middleware('guest')->group(function () {
     Route::name('login.')->prefix('login')->group(function () {
@@ -121,19 +122,56 @@ Route::post('verification-code-submit', [App\Http\Controllers\Panel\Transmission
 Route::post('transfer-logout', [App\Http\Controllers\Panel\TransmissionController::class, 'transfer_logout'])->name('transfer.logout');
 
 
-Route::get('fast-gateway',[App\Http\Controllers\Panel\FastPaymentController::class,'index'])->name('panel.fast-gateway-view');
-Route::post('fast-gateway',[App\Http\Controllers\Panel\FastPaymentController::class,'gatewayFastPayment'])->name('panel.fast-gateway-payment');
-Route::post('fast-gateway-back',[App\Http\Controllers\Panel\FastPaymentController::class,'gatewayFastPaymentBack'])->name('panel.fast-gateway-payment-back')->withoutMiddleware(Illuminate\Foundation\Http\Middleware\ValidateCsrfToken::class);
+Route::get('fast-gateway', [App\Http\Controllers\Panel\FastPaymentController::class, 'index'])->name('panel.fast-gateway-view');
+Route::post('fast-gateway', [App\Http\Controllers\Panel\FastPaymentController::class, 'gatewayFastPayment'])->name('panel.fast-gateway-payment');
+Route::post('fast-gateway-back', [App\Http\Controllers\Panel\FastPaymentController::class, 'gatewayFastPaymentBack'])->name('panel.fast-gateway-payment-back')->withoutMiddleware(Illuminate\Foundation\Http\Middleware\ValidateCsrfToken::class);
 Route::get('fast-gateway-back/status/{fastPayment}', [App\Http\Controllers\Panel\FastPaymentController::class, 'fastPaymentStatus'])->name('panel.fast-gateway-status');
 
 
-Route::post('gateway-out',[App\Http\Controllers\Panel\TransmissionController::class,'gatewayOut'])->name('gateway-out')->withoutMiddleware(Illuminate\Foundation\Http\Middleware\ValidateCsrfToken::class);;
-Route::post('gateway-out-back',[App\Http\Controllers\Panel\TransmissionController::class,'gatewayOutBack'])->name('gateway-out-back')->withoutMiddleware(Illuminate\Foundation\Http\Middleware\ValidateCsrfToken::class);
+Route::post('gateway-out', [App\Http\Controllers\Panel\TransmissionController::class, 'gatewayOut'])->name('gateway-out')->withoutMiddleware(Illuminate\Foundation\Http\Middleware\ValidateCsrfToken::class);;
+Route::post('gateway-out-back', [App\Http\Controllers\Panel\TransmissionController::class, 'gatewayOutBack'])->name('gateway-out-back')->withoutMiddleware(Illuminate\Foundation\Http\Middleware\ValidateCsrfToken::class);
 
-Route::post('form',function (\Illuminate\Http\Request $request){;
-    return view('form',compact('request'));
+Route::post('form', function (\Illuminate\Http\Request $request) {
+    ;
+    return view('form', compact('request'));
 })->withoutMiddleware(Illuminate\Foundation\Http\Middleware\ValidateCsrfToken::class);
 
+
+Route::get('test', function () {
+  
+//    $financeOne=\App\Models\FastPayment::select('finance_transactions.user_id')
+//        ->join('finance_transactions','fast_payments.finance_id','=','finance_transactions.id')
+//        ->whereBetween('fast_payments.created_at',['2026-01-08','2026-01-23'])
+//        ->where('finance_transactions.status','success')->where('fast_payments.api_success','false')
+//        ->groupBy('finance_transactions.user_id')->get()->pluck('user_id')->toArray();
+//
+//    $financeTwo=\App\Models\FinanceTransaction::select(DB::raw('finance_transactions.user_id,finance_transactions.creadit_balance'))
+//        ->whereIn('user_id',$financeOne)->whereBetween('finance_transactions.created_at',['2026-01-08','2026-01-23'])->
+//        where('finance_transactions.creadit_balance',">",0)->groupBy('finance_transactions.user_id','finance_transactions.creadit_balance')
+//        ->get();
+
+
+
+//    foreach ($financeTwo as $finance){
+
+//            $userBalance=\App\Models\FinanceTransaction::where('user_id',$finance->user_id)->latest()->first();
+//            $userBalance->update(['creadit_balance'=>$userBalance->creadit_balance+$finance->creadit_balance]);
+
+//    }
+//    for ($i = 0; $i <=30 ; $i++) {
+//        $token = 'USD-' . rand(1, 9) . Str::random(3) . '-' . Str::random(4) . '-' . Str::random(4) . '-' . Str::random(4) . '-' . Str::random(4);
+//        $token=strtoupper($token);
+//        VouchersBank::create([
+//            'serial' => $token,
+//            'code' => $token,
+//            'amount' => '5',
+//            'status' => 'new',
+//            'description' => 'ایجاد ووچر به صورت اتوماتیک'
+//        ]);
+//    }
+
+
+});
 Route::fallback(function () {
     abort(404);
 });
