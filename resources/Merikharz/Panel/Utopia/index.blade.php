@@ -17,9 +17,16 @@
 
                 <div class="flex items-center space-x-reverse space-x-2 ">
                     <p class="text-black font-bold text-mini-mini-base w-28 leading-4">مبلغ ووچر یوتوپیا (دلار) :</p>
-                    <input type="text"
-                           class="customPayment py-1.5 px-4 border border-black rounded-md text-black w-[92%] md:w-[30%] 2xl:w-[20%]"
-                           name="custom_payment" value="{{old('custom_payment')}}">
+{{--                    <input type="text"--}}
+{{--                           class="customPayment py-1.5 px-4 border border-black rounded-md text-black w-[92%] md:w-[30%] 2xl:w-[20%]"--}}
+{{--                           name="custom_payment" value="{{old('custom_payment')}}">--}}
+
+                    <select name="custom_payment" class="customPayment py-1.5 px-4 border border-black rounded-md text-black w-[92%] md:w-[30%] 2xl:w-[20%]">
+                        <option value="0.3">0.3</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="5">5</option>
+                    </select>
                     <img src="{{asset('merikhArz/src/images/pasteIcon.svg')}}" alt="">
                 </div>
 

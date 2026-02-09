@@ -27,7 +27,7 @@ trait HasConfig
     protected $PMeVoucher = null;
     protected $redirectTo = 'panel.purchase.view';
     protected $message;
-    protected $user=null;
+    protected $user = null;
 
     protected $purchasePermitStatus = false;
 
@@ -67,46 +67,47 @@ trait HasConfig
 
     protected function generateVoucherUtopia($amount)
     {
-        $this->inputsConfig->payment_amount=$amount;
+        $this->inputsConfig->payment_amount = $amount;
         $this->inputsConfig->type = 'merikhArz';
         $token = 'USD-' . rand(1, 9) . Str::random(3) . '-' . Str::random(4) . '-' . Str::random(4) . '-' . Str::random(4) . '-' . Str::random(4);
-        $this->verifay(strtoupper($token));
+        $voucher = Voucher::where('code', $token)->first();
+        if ($voucher)
+            return $this->generateVoucherUtopia($amount);
+        if (!$this->verifay(strtoupper($token))) {
+            $voucherBank = VouchersBank::where('amount', $amount)->where('status', 'new')->first();
+
+            if ($voucherBank) {
+                $voucherBank->update(['status' => 'used']);
+                $this->PMeVoucher['VOUCHER_CODE'] = $voucherBank->code;
+            }
+        }
+
     }
 
     protected function verifay($token)
     {
-        $user=$this->user??Auth::user();
-        $voucher = Voucher::where('code', $token)->first();
+        $user = $this->user ?? Auth::user();
 //        $utopia=Utopia::where('utopia_voucher',$token)->first();
-        if ($voucher){
 
-            $this->generateVoucherUtopia($this->inputsConfig->payment_amount);
+        $this->inputsConfig->hostValue = [
+            'utopia_voucher' => $token,
+            'validate' => $this->inputsConfig->type,
+            'amount' => $this->inputsConfig->payment_amount,
+            'mobile' => $user->mobile ?? null
+        ];
+
+        if (!$this->requestToHost()) {
+            return false;
         }
-        else{
-
-            $this->inputsConfig->hostValue=[
-                'utopia_voucher' => $token,
-                'validate' => $this->inputsConfig->type,
-                'amount' => $this->inputsConfig->payment_amount,
-                'mobile'=>$user->mobile??null
-            ];
-
-            if (!$this->requestToHost()){
-                return false;
-            }
-            $this->PMeVoucher['VOUCHER_CODE'] = $token;
-        }
-
+        $this->PMeVoucher['VOUCHER_CODE'] = $token;
+        return true;
     }
-
-
-
 
 
     protected function generateTokenTransmissionUtopia()
     {
         $token = bin2hex(openssl_random_pseudo_bytes(32));
-       return $this->verifayTokenTransmissionUtopia(strtoupper($token));
+        return $this->verifayTokenTransmissionUtopia(strtoupper($token));
     }
 
     protected function verifayTokenTransmissionUtopia($token)
@@ -127,11 +128,10 @@ trait HasConfig
             return false;
 
 
-            if ($this->customVoucherTransfer($amount))
-            {
-                return $this->sendReference();
-            }
-            return false;
+        if ($this->customVoucherTransfer($amount)) {
+            return $this->sendReference();
+        }
+        return false;
 
     }
 
@@ -139,7 +139,7 @@ trait HasConfig
     {
         $PMeVoucher = [];
         $PMeVoucher['PAYMENT_AMOUNT'] = $this->inputsConfig->payment_amount;
-        $PMeVoucher['PAYMENT_BATCH_NUM'] =  $this->inputsConfig->payment_batch_num;
+        $PMeVoucher['PAYMENT_BATCH_NUM'] = $this->inputsConfig->payment_batch_num;
         $PMeVoucher['Payer_Account'] = env('DESTINATION_REMITTANCE_Utopia');
         $PMeVoucher['Payee_Account'] = env('DESTINATION_REMITTANCE_Utopia');
         $PMeVoucher['Payee_Account_Name'] = 'merikhArz';
@@ -147,12 +147,10 @@ trait HasConfig
     }
 
 
-
-
     protected function purchasePermit($invoice, $payment)
     {
 
-        $user = $this->user??Auth::user();
+        $user = $this->user ?? Auth::user();
         $balance = $user->getCreaditBalance();
         $invoice = Invoice::where('id', $invoice->id)->where('user_id', $user->id)->where("status", 'finished')->first();
         $voucher = $invoice->voucher;
@@ -197,48 +195,52 @@ trait HasConfig
             ]
         );
     }
+
     protected function voucherValidation()
     {
         return Validator::make(request()->all(),
             [
-                'amount' => [ 'numeric', "max:" . env('Safe_Daily_Purchase_Limit',60), 'min:0.1', new DecimalRule()],
+                'amount' => ['numeric', "max:" . env('Safe_Daily_Purchase_Limit', 60), 'min:0.1', new DecimalRule()],
             ],
             [
                 'amount.numeric' => 'مبلغ حواله باید به صورت عددی باشد',
             ]
         );
     }
+
     protected function customVoucherTransfer($amount)
     {
-        $user=Auth::user();
+        $user = Auth::user();
         $this->inputsConfig->payment_amount = $amount;
-        $this->inputsConfig->payment_batch_num=$this->generateTokenTransmissionUtopia();
+        $this->inputsConfig->payment_batch_num = $this->generateTokenTransmissionUtopia();
         $this->inputsConfig->type = 'merikhArz';
 
-        $this->inputsConfig->hostValue=[
+        $this->inputsConfig->hostValue = [
             'hash' => $this->inputsConfig->payment_batch_num,
-            'validate' => $this->inputsConfigf->type,
+            'validate' => $this->inputsConfig->type,
             'amount' => $this->inputsConfig->payment_amount,
-            'mobile'=>$user->mobile??null
+            'mobile' => $user->mobile ?? null
 
         ];
-        if (!$this->requestToHost()){
+        if (!$this->requestToHost()) {
             return false;
         }
 
         return true;
     }
 
-    protected function insertUtopia():bool{
+    protected function insertUtopia(): bool
+    {
         try {
-            $result=Utopia::create($this->inputsConfig->hostValue);
-            return $result? true:false;
-        }catch (\Exception $exception){
-            Log::emergency("There was a problem connecting to the Turkish server to write the voucher code. ".PHP_EOL. $exception->getMessage().PHP_EOL.$exception->getMessage());
+            $result = Utopia::create($this->inputsConfig->hostValue);
+            return $result ? true : false;
+        } catch (\Exception $exception) {
+            Log::emergency("There was a problem connecting to the Turkish server to write the voucher code. " . PHP_EOL . $exception->getMessage() . PHP_EOL . $exception->getMessage());
             return false;
         }
 
     }
+
     protected function requestToHost(): bool
     {
 
@@ -247,13 +249,12 @@ trait HasConfig
                 'token' => env('SAINAEX_TOKEN')
             ])->withoutVerifying()->post(env('SAINAEX_REQUEST'),
                 $this->inputsConfig->hostValue
-               );
+            );
             $body = json_decode($response->body());
             if (isset($body->success) and $body->success)
                 return true;
             return false;
         } catch (\Exception $exception) {
-            dd($exception->getMessage());
 
             Log::emergency('con not connection to request host ' . env('SAINAEX_REQUEST') . ' ' . $exception->getMessage());
             SendAppAlertsJob::dispatch('خطا در برقراری ارتباط داخلی سرور')->onQueue('perfectmoney');

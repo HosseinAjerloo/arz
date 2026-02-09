@@ -62,30 +62,7 @@
                     </h1>
                 </div>
 
-                <div class="flex flex-col  w-full md:flex-row md:space-x-reverse space-y-3 md:space-y-0 md:space-x-4  ">
-
-                        @foreach($banks as $bank)
-
-                            <div class="flex items-center justify-center action  md:w-[40%] lg:w-[30%] 2xl:w-[16%]">
-                                <label for="bank-{{$bank->id}}" type="button" onclick="selectBank({{$bank->id}})"
-                                       class="labelBank cursor-pointer bg-gradient-to-b from-268832 to-80C714 flex items-center justify-center space-x-reverse space-x-2 text-mini-mini-base px-4 py-2.5 text-white rounded-lg w-full">
-                                    <span class="w-48 text-mini-base leading-4">پرداخت با {{$bank->name??''}}</span>
-                                    <img src="{{asset('merikhArz/src/images/bankkart.svg')}}" alt="" class="bg-cover w-5 h-5 ">
-                                </label>
-                                <input type="radio" value="{{$bank->id}}"  name="bank" id="bank-{{$bank->id}}" class="action hidden">
-                            </div>
-
-                        @endforeach
-
-
-                        <div class="flex items-center justify-center action  md:w-[40%] lg:w-[30%] 2xl:w-[16%]">
-                            <button
-                                class="submitWallet bg-gradient-to-b from-DE9408 to-FFC98B flex items-center justify-center space-x-reverse space-x-2 text-mini-mini-base px-4 py-2.5 text-white rounded-lg w-full">
-                                <span class="w-48 text-mini-base leading-4">پرداخت از طریق کیف پول</span>
-                                <img src="{{asset('merikhArz/src/images/walletWhite.svg')}}" alt="" class="bg-cover w-5 h-5 ">
-                            </button>
-                        </div>
-                    </div>
+                
                 <div class="flex items-center justify-center  ">
                     <h1 class="font-bold text-xl flex items-center justify-center text-right loading">
 

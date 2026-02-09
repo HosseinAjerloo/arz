@@ -402,6 +402,7 @@ class PanelController extends Controller
 
     public function deliveryVoucherBankView(Request $request, Invoice $invoice, Payment $payment)
     {
+
         $validationPurchasePermit = $this->purchasePermit($invoice, $payment);
         if ($validationPurchasePermit->purchasePermitStatus) {
             return $validationPurchasePermit->redirectFunction();
@@ -418,6 +419,7 @@ class PanelController extends Controller
             if ($validationPurchasePermit->purchasePermitStatus) {
                 return $validationPurchasePermit->redirectFunction();
             }
+
             BuyUtopiaCouponsWithJob::dispatch($invoice,$payment)->onQueue('BuyUtopiaCouponsWithJob');
 
             $balance = Auth::user()->getCreaditBalance();
@@ -431,7 +433,6 @@ class PanelController extends Controller
             } else {
                 $amount = $invoice->service_id_custom;
             }
-
             $this->generateVoucherUtopia($amount);
 
             $voucher = Voucher::create(
@@ -466,7 +467,7 @@ class PanelController extends Controller
                     'amount' => $payment->amount,
                     'type' => "withdrawal",
                     "creadit_balance" => $balance - $payment->amount,
-                    'description' => "خرید کارت هدیه {$amount} دلاری و کسر مبغ از کیف پول",
+                    'description' => "خرید کارت هدیه {$amount} دلاری و کسر مبلغ از کیف پول",
                     'payment_id' => $payment->id,
                     'time_price_of_dollars' => $dollar->DollarRateWithAddedValue()
                 ]);
@@ -501,6 +502,8 @@ class PanelController extends Controller
     public function walletCharging(Request $request)
     {
         $bank = Bank::where('is_active', 1)->first();
+        if (!$bank)
+            return redirect()->route('panel.index')->withErrors(['error'=>'به دلیل خاموش بودن درگاه این روش غیر فعال میباشد']);
         $user = Auth::user();
         return view("Panel.RechargeWallet.index", compact('user', 'bank'));
     }

@@ -166,6 +166,7 @@ class TransmissionController extends Controller
             }
         } catch
         (\Exception $exception) {
+
             SendAppAlertsJob::dispatch('در انتقال وچچر از طریف کیف پول خطایی رخ داد سرویس یوتوپیا و سایر موارد چک شود')->onQueue('perfectmoney');
             Log::emergency(PHP_EOL . $exception->getMessage() . PHP_EOL);
 
@@ -610,7 +611,7 @@ class TransmissionController extends Controller
 
             $transition = $this->transmissionUtopia(session()->get('transmission'), $amount);
             $invoice->update(['status' => 'finished']);
-            if (is_array($transition)) {
+            if ($transition and isset($transition) and is_array($transition)) {
 
                 $financeTransaction->update([
                     'user_id' => $user->id,
@@ -677,7 +678,7 @@ class TransmissionController extends Controller
     {
         $dollar = Doller::orderBy('id', 'desc')->first();
         $dollar_price = numberFormat((floor($dollar->DollarRateWithAddedValue() * 1) / 10000));
-        $carts = [['value' => 1], ['value' => 2], ['value' => 5]];
+        $carts = [['value' => '1'], ['value' => '2'],['value' => '5']];
         return view('Panel.Voucher.price', compact('dollar_price', 'carts'));
     }
 
@@ -687,6 +688,10 @@ class TransmissionController extends Controller
             $validation = $this->voucherValidation();
             $inputs = $request->all();
             $bank = Bank::where('is_active', 1)->first();
+
+            if (!$bank)
+                return redirect()->route('panel.index')->withErrors(['error'=>'به دلیل غیر فعال بودن درگاهپرداخت این روش غیر فعال شده است']);
+
             $dollar = Doller::orderBy('id', 'desc')->first();
             $dollar_price = (floor($dollar->DollarRateWithAddedValue() / 10000) * 10000) / 10; //rial to toman
             if (!$validation->fails()) {

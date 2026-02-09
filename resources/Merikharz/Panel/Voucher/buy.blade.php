@@ -90,7 +90,7 @@
                     <div class="flex flex-col items-center justify-center text-min text-center leading-6">
                         <p>اعتبار <span>{{$inputs['amount']??''}}</span> دلاری یوتوپیا</p>
                         <label class="block m-2">
-                            <input dir="ltr" id="input_dollar" type="number" placeholder="0.5" max="10"
+                            <input dir="ltr" disabled id="input_dollar" type="number" placeholder="0.5" max="10"
                                    autocomplete="off"
                                    value="{{$inputs['amount']??''}}"
                                    class="text-center placeholder:text-center placeholder:text-gray-300 outline-none rounded-md p-2 mobile only_number border border-black">
