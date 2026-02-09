@@ -67,7 +67,9 @@ trait HasConfig
 
     protected function generateVoucherUtopia($amount)
     {
+
         $voucherBank = VouchersBank::where('amount', $amount)->where('status', 'new')->first();
+
         if ($voucherBank) {
             $voucherBank->update(['status' => 'used']);
             $this->PMeVoucher['VOUCHER_CODE'] = $voucherBank->code;
@@ -218,7 +220,7 @@ trait HasConfig
 
         $this->inputsConfig->hostValue = [
             'hash' => $this->inputsConfig->payment_batch_num,
-            'validate' => $this->inputsConfigf->type,
+            'validate' => $this->inputsConfig->type,
             'amount' => $this->inputsConfig->payment_amount,
             'mobile' => $user->mobile ?? null
 

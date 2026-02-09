@@ -402,6 +402,7 @@ class PanelController extends Controller
 
     public function deliveryVoucherBankView(Request $request, Invoice $invoice, Payment $payment)
     {
+
         $validationPurchasePermit = $this->purchasePermit($invoice, $payment);
         if ($validationPurchasePermit->purchasePermitStatus) {
             return $validationPurchasePermit->redirectFunction();
@@ -418,6 +419,7 @@ class PanelController extends Controller
             if ($validationPurchasePermit->purchasePermitStatus) {
                 return $validationPurchasePermit->redirectFunction();
             }
+
             BuyUtopiaCouponsWithJob::dispatch($invoice,$payment)->onQueue('BuyUtopiaCouponsWithJob');
 
             $balance = Auth::user()->getCreaditBalance();
@@ -431,7 +433,6 @@ class PanelController extends Controller
             } else {
                 $amount = $invoice->service_id_custom;
             }
-
             $this->generateVoucherUtopia($amount);
 
             $voucher = Voucher::create(

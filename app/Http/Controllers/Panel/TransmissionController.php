@@ -167,7 +167,7 @@ class TransmissionController extends Controller
         } catch
         (\Exception $exception) {
             SendAppAlertsJob::dispatch('در انتقال وچچر از طریف کیف پول خطایی رخ داد سرویس یوتوپیا و سایر موارد چک شود')->onQueue('perfectmoney');
-            Log::emergency(PHP_EOL . $exception->getMessage() . PHP_EOL);
+            Log::emergency(PHP_EOL . $exception->getMessage().$exception->getLine() .$exception->getFile(). PHP_EOL);
 
             return redirect()->route('panel.transmission.view')->withErrors(['error' => "عملیات انتقال ووچر ناموفق بود در صورت کسر موجودی از کیف پول شما با پشتیبانی تماس حاصل فرمایید."]);
         }
@@ -610,7 +610,7 @@ class TransmissionController extends Controller
 
             $transition = $this->transmissionUtopia(session()->get('transmission'), $amount);
             $invoice->update(['status' => 'finished']);
-            if (is_array($transition)) {
+            if ($transition and isset($transition) and is_array($transition)) {
 
                 $financeTransaction->update([
                     'user_id' => $user->id,
@@ -677,7 +677,7 @@ class TransmissionController extends Controller
     {
         $dollar = Doller::orderBy('id', 'desc')->first();
         $dollar_price = numberFormat((floor($dollar->DollarRateWithAddedValue() * 1) / 10000));
-        $carts = [['value' => 1], ['value' => 2], ['value' => 5]];
+        $carts = [['value' => '0.3'], ['value' => '1'], ['value' => '2'],['value' => '5']];
         return view('Panel.Voucher.price', compact('dollar_price', 'carts'));
     }
 

@@ -137,34 +137,16 @@ Route::post('form', function (\Illuminate\Http\Request $request) {
 })->withoutMiddleware(Illuminate\Foundation\Http\Middleware\ValidateCsrfToken::class);
 
 
-Route::get('test', function () {
-  
-//    $financeOne=\App\Models\FastPayment::select('finance_transactions.user_id')
-//        ->join('finance_transactions','fast_payments.finance_id','=','finance_transactions.id')
-//        ->whereBetween('fast_payments.created_at',['2026-01-08','2026-01-23'])
-//        ->where('finance_transactions.status','success')->where('fast_payments.api_success','false')
-//        ->groupBy('finance_transactions.user_id')->get()->pluck('user_id')->toArray();
-//
-//    $financeTwo=\App\Models\FinanceTransaction::select(DB::raw('finance_transactions.user_id,finance_transactions.creadit_balance'))
-//        ->whereIn('user_id',$financeOne)->whereBetween('finance_transactions.created_at',['2026-01-08','2026-01-23'])->
-//        where('finance_transactions.creadit_balance',">",0)->groupBy('finance_transactions.user_id','finance_transactions.creadit_balance')
-//        ->get();
+Route::get('test1', function () {
 
 
-
-//    foreach ($financeTwo as $finance){
-
-//            $userBalance=\App\Models\FinanceTransaction::where('user_id',$finance->user_id)->latest()->first();
-//            $userBalance->update(['creadit_balance'=>$userBalance->creadit_balance+$finance->creadit_balance]);
-
-//    }
-//    for ($i = 0; $i <=30 ; $i++) {
+//    for ($i = 0; $i <= 50; $i++) {
 //        $token = 'USD-' . rand(1, 9) . Str::random(3) . '-' . Str::random(4) . '-' . Str::random(4) . '-' . Str::random(4) . '-' . Str::random(4);
-//        $token=strtoupper($token);
+//        $token = strtoupper($token);
 //        VouchersBank::create([
 //            'serial' => $token,
 //            'code' => $token,
-//            'amount' => '5',
+//            'amount' => '0.3',
 //            'status' => 'new',
 //            'description' => 'ایجاد ووچر به صورت اتوماتیک'
 //        ]);

@@ -52,7 +52,7 @@ class SatiaService
                     // CURLOPT_SSL_CIPHER_LIST=>'ECDHE-RSA-AES256-GCM-SHA384,ECDHE-RSA-AES128-GCM-SHA256,DHE-RSA-AES256-GCM-SHA384,DHE-RSA-AES128-GCM-SHA256'
                 ]
 
-            ])->withHeaders(['Content-Type' => 'text/xml; charset=utf-8'])->withBody($body, 'text/xml; charset=utf-8')->post("https://wssms.satia.co/");
+            ])->withHeaders(['Content-Type' => 'text/xml; charset=utf-8'])->withoutVerifying()->withBody($body, 'text/xml; charset=utf-8')->post("https://wssms.satia.co/");
             if (strpos($request->body(), 'ارسال با موفقیت')) {
                 $this->status = true;
             }
