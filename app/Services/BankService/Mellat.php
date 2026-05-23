@@ -9,33 +9,6 @@ use Illuminate\Support\Facades\Log;
 
 class Mellat extends Service
 {
-    private static $classmap = array('bpVerifyRequest' => 'bpVerifyRequest'
-    , 'bpVerifyRequestResponse' => 'bpVerifyRequestResponse'
-    , 'bpRefundInquiryRequest' => 'bpRefundInquiryRequest'
-    , 'bpRefundInquiryRequestResponse' => 'bpRefundInquiryRequestResponse'
-    , 'bpRefundVerifyRequest' => 'bpRefundVerifyRequest'
-    , 'bpRefundVerifyRequestResponse' => 'bpRefundVerifyRequestResponse'
-    , 'bpSettleRequest' => 'bpSettleRequest'
-    , 'bpSettleRequestResponse' => 'bpSettleRequestResponse'
-    , 'bpDynamicPayRequest' => 'bpDynamicPayRequest'
-    , 'bpDynamicPayRequestResponse' => 'bpDynamicPayRequestResponse'
-    , 'bpVirtualPayRequest' => 'bpVirtualPayRequest'
-    , 'bpVirtualPayRequestResponse' => 'bpVirtualPayRequestResponse'
-    , 'bpReversalRequest' => 'bpReversalRequest'
-    , 'bpReversalRequestResponse' => 'bpReversalRequestResponse'
-    , 'bpCumulativeDynamicPayRequest' => 'bpCumulativeDynamicPayRequest'
-    , 'bpCumulativeDynamicPayRequestResponse' => 'bpCumulativeDynamicPayRequestResponse'
-    , 'bpPayRequest' => 'bpPayRequest'
-    , 'bpPayRequestResponse' => 'bpPayRequestResponse'
-    , 'bpSaleReferenceIdRequest' => 'bpSaleReferenceIdRequest'
-    , 'bpSaleReferenceIdRequestResponse' => 'bpSaleReferenceIdRequestResponse'
-    , 'bpChargePayRequest' => 'bpChargePayRequest'
-    , 'bpChargePayRequestResponse' => 'bpChargePayRequestResponse'
-    , 'bpInquiryRequest' => 'bpInquiryRequest'
-    , 'bpInquiryRequestResponse' => 'bpInquiryRequestResponse'
-    , 'bpRefundRequest' => 'bpRefundRequest'
-    , 'bpRefundRequestResponse' => 'bpRefundRequestResponse'
-    );
 
 
     protected $status = false;
@@ -50,14 +23,17 @@ class Mellat extends Service
 
     public function payment()
     {
-        $request = $this->cullRequest($this->objectBank->url);
-        $response = $request->bpPayRequest($this->data);
+        $response = $this->GetToken();
+        $response = (array)$response;
+        $response = explode(',', $response['return']);
 
-        if (!empty($response)) {
-            return $response->return;
+
+        if (!empty($response) and count($response) >= 2) {
+            return $response[1];
         } else {
+            $response = $response['return'] ?? null;
             Log::emergency('An error occurred while connecting to National Bank :' . PHP_EOL .
-                $this->verifyTransaction($response));
+                $this->verifyTransaction($response[0]));
 
             SendAppAlertsJob::dispatch('هنگام اتصال به بانک ملی خطایی رخ  داد و اتصال برقرار نشد')->onQueue('perfectmoney');
             return false;
@@ -67,12 +43,16 @@ class Mellat extends Service
 
     public function GetToken()
     {
+        $this->generateData();
+        $request = $this->cullRequest($this->objectBank->url);
+        $response = $request->bpPayRequest($this->data);
+        return $response;
     }
 
     function cullRequest($url)
     {
 
-        $this->generateData();
+
         try {
             $clinet = new \SoapClient($url);
             return $clinet;
@@ -89,12 +69,12 @@ class Mellat extends Service
 
     public function backBank()
     {
-        $Token = request()->input("token");
-        $ResCode = request()->input("ResCode");
-        if (isset($Token) and isset($ResCode) and $ResCode == '0') {
+        $Token = request()->input("CardHolderInfo");
+        if (isset($Token)) {
             return true;
         } else
             return false;
+
     }
 
     protected function generateData()
@@ -112,11 +92,13 @@ class Mellat extends Service
             'additionalData' => "order_" . $this->getOrderID(),
             'payerId' => 0,
             'callBackUrl' => $this->getUrlBack());
+
+
     }
 
     public function transactionStatus()
     {
-        return $this->verifyTransaction($this->verify());
+        return $this->verifyTransaction(request()->input('ResCode'));
     }
 
     public function verifyTransaction($ErrorCode)
@@ -163,57 +145,39 @@ class Mellat extends Service
         ];
         $property = 34;
 
-        if (property_exists($ErrorCode, 'return'))
-            $property = (int)$ErrorCode->return;
 
-
-        if (!in_array($property,array_keys($bpResponseCodes))){
+        if (!in_array($ErrorCode, array_keys($bpResponseCodes))) {
             return $bpResponseCodes[34];
         }
         return $bpResponseCodes[$property];
 
     }
 
-    protected function encrypt_pkcs7_meli($str, $key)
-    {
-        $key = base64_decode($key);
-        $ciphertext = openssl_encrypt($str, "DES-EDE3", $key, OPENSSL_RAW_DATA);
-        return base64_encode($ciphertext);
-    }
-
 
     public function verify($amount = 0)
     {
-        if (!$this->status) {
-            $key = $this->objectBank->password;
-            $ResCode = request()->input('ResCode');
-            $Token = request()->input('token');
 
-            if (isset($ResCode) and $ResCode == 0) {
-
-                $this->data = array('Token' => $Token, 'SignData' => $this->encrypt_pkcs7_meli($Token, $key));
-                $arrres = $this->cullRequest('https://sadad.shaparak.ir/vpg/api/v0/Advice/Verify');
-                if ($arrres->ResCode != -1 && $arrres->ResCode == 0) {
-                    $Refid = $arrres->SystemTraceNo;
-                    if ($Refid == '') {
-                        return $arrres->ResCode;
-                    }
-                    $RefNo = $arrres->RetrivalRefNo;
-                    request()->request->add(['RefNum' => $Token]);
-                    $this->status = true;
-                    return true;
-                } else {
-                    return 1050;
-                }
-            }
-            return 1050;
+        $this->data = array(
+            'terminalId' => $this->objectBank->terminal_id,
+            'userName' => $this->objectBank->username,
+            'userPassword' => $this->objectBank->password,
+            'orderId' => request()->input('SaleOrderId'),
+            'saleOrderId' => request()->input('SaleOrderId'),
+            'saleReferenceId' => request()->input('SaleReferenceId'),
+        );
+        $request = $this->cullRequest($this->objectBank->url);
+        $web_result = $request->bpVerifyRequest($this->data);
+        $verify_result = (int)$web_result->return;
+        if ($verify_result == 0) {
+            return true;
         }
-        return $this->status;
+        return $verify_result;
+
     }
 
     public function connectionToBank($token)
     {
-        return view('mellat',compact('token'));
+        return view('mellat', compact('token'));
     }
 
     public function setBankModel(Bank $bank)

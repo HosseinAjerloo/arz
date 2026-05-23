@@ -55,7 +55,7 @@ Route::middleware(['auth'])->group(function () {
         Route::post('Purchase-through-the-bank', [App\Http\Controllers\Panel\PanelController::class, 'PurchaseThroughTheBank'])->name('panel.PurchaseThroughTheBank');
         Route::post('transmission', [App\Http\Controllers\Panel\TransmissionController::class, 'store'])->name('panel.transmission');
         Route::post('voucher-transfer-through-bank', [App\Http\Controllers\Panel\TransmissionController::class, 'transferFromThePaymentGateway'])->name('panel.transferFromThePaymentGateway');
-        Route::post('back/voucher-transfer-through-bank', [App\Http\Controllers\Panel\TransmissionController::class, 'transferFromThePaymentGatewayBack'])->name('panel.back.transferFromThePaymentGateway')->withoutMiddleware(Illuminate\Foundation\Http\Middleware\ValidateCsrfToken::class);
+        Route::match(['post','get'],'back/voucher-transfer-through-bank', [App\Http\Controllers\Panel\TransmissionController::class, 'transferFromThePaymentGatewayBack'])->name('panel.back.transferFromThePaymentGateway')->withoutMiddleware(Illuminate\Foundation\Http\Middleware\ValidateCsrfToken::class);
 //        Route::post('transfer', [App\Http\Controllers\Panel\TransmissionController::class, 'transferConnectionBank'])->name('panel.transfer.external.post');
 //        Route::post('transfer/back-bank', [App\Http\Controllers\Panel\TransmissionController::class, 'transferConnectionBackBank'])->name('panel.transfer.external.back-bank')->withoutMiddleware(Illuminate\Foundation\Http\Middleware\ValidateCsrfToken::class);;
 
@@ -63,11 +63,11 @@ Route::middleware(['auth'])->group(function () {
     });
 //    Route::get('transfer', [App\Http\Controllers\Panel\TransmissionController::class, 'transfer'])->name('panel.transfer.external');
 
-    Route::post('back/Purchase-through-the-bank', [App\Http\Controllers\Panel\PanelController::class, 'backPurchaseThroughTheBank'])->name('panel.Purchase-through-the-bank')->withoutMiddleware(Illuminate\Foundation\Http\Middleware\ValidateCsrfToken::class);
+    Route::match(['post','get'],'back/Purchase-through-the-bank', [App\Http\Controllers\Panel\PanelController::class, 'backPurchaseThroughTheBank'])->name('panel.Purchase-through-the-bank')->withoutMiddleware(Illuminate\Foundation\Http\Middleware\ValidateCsrfToken::class);
     Route::get('wallet-charging', [App\Http\Controllers\Panel\PanelController::class, 'walletCharging'])->name('panel.wallet.charging');
     Route::get('wallet-charging-Preview', [App\Http\Controllers\Panel\PanelController::class, 'walletChargingPreview'])->name('panel.wallet.charging-Preview');
     Route::post('wallet-charging', [App\Http\Controllers\Panel\PanelController::class, 'walletChargingStore'])->name('panel.wallet.charging.store');
-    Route::post('back/wallet-charging', [App\Http\Controllers\Panel\PanelController::class, 'walletChargingBack'])->name('panel.wallet.charging.back')->withoutMiddleware(Illuminate\Foundation\Http\Middleware\ValidateCsrfToken::class);
+    Route::match(['post','get'],'back/wallet-charging', [App\Http\Controllers\Panel\PanelController::class, 'walletChargingBack'])->name('panel.wallet.charging.back')->withoutMiddleware(Illuminate\Foundation\Http\Middleware\ValidateCsrfToken::class);
     Route::get('delivery-bank/{invoice}/{payment}', [App\Http\Controllers\Panel\PanelController::class, 'deliveryVoucherBankView'])->name('panel.deliveryVoucherBankView');
     Route::post('delivery-bank/{invoice}/{payment}', [App\Http\Controllers\Panel\PanelController::class, 'deliveryVoucherBank'])->name('panel.deliveryVoucherBank');
     Route::middleware('IsEmptyUserInformation')->group(function () {
@@ -121,9 +121,9 @@ Route::post('verification-code-submit', [App\Http\Controllers\Panel\Transmission
 Route::post('transfer-logout', [App\Http\Controllers\Panel\TransmissionController::class, 'transfer_logout'])->name('transfer.logout');
 
 
-Route::get('fast-gateway',[App\Http\Controllers\Panel\FastPaymentController::class,'index'])->name('panel.fast-gateway-view');
-Route::post('fast-gateway',[App\Http\Controllers\Panel\FastPaymentController::class,'gatewayFastPayment'])->name('panel.fast-gateway-payment');
-Route::post('fast-gateway-back',[App\Http\Controllers\Panel\FastPaymentController::class,'gatewayFastPaymentBack'])->name('panel.fast-gateway-payment-back')->withoutMiddleware(Illuminate\Foundation\Http\Middleware\ValidateCsrfToken::class);
+Route::get('fast-gateway', [App\Http\Controllers\Panel\FastPaymentController::class, 'index'])->name('panel.fast-gateway-view');
+Route::post('fast-gateway', [App\Http\Controllers\Panel\FastPaymentController::class, 'gatewayFastPayment'])->name('panel.fast-gateway-payment');
+Route::match(['post','get'],'fast-gateway-back', [App\Http\Controllers\Panel\FastPaymentController::class, 'gatewayFastPaymentBack'])->name('panel.fast-gateway-payment-back')->withoutMiddleware(Illuminate\Foundation\Http\Middleware\ValidateCsrfToken::class);
 Route::get('fast-gateway-back/status/{fastPayment}', [App\Http\Controllers\Panel\FastPaymentController::class, 'fastPaymentStatus'])->name('panel.fast-gateway-status');
 
 
@@ -137,33 +137,4 @@ Route::get('fast-gateway-back/status/{fastPayment}', [App\Http\Controllers\Panel
 Route::fallback(function () {
     abort(404);
 });
-Route::get('test',function (){
-    $bank=\App\Models\Bank::find(5);
-    $objBank = new $bank->class;
-    $objBank->setTotalPrice(50000);
-    $objBank->setBankUrl($bank->url);
 
-    $objBank->setOrderID(1 + Payment::transactionNumber);
-    $objBank->setTerminalId($bank->terminal_id);
-    $objBank->setUrlBack(route('panel.wallet.charging.back'));
-    $objBank->setBankModel($bank);
-    $objBank->payment();
-});
-
-//Route::get('test1', function () {
-//
-//
-//    for ($i = 0; $i <= 300; $i++) {
-//        $token = 'USD-' . rand(1, 9) . Str::random(3) . '-' . Str::random(4) . '-' . Str::random(4) . '-' . Str::random(4) . '-' . Str::random(4);
-//        $token = strtoupper($token);
-//        VouchersBank::create([
-//            'serial' => $token,
-//            'code' => $token,
-//            'amount' => '5.0',
-//            'status' => 'new',
-//            'description' => 'ایجاد ووچر به صورت اتوماتیک'
-//        ]);
-//    }
-//
-//
-//});

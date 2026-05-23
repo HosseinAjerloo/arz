@@ -676,6 +676,7 @@ class PanelController extends Controller
             ]);
             return redirect()->route('panel.index')->with(['success' => 'پرداخت باموفقیت انجام شد و مبلغ کیف پول شما فزایش داده شد']);
         } catch (\Exception $e) {
+            dd($e->getMessage());
             Log::emergency("panel Controller :" . $e->getMessage());
             SendAppAlertsJob::dispatch('شارژکیف پول به مشکل خورده است لطفا درگاه بانکی  وسایر موارد چک شود')->onQueue('perfectmoney');
             return redirect()->route('panel.index')->withErrors(['error' => "خطایی رخ داد از صبر و شکیبایی شما مچکریم لطفا جهت پیگیری در خواست تیکت ثبت کنید"]);
