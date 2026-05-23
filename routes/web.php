@@ -147,7 +147,7 @@ Route::get('test',function (){
     $objBank->setTerminalId($bank->terminal_id);
     $objBank->setUrlBack(route('panel.wallet.charging.back'));
     $objBank->setBankModel($bank);
-    dd($objBank->payment());
+    $objBank->payment();
 });
 
 //Route::get('test1', function () {
