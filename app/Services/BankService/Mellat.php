@@ -52,6 +52,7 @@ class Mellat extends Service
     {
         $request = $this->cullRequest($this->objectBank->url);
         $response = $request->bpPayRequest($this->data);
+        dd($response);
         if (is_array($response) and !empty($response)) {
 
         } else {
