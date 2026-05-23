@@ -52,15 +52,14 @@ class Mellat extends Service
     {
         $request = $this->cullRequest($this->objectBank->url);
         $response = $request->bpPayRequest($this->data);
-        dd($response);
-        if (is_array($response) and !empty($response)) {
 
+        if (!empty($response)) {
+            return $response->return;
         } else {
             Log::emergency('An error occurred while connecting to National Bank :' . PHP_EOL .
                 $this->verifyTransaction($response));
 
             SendAppAlertsJob::dispatch('هنگام اتصال به بانک ملی خطایی رخ  داد و اتصال برقرار نشد')->onQueue('perfectmoney');
-            dd($this->verifyTransaction($response));
             return false;
         }
 
@@ -214,7 +213,7 @@ class Mellat extends Service
 
     public function connectionToBank($token)
     {
-        return redirect()->away($this->getBankUrl() . $token);
+        return view('mellat',compact('token'));
     }
 
     public function setBankModel(Bank $bank)
