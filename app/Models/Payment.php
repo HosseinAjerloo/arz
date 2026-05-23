@@ -10,7 +10,7 @@ class Payment extends Model
 {
     Const transactionNumber=30000000;
     use HasFactory,SoftDeletes;
-    protected $fillable=['bank_id','invoice_id','state','amount','RefNum','ResNum','order_id'];
+    protected $fillable=['bank_id','invoice_id','state','amount','RefNum','ResNum','order_id','type'];
 
     public function bank()
     {

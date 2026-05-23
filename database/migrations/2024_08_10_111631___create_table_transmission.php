@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('payee_account_name')->nullable();
             $table->string('payee_account')->nullable();
             $table->string('payer_account')->nullable();
-            $table->decimal('payment_amount',10,1)->nullable();
+            $table->decimal('payment_amount',10,2)->nullable();
             $table->string('payment_batch_num')->nullable();
             $table->timestamps();
             $table->softDeletes();

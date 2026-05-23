@@ -4,17 +4,17 @@
 <script src="{{asset("merikhArz/ckeditor/ckeditor.js")}}"></script>
 <script>
     function close(){
-            let toast = $('.toast');
-            setTimeout(function () {
-                $(toast).addClass('-translate-y-7');
-                $(toast).remove();
-            }, 2000)
+        let toast = $('.toast');
+        setTimeout(function () {
+            $(toast).addClass('-translate-y-7');
+            $(toast).remove();
+        }, 2000)
 
 
-            let closeToast = $('.close-toast');
-            $(closeToast).click(function () {
-                $(toast).addClass('invisible');
-                $(toast).remove();
-            });
+        let closeToast = $('.close-toast');
+        $(closeToast).click(function () {
+            $(toast).addClass('invisible');
+            $(toast).remove();
+        });
     }
 </script>

@@ -8,11 +8,10 @@ use App\Models\Utopia;
 use App\Models\VouchersBank;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\DB;
+
 use Illuminate\Http\Client\Response;
 use Illuminate\Http\Client\RequestException;
 use AyubIRZ\PerfectMoneyAPI\PerfectMoneyAPI;
-use Illuminate\Support\Str;
 
 Route::middleware('guest')->group(function () {
     Route::name('login.')->prefix('login')->group(function () {
@@ -122,39 +121,49 @@ Route::post('verification-code-submit', [App\Http\Controllers\Panel\Transmission
 Route::post('transfer-logout', [App\Http\Controllers\Panel\TransmissionController::class, 'transfer_logout'])->name('transfer.logout');
 
 
-Route::get('fast-gateway', [App\Http\Controllers\Panel\FastPaymentController::class, 'index'])->name('panel.fast-gateway-view');
-Route::post('fast-gateway', [App\Http\Controllers\Panel\FastPaymentController::class, 'gatewayFastPayment'])->name('panel.fast-gateway-payment');
-Route::post('fast-gateway-back', [App\Http\Controllers\Panel\FastPaymentController::class, 'gatewayFastPaymentBack'])->name('panel.fast-gateway-payment-back')->withoutMiddleware(Illuminate\Foundation\Http\Middleware\ValidateCsrfToken::class);
+Route::get('fast-gateway',[App\Http\Controllers\Panel\FastPaymentController::class,'index'])->name('panel.fast-gateway-view');
+Route::post('fast-gateway',[App\Http\Controllers\Panel\FastPaymentController::class,'gatewayFastPayment'])->name('panel.fast-gateway-payment');
+Route::post('fast-gateway-back',[App\Http\Controllers\Panel\FastPaymentController::class,'gatewayFastPaymentBack'])->name('panel.fast-gateway-payment-back')->withoutMiddleware(Illuminate\Foundation\Http\Middleware\ValidateCsrfToken::class);
 Route::get('fast-gateway-back/status/{fastPayment}', [App\Http\Controllers\Panel\FastPaymentController::class, 'fastPaymentStatus'])->name('panel.fast-gateway-status');
 
 
-Route::post('gateway-out', [App\Http\Controllers\Panel\TransmissionController::class, 'gatewayOut'])->name('gateway-out')->withoutMiddleware(Illuminate\Foundation\Http\Middleware\ValidateCsrfToken::class);;
-Route::post('gateway-out-back', [App\Http\Controllers\Panel\TransmissionController::class, 'gatewayOutBack'])->name('gateway-out-back')->withoutMiddleware(Illuminate\Foundation\Http\Middleware\ValidateCsrfToken::class);
+Route::post('gateway-out',[App\Http\Controllers\Panel\TransmissionController::class,'gatewayOut'])->name('gateway-out')->withoutMiddleware(Illuminate\Foundation\Http\Middleware\ValidateCsrfToken::class);;
+Route::post('gateway-out-back',[App\Http\Controllers\Panel\TransmissionController::class,'gatewayOutBack'])->name('gateway-out-back')->withoutMiddleware(Illuminate\Foundation\Http\Middleware\ValidateCsrfToken::class);
 
-Route::post('form', function (\Illuminate\Http\Request $request) {
-    ;
-    return view('form', compact('request'));
+Route::post('form',function (\Illuminate\Http\Request $request){;
+    return view('form',compact('request'));
 })->withoutMiddleware(Illuminate\Foundation\Http\Middleware\ValidateCsrfToken::class);
 
+Route::fallback(function () {
+    abort(404);
+});
+Route::get('test',function (){
+    $bank=\App\Models\Bank::find(5);
+    $objBank = new $bank->class;
+    $objBank->setTotalPrice(50000);
+    $objBank->setBankUrl($bank->url);
 
-Route::get('test1', function () {
+    $objBank->setOrderID(1 + Payment::transactionNumber);
+    $objBank->setTerminalId($bank->terminal_id);
+    $objBank->setUrlBack(route('panel.wallet.charging.back'));
+    $objBank->setBankModel($bank);
+    dd($objBank->payment());
+});
 
-
-//    for ($i = 0; $i <= 50; $i++) {
+//Route::get('test1', function () {
+//
+//
+//    for ($i = 0; $i <= 300; $i++) {
 //        $token = 'USD-' . rand(1, 9) . Str::random(3) . '-' . Str::random(4) . '-' . Str::random(4) . '-' . Str::random(4) . '-' . Str::random(4);
 //        $token = strtoupper($token);
 //        VouchersBank::create([
 //            'serial' => $token,
 //            'code' => $token,
-//            'amount' => '0.3',
+//            'amount' => '5.0',
 //            'status' => 'new',
 //            'description' => 'ایجاد ووچر به صورت اتوماتیک'
 //        ]);
 //    }
-
-
-});
-Route::fallback(function () {
-    abort(404);
-});
-
+//
+//
+//});

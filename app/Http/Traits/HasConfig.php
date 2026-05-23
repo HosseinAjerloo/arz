@@ -67,43 +67,40 @@ trait HasConfig
 
     protected function generateVoucherUtopia($amount)
     {
-
-        $voucherBank = VouchersBank::where('amount', $amount)->where('status', 'new')->first();
-
-        if ($voucherBank) {
-            $voucherBank->update(['status' => 'used']);
-            $this->PMeVoucher['VOUCHER_CODE'] = $voucherBank->code;
-        }
-        return;
         $this->inputsConfig->payment_amount = $amount;
         $this->inputsConfig->type = 'merikhArz';
         $token = 'USD-' . rand(1, 9) . Str::random(3) . '-' . Str::random(4) . '-' . Str::random(4) . '-' . Str::random(4) . '-' . Str::random(4);
-        $this->verifay(strtoupper($token));
+        $voucher = Voucher::where('code', $token)->first();
+        if ($voucher)
+            return $this->generateVoucherUtopia($amount);
+        if (!$this->verifay(strtoupper($token))) {
+            $voucherBank = VouchersBank::where('amount', $amount)->where('status', 'new')->first();
+
+            if ($voucherBank) {
+                $voucherBank->update(['status' => 'used']);
+                $this->PMeVoucher['VOUCHER_CODE'] = $voucherBank->code;
+            }
+        }
+
     }
 
     protected function verifay($token)
     {
         $user = $this->user ?? Auth::user();
-        $voucher = Voucher::where('code', $token)->first();
 //        $utopia=Utopia::where('utopia_voucher',$token)->first();
-        if ($voucher) {
 
-            $this->generateVoucherUtopia($this->inputsConfig->payment_amount);
-        } else {
+        $this->inputsConfig->hostValue = [
+            'utopia_voucher' => $token,
+            'validate' => $this->inputsConfig->type,
+            'amount' => $this->inputsConfig->payment_amount,
+            'mobile' => $user->mobile ?? null
+        ];
 
-            $this->inputsConfig->hostValue = [
-                'utopia_voucher' => $token,
-                'validate' => $this->inputsConfig->type,
-                'amount' => $this->inputsConfig->payment_amount,
-                'mobile' => $user->mobile ?? null
-            ];
-
-            if (!$this->requestToHost()) {
-                return false;
-            }
-            $this->PMeVoucher['VOUCHER_CODE'] = $token;
+        if (!$this->requestToHost()) {
+            return false;
         }
-
+        $this->PMeVoucher['VOUCHER_CODE'] = $token;
+        return true;
     }
 
 

@@ -467,7 +467,7 @@ class PanelController extends Controller
                     'amount' => $payment->amount,
                     'type' => "withdrawal",
                     "creadit_balance" => $balance - $payment->amount,
-                    'description' => "خرید کارت هدیه {$amount} دلاری و کسر مبغ از کیف پول",
+                    'description' => "خرید کارت هدیه {$amount} دلاری و کسر مبلغ از کیف پول",
                     'payment_id' => $payment->id,
                     'time_price_of_dollars' => $dollar->DollarRateWithAddedValue()
                 ]);
