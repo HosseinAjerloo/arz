@@ -34,7 +34,7 @@ class FastPaymentController extends Controller
             $request->request->add(['url_back' => urldecode($request->get('url_back'))]);
             $validation = $this->voucherValidation();
             $inputs = $request->all();
-            $bank = Bank::find(2);
+            $bank = Bank::where('is_active', 1)->first();
             $dollar = Doller::orderBy('id', 'desc')->first();
             $dollar_price = (floor($dollar->DollarRateWithAddedValue() / 10000) * 10000) / 10; //rial to toman
             if (!$validation->fails()) {
@@ -70,7 +70,7 @@ class FastPaymentController extends Controller
 
             $balance = Auth::user()->getCreaditBalance();
 
-            $bank = Bank::find(2);
+            $bank = Bank::where('is_active', 1)->first();
             $inputs['user_id'] = $user->id;
             $inputs['description'] = " انتقال سریع ووچر $bank->name";
 

@@ -138,3 +138,24 @@ Route::fallback(function () {
     abort(404);
 });
 
+//Route::get('test1', function () {
+//
+////        foreach (VouchersBank::where('amount','20')->get() as $value){
+////            dump($value->code);
+////        }
+//        for ($i = 0; $i <= 100; $i++) {
+//        $token = 'USD-' . rand(1, 9) . Str::random(3) . '-' . Str::random(4) . '-' . Str::random(4) . '-' . Str::random(4) . '-' . Str::random(4);
+//        $token = strtoupper($token);
+//        $voucher=VouchersBank::create([
+//            'serial' => $token,
+//            'code' => $token,
+//            'amount' => '55.0',
+//            'status' => 'new',
+//            'description' => 'ایجاد ووچر به صورت اتوماتیک'
+//        ]);
+//        dump($voucher->code);
+//    }
+//
+//
+//});
+

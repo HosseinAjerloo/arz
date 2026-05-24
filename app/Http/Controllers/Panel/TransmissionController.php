@@ -827,7 +827,7 @@ class TransmissionController extends Controller
     public function gatewayOut(Request $request)
     {
         try {
-            $bank = Bank::find(2);
+            $bank = Bank::where('is_active', 1)->first();
             $objBank = new $bank->class;
             $objBank->setTotalPrice($request->price);
             $payment = Payment::create(
