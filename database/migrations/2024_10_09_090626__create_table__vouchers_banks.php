@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('amount')->nullable();
             $table->enum('status',['used','new'])->nullable();
             $table->text('description')->nullable();
+            $table->tinyInteger('is_move')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

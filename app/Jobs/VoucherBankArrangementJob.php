@@ -26,17 +26,17 @@ class VoucherBankArrangementJob implements ShouldQueue,ShouldBeUnique
     public $uniqueUntilFailure = true;
 
     protected $numberOFVouchers = [
-        0.25 => 500,
-        0.5  => 500,
-        1.0  => 500,
-        2.0  => 500,
-        2.5  => 500,
-        3.0  => 500,
-        3.5  => 500,
-        4.0  => 200,
-        5.0  => 200,
-        6.0  => 200,
-        10.0 => 200,
+        '0.25' => 500,
+        '0.5'  => 500,
+        '1.0' => 500,
+        '2.0'  => 500,
+        '2.5'  => 500,
+        '3.0'  => 500,
+        '3.5'  => 500,
+        '4.0'  => 200,
+        '5.0'  => 200,
+        '6.0'  => 200,
+        '10.0' => 200,
     ];
 
     /**
