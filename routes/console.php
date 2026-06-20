@@ -8,3 +8,5 @@ use \App\Jobs\transmissionsBankArrangementJob;
 
 \Illuminate\Support\Facades\Schedule::command('queue:work --stop-when-empty --queue BuyUtopiaCouponsWithJob')->runInBackground()->everyFiveMinutes();
 \Illuminate\Support\Facades\Schedule::command('queue:work --stop-when-empty --queue HologateReport')->everyMinute();
+\Illuminate\Support\Facades\Schedule::job(VoucherBankArrangementJob::class)->everyMinute();
+\Illuminate\Support\Facades\Schedule::command('queue:work --stop-when-empty --queue VoucherBankArrangementJob')->runInBackground()->everyMinute();

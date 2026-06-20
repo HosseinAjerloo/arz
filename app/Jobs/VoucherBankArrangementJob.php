@@ -4,43 +4,47 @@ namespace App\Jobs;
 
 use App\Models\Ticket;
 use App\Models\VouchersBank;
+use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Queue\Queueable;
 
 use AyubIRZ\PerfectMoneyAPI\PerfectMoneyAPI;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Str;
 
-class VoucherBankArrangementJob implements ShouldQueue
+class VoucherBankArrangementJob implements ShouldQueue,ShouldBeUnique
 {
     use Queueable;
 
     public $timeout = 0;
 
-    protected $numberOFVouchers =
-        [
-            1 => 10,
-            2 => 10,
-            3 => 5,
-            4 => 5,
-            5 => 7,
-            6 => 5,
-            7 => 2,
-            8 => 2,
-            9 => 2,
-            10 => 4,
-            20 => 4,
-            16 => 1,
-            17 => 1,
-            18 => 1,
-            25 => 1
+    public function uniqueId()
+    {
+        return 'VoucherBankArrangement';
+    }
+    public $uniqueFor = 300;
+    public $uniqueUntilFailure = true;
 
-        ];
+    protected $numberOFVouchers = [
+        0.25 => 500,
+        0.5  => 500,
+        1.0  => 500,
+        2.0  => 500,
+        2.5  => 500,
+        3.0  => 500,
+        3.5  => 500,
+        4.0  => 200,
+        5.0  => 200,
+        6.0  => 200,
+        10.0 => 200,
+    ];
 
     /**
      * Create a new job instance.
      */
     public function __construct()
     {
+        $this->onQueue('VoucherBankArrangementJob');
     }
 
     /**
@@ -50,30 +54,21 @@ class VoucherBankArrangementJob implements ShouldQueue
     {
 
         try {
-            $PM = new PerfectMoneyAPI(env('PM_ACCOUNT_ID'), env('PM_PASS'));
             foreach ($this->numberOFVouchers as $amount => $numberOFVoucher) {
                 $getNewVoucherInDatabaseTable = VouchersBank::where('status', 'new')->where("amount", $amount)->count();
 
                 $numberOfGenerate = $numberOFVoucher - $getNewVoucherInDatabaseTable;
                 if ($numberOfGenerate > 0) {
                     for ($i = 0; $i < $numberOfGenerate; $i++) {
-                        $PMeVoucher = $PM->createEV(env('PAYER_ACCOUNT'), $amount);
-                        if (is_array($PMeVoucher) and isset($PMeVoucher['VOUCHER_NUM']) and isset($PMeVoucher['VOUCHER_CODE'])) {
-
-                            VouchersBank::create(
-                                [
-                                    'serial' => $PMeVoucher['VOUCHER_NUM'],
-                                    'code' => $PMeVoucher['VOUCHER_CODE'],
-                                    'amount' => $amount,
-                                    'status' => 'new',
-                                    'description' => 'ایجاد ووچر به صورت اتوماتیک'
-                                ]
-                            );
-                        }else{
-                            Log::emergency(json_encode($PMeVoucher));
-
-                        }
-
+                        $token = 'USD-' . rand(1, 9) . Str::random(3) . '-' . Str::random(4) . '-' . Str::random(4) . '-' . Str::random(4) . '-' . Str::random(4);
+                        $token = strtoupper($token);
+                        $voucher=VouchersBank::create([
+                            'serial' => $token,
+                            'code' => $token,
+                            'amount' => $amount,
+                            'status' => 'new',
+                            'description' => 'ایجاد ووچر به صورت اتوماتیک'
+                        ]);
                     }
                 }
 
