@@ -23,6 +23,7 @@ class DollarController extends Controller
 
         $dollar = Doller::all()->first();
         $dollar->amount_to_rials = $request->dollar_price;
+        $dollar->description = $request->input('description');
         $dollar->save();
         return redirect()->back()->with(['success' => "قیمت دلار ثبت شد"]);
     }
