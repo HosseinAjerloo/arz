@@ -19,11 +19,11 @@
             <img src="{{asset("merikhArz/src/images/adminTicket.svg")}}" alt="" class="object-cover w-28 h-28">
             <p class="text-base mt-6">تیکت های پیشتیبانی</p>
         </a>
-        <div
+        <a href="{{route('panel.admin.dollar-price')}}"
             class="w-[48%] h-40 bg-gradient-to-b from-FFBEBE to-FFF5EA rounded-md flex justify-center items-center flex-col mt-2">
             <img src="{{asset('merikhArz/src/images/dollarAdmin.svg')}}" alt="" class="object-cover w-28 h-28">
             <p class="text-base  mt-6">تنظیم نرخ دلار</p>
-        </div>
+        </a>
 
         <a href="{{route('panel.admin.user.index')}}"
            class="w-full h-40 bg-gradient-to-b from-DBBBFF to-F6EDFF rounded-md flex justify-center items-center flex-col mt-2">
