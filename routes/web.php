@@ -46,7 +46,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('purchase', [App\Http\Controllers\Panel\PanelController::class, 'purchase'])->name('panel.purchase.view');
 
 
-//    Route::get('transmission', [App\Http\Controllers\Panel\TransmissionController::class, 'index'])->name('panel.transmission.view');
+    Route::get('transmission', [App\Http\Controllers\Panel\TransmissionController::class, 'index'])->name('panel.transmission.view');
     Route::get('remittance-transfer-information/{transitionDelivery}', [App\Http\Controllers\Panel\TransmissionController::class, 'information'])->name('panel.transfer.information');
     Route::get('transmission-fail', [App\Http\Controllers\Panel\TransmissionController::class, 'transmissionFail'])->name('panel.transfer.fail');
 

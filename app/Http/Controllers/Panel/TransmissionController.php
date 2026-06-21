@@ -44,6 +44,7 @@ class TransmissionController extends Controller
 
     public function index()
     {
+        abort(404);
         $banks = Bank::where('is_active', 1)->get();
         $services = Service::all();
         $dollar = Doller::orderBy('id', 'desc')->first();
